@@ -1,9 +1,5 @@
 package com.example.demo.threadexamples;
 
-import lombok.EqualsAndHashCode;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,15 +7,6 @@ public class BlockingQueueSharedDataThread {
     static BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
-
-        Map<Integer, String> map = new HashMap<>();
-        map.put(1, "one");
-        map.put(2, "two");
-        map.put(1, "first");
-        System.out.println(map.get(1));
-    }
-
-    public static void main1(String[] args) {
         Thread producer = new Thread(new Producer(queue));
         Thread consumer = new Thread(new Consumer(queue));
 
