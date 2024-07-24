@@ -28,7 +28,7 @@ public class MultiValueHashMap<K, V> {
     }
 }
 
-class ReplacedValueHashMap<K, V> {
+class SingleValueHashMap<K, V> {
     static Map<Integer, String> map = new HashMap<>();
 
     public static void main(String[] args) {
