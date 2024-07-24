@@ -16,7 +16,7 @@ public class MultiValueHashMap<K, V> {
         /**
          *map.get returns 'null' or a mapped value.
          *map.getOrDefault returns default key value (new ArrayList<>()) or the specific key value.
-        */
+         */
         return map.getOrDefault(key, new ArrayList<>());
     }
 
@@ -28,7 +28,7 @@ public class MultiValueHashMap<K, V> {
     }
 }
 
-class ReplacedDuplicatedValueHashMap<K, V> {
+class ReplacedValueHashMap<K, V> {
     static Map<Integer, String> map = new HashMap<>();
 
     public static void main(String[] args) {

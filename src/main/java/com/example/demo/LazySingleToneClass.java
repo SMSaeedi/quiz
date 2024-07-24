@@ -81,7 +81,7 @@ class EagerSingleToneClass {
     /**
      * Eager initialize means the SingleTon class is initialized on the class load.
      * Pros: Simple implementation, thread-safe without requiring synchronized methods.
-     * Cons: Instance is created even if it is never used, which can lead to resource wastage
+     * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
      */
     @Getter
     private final static EagerSingleToneClass eagerSingleToneClass = new EagerSingleToneClass();
