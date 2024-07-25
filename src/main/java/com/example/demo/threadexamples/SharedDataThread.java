@@ -83,12 +83,13 @@ class AtomicSharedData {
             System.out.println("3rd thread --> " + useSharedData.sharedData.get());
         };
 
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-        executor.submit(task3);
-        executor.submit(task1);
-        executor.submit(task2);
+        try (ExecutorService executor = Executors.newFixedThreadPool(3)) {
+            executor.submit(task3);
+            executor.submit(task1);
+            executor.submit(task2);
 
-        executor.shutdown();
+            executor.shutdown();
+        }
     }
 }
 

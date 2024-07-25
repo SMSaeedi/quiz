@@ -40,7 +40,7 @@ public class VolatileVariable {
 }
 
 class AtomicVariable {
-    private static AtomicInteger atomicCounter = new AtomicInteger(0);
+    private static final AtomicInteger atomicCounter = new AtomicInteger(0);
 
     @SneakyThrows
     public static void main(String[] args) {
