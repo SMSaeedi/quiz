@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Getter
 @Setter
@@ -116,6 +118,53 @@ class ConcurrentHashMapSharedData {
         Runnable task2 = () -> {
             useSharedData.modifyingSharedData(35);
             System.out.println("2nd thread --> " + useSharedData.concurrentMap.get("data"));
+        };
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor.submit(task1);
+        executor.submit(task2);
+
+        executor.shutdown();
+    }
+}
+
+class ReentrantLockSharedData {
+    private int sharedData;
+    private final Lock lock = new ReentrantLock();
+
+    public ReentrantLockSharedData(int initialValue) {
+        this.sharedData = initialValue;
+    }
+
+    public void modifyingSharedData(int value) {
+        lock.lock();
+        try {
+            sharedData += value;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public int getData() {
+        lock.lock();
+        try {
+            return sharedData;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) {
+        ReentrantLockSharedData reentrantLockSharedData = new ReentrantLockSharedData(100);
+
+        Runnable task1 = () -> {
+            reentrantLockSharedData.modifyingSharedData(25);
+            System.out.println("1st thread --> " + reentrantLockSharedData.getData());
+        };
+
+        Runnable task2 = () -> {
+            reentrantLockSharedData.modifyingSharedData(35);
+            System.out.println("2nd thread --> " + reentrantLockSharedData.getData());
         };
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
