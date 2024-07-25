@@ -5,18 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DIP {
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("A");
-        list.add("B");
-        list.add("C");
-        Iterator<String> iterable = list.iterator();
-        iterable.next();
-        iterable.remove();
-        System.out.println(list);
-    }
 
-    public static void main1(String[] args) {
+    public static void main(String[] args) {
         PaymentProcessor creditCardProcessor = new CreditCardProcessor();
         PaymentProcessor payPalProcessor = new PayPalProcessor();
 
