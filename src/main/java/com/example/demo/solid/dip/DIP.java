@@ -1,9 +1,5 @@
 package com.example.demo.solid.dip;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class DIP {
 
     public static void main(String[] args) {
