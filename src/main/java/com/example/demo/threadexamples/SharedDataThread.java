@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -136,7 +134,7 @@ class ReentrantLockSharedData {
         this.sharedData = initialValue;
     }
 
-    public void modifyingSharedData(int value) {
+    public void setData(int value) {
         lock.lock();
         try {
             sharedData += value;
@@ -158,12 +156,12 @@ class ReentrantLockSharedData {
         ReentrantLockSharedData reentrantLockSharedData = new ReentrantLockSharedData(100);
 
         Runnable task1 = () -> {
-            reentrantLockSharedData.modifyingSharedData(25);
+            reentrantLockSharedData.setData(25);
             System.out.println("1st thread --> " + reentrantLockSharedData.getData());
         };
 
         Runnable task2 = () -> {
-            reentrantLockSharedData.modifyingSharedData(35);
+            reentrantLockSharedData.setData(35);
             System.out.println("2nd thread --> " + reentrantLockSharedData.getData());
         };
 

@@ -8,7 +8,7 @@ public class VolatileVariable {
     /**
      * Use Cases for volatile
      * State Flags: indicating the completion/cancellation of a task, or other simple state changes.
-     * <p>
+     *
      * Pros: Simplicity, Visibility, Performance
      * Cons: Does not provide atomicity for compound actions like incrementing a counter,
      * Suitable only for simple flags or state variables.
