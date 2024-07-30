@@ -102,6 +102,10 @@ class ConcurrentHashMapSharedData {
     }
 
     public void modifyingSharedData(int data) {
+        /**
+         * merge method provides a convenient way to update a value based on its current value,
+         * and is particularly useful for atomic updates in a concurrent environment.
+        */
         concurrentMap.merge("data", data, Integer::sum);
     }
 
