@@ -1,6 +1,5 @@
 package com.example.demo.revolutquiz;
 
-import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -87,17 +86,5 @@ class ThreadPoolWorker implements Runnable {
         System.out.println(Thread.currentThread().getName() + " process starts: " + count);
         processCount();
         System.out.println(Thread.currentThread().getName() + " process finishes: ");
-    }
-}
-
-class Test implements Serializable {
-    private int count;
-
-    public synchronized int getCount() {
-        return count;
-    }
-
-    public synchronized void setCount() {
-        count++;
     }
 }
