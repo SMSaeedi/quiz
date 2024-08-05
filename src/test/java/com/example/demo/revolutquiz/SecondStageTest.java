@@ -39,7 +39,7 @@ class SecondStageTest {
     @Test
     void concurrent_map_test() {
         concurrentMap.put("one", 11);
-        assertNotEquals(concurrentMap.get("oone"), 1);
-        assertNotEquals(concurrentMap.get("one"), 11);
+        assertNotEquals(concurrentMap.get("one"), 1);
+        assertEquals(concurrentMap.get("one"), 11);
     }
 }
