@@ -1,4 +1,4 @@
-package com.example.demo.revolutquiz;
+package com.example.demo.quiz.revolutquiz;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

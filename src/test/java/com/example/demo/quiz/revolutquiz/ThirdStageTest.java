@@ -1,5 +1,7 @@
-package com.example.demo.revolutquiz;
+package com.example.demo.quiz.revolutquiz;
 
+import com.example.demo.quiz.revolutquiz.ThirdStage;
+import com.example.demo.quiz.revolutquiz.ThreadPoolWorker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

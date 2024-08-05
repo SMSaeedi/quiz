@@ -1,4 +1,4 @@
-package com.example.demo.revolutquiz;
+package com.example.demo.quiz.revolutquiz;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;

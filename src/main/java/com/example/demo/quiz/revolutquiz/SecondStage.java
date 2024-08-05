@@ -1,4 +1,4 @@
-package com.example.demo.revolutquiz;
+package com.example.demo.quiz.revolutquiz;
 
 import java.util.HashMap;
 import java.util.Map;
