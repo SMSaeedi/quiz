@@ -1,14 +1,15 @@
 package com.example.demo.quiz;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FirstQuizTest {
     FirstQuiz firstQuiz;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         firstQuiz = new FirstQuiz();
         firstQuiz.serverList.add("192.168.1.1");
@@ -26,18 +27,18 @@ public class FirstQuizTest {
     @Test
     public void register_new_server_sunny_test() {
         assertTrue(firstQuiz.serverList.remove("192.168.1.10"));
-        assertTrue(firstQuiz.validateServer("192.168.1.10"));
+        assertTrue(firstQuiz.validateAndAddServer("192.168.1.10"));
     }
 
     @Test
     public void register_new_server_gray_test() {
-        assertFalse(firstQuiz.validateServer("192.168.1.10"));
-        assertFalse(firstQuiz.validateServer("192.168.1.111"));
+        assertFalse(firstQuiz.validateAndAddServer("192.168.1.10"));
+        assertFalse(firstQuiz.validateAndAddServer("192.168.1.111"));
     }
 
     @Test
     public void threshold_check() {
-        assertThrows(ServerException.class, () -> firstQuiz.registerServer());
+        assertThrows(ServerException.class, () -> firstQuiz.registerServer("192.168.1.10"));
     }
 
 }
