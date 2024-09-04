@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MyTests {
+public class SortListTests {
     private static List<LocalDate> dates = List.of(
             LocalDate.of(2024, 5, 11)
             , LocalDate.of(2024, 5, 16)

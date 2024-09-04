@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Multi-thread safety extends the concept into the entire app/system,
- * ensuring multiple threads run concurrently without interfering each other
+ * ensuring multi-threads run concurrently without interfering each other
  * Multi-thread safety a mutex for a single resource
  */
 public class MTSafety {
