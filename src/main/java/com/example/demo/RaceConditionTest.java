@@ -64,6 +64,8 @@ class StringCount {
 class StringReplace {
     public static void main(String[] args) {
         String str = "Java";
+        //The replace method does not modify the original string
+        // but instead returns a new string with the replacements made
         str.replace('a', 'o');
         System.out.println(str);
         System.out.println(str.replace('a', 'o'));
