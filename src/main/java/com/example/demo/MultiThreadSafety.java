@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  * ensuring multi-threads run concurrently without interfering each other
  * Multi-thread safety a mutex for a single resource
  */
-public class MTSafety {
+public class MultiThreadSafety {
     private final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
@@ -25,7 +25,7 @@ public class MTSafety {
     }
 
     public static void main(String[] args) {
-        MTSafety mt = new MTSafety();
+        MultiThreadSafety mt = new MultiThreadSafety();
 
         for (int i = 0; i < 5; i++)
             mt.process("key");
