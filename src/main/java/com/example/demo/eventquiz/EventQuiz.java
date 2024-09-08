@@ -1,46 +1,34 @@
 package com.example.demo.eventquiz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class EventQuiz {
-    private static List<Event> events = new ArrayList<>();
-
+class EventQuiz {
     public static void main(String[] args) {
-        events.add(new Event("foo", 1000000L));
-        events.add(new Event("bar", 1000003L));
-        events.add(new Event("baz", 1000006L));
-        events.add(new Event("foo", 1000009L));
-        events.add(new Event("bar", 1000013L));
-        events.add(new Event("baz", 1000016L));
-        events.add(new Event("foo", 1000013L));
+        Map<String, Long> map = new HashMap<>();
+        List<String> keySequence = new ArrayList<>();
 
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < events.size(); i++)
-            for (int j = i + 1; j < events.size(); j++)
-                if (events.get(j).getName().equals(events.get(i).getName())) {
-                    result.add(events.get(i).getName());
-                    if (events.get(j).getTimestamp() - events.get(i).getTimestamp() >= 10L) {
-                        j++;
-                        System.out.println(events.get(i).getName());
-                    }
-                }
+        updateMap(map, keySequence, "foo", 1000001L);
+        updateMap(map, keySequence, "bar", 1000002L);
+        updateMap(map, keySequence, "baz", 1000005L);
+        updateMap(map, keySequence, "foo", 1000006L);
+        updateMap(map, keySequence, "bar", 1000014L);
+        updateMap(map, keySequence, "baz", 1000017L);
+        updateMap(map, keySequence, "foo", 1000020L);
 
+        System.out.println(String.join(", ", keySequence));
     }
-}
 
-class Event {
-    private String name;
-    private Long timestamp;
+    private static void updateMap(Map<String, Long> map, List<String> keySequence, String key, Long value) {
+        if (map.containsKey(key)) {
+            Long previousValue = map.get(key);
+            if (Math.abs(value - previousValue) >= 10)
+                keySequence.add(key);
+        } else
+            keySequence.add(key);
 
-    public Event(String name, Long timestamp) {
-        this.name = name;
-        this.timestamp = timestamp;
-    }
-    public String getName() {
-        return name;
-    }
-    public Long getTimestamp() {
-        return timestamp;
+        map.put(key, value);
     }
 }
