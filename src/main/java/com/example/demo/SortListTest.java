@@ -26,8 +26,11 @@ class SortMapTest {
         map1.put("Apple", 2);
         map1.put("Orange", 3);
         map1.put("Peach", 4);
-        TreeMap<String, Integer> sortedMap1 = new TreeMap<>(map1);
-        System.out.println(sortedMap1);
+        TreeMap<String, Integer> asc = new TreeMap<>(map1);
+        System.out.println(asc);
+        TreeMap<String, Integer> desc = new TreeMap<>(Comparator.reverseOrder());
+        desc.putAll(map1);
+        System.out.println(desc);
 
         Map<Integer, String> map2 = new HashMap<>();
         map2.put(5,"Bnanna");
@@ -35,7 +38,10 @@ class SortMapTest {
         map2.put(1,"Orange");
         map2.put(4,"Peach");
         map2.put(3,"Melon");
-        TreeMap<Integer, String> sortedMap2 = new TreeMap<>(map2);
-        System.out.println(sortedMap2);
+        TreeMap<Integer, String> asc2 = new TreeMap<>(map2);
+        System.out.println(asc2);
+        TreeMap<Integer, String> desc2 = new TreeMap<>(Comparator.reverseOrder());
+        desc2.putAll(map2);
+        System.out.println(desc2);
     }
 }
