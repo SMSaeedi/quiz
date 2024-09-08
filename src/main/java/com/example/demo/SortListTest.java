@@ -33,15 +33,25 @@ class SortMapTest {
         System.out.println(desc);
 
         Map<Integer, String> map2 = new HashMap<>();
-        map2.put(5,"Bnanna");
-        map2.put(2,"Apple");
-        map2.put(1,"Orange");
-        map2.put(4,"Peach");
-        map2.put(3,"Melon");
+        map2.put(5, "Bnanna");
+        map2.put(2, "Apple");
+        map2.put(1, "Orange");
+        map2.put(4, "Peach");
+        map2.put(3, "Melon");
         TreeMap<Integer, String> asc2 = new TreeMap<>(map2);
         System.out.println(asc2);
         TreeMap<Integer, String> desc2 = new TreeMap<>(Comparator.reverseOrder());
         desc2.putAll(map2);
         System.out.println(desc2);
+    }
+}
+
+class test {
+    public static void main(String[] args) {
+        String s1 = "Java";
+        String s2 = "Ja" + "va";
+        System.out.println(s1 == s2);
+        System.out.println(s1.hashCode());
+        System.out.println(s2.hashCode());
     }
 }

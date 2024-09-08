@@ -10,18 +10,18 @@ class EventQuiz {
         Map<String, Long> map = new HashMap<>();
         List<String> keySequence = new ArrayList<>();
 
-        updateMap(map, keySequence, "foo", 1000001L);
-        updateMap(map, keySequence, "bar", 1000002L);
-        updateMap(map, keySequence, "baz", 1000005L);
-        updateMap(map, keySequence, "foo", 1000006L);
-        updateMap(map, keySequence, "bar", 1000014L);
-        updateMap(map, keySequence, "baz", 1000017L);
-        updateMap(map, keySequence, "foo", 1000020L);
+        checkDuplicateInMap(map, keySequence, "foo", 1000001L);
+        checkDuplicateInMap(map, keySequence, "bar", 1000002L);
+        checkDuplicateInMap(map, keySequence, "baz", 1000005L);
+        checkDuplicateInMap(map, keySequence, "foo", 1000006L);
+        checkDuplicateInMap(map, keySequence, "bar", 1000014L);
+        checkDuplicateInMap(map, keySequence, "baz", 1000017L);
+        checkDuplicateInMap(map, keySequence, "foo", 1000020L);
 
         System.out.println(String.join(", ", keySequence));
     }
 
-    private static void updateMap(Map<String, Long> map, List<String> keySequence, String key, Long value) {
+    private static void checkDuplicateInMap(Map<String, Long> map, List<String> keySequence, String key, Long value) {
         if (map.containsKey(key)) {
             Long previousValue = map.get(key);
             if (Math.abs(value - previousValue) >= 10)
