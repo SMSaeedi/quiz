@@ -9,7 +9,8 @@ import java.io.Serializable;
  * Serializable makes the object converting into byte stream.
  * which means deserializable back into the copy of the object.
  * Serializable Thread-safe ensures that process (ser, des) won't corrupt data while accessing by multiple threads.
- * thread-safe serialization a single mutex for all resources
+ * thread-safe serialization a single mutex for all resources (A Mutex (short for Mutual Exclusion) is a synchronization
+ * primitive used in concurrent programming to control access to a shared resource)
  */
 public class ThreadSafeSerializable implements Serializable {
     private static final long serialVersionUID = 1L;
