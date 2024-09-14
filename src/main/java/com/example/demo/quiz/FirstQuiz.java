@@ -1,5 +1,7 @@
 package com.example.demo.quiz;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,21 +9,19 @@ class FirstQuiz {
     public List<String> serverList = new ArrayList<>();
 
     public void registerServer(final String server) {
-        if (serverList.size() >= 10) throw new ServerException("out of threshold");
+        validateIp(server);
 
-        validateAndAddServer(server);
+        try {
+            InetAddress addressIP = InetAddress.getByName(server);
+            serverList.add(addressIP.getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new ServerException("unknown host");
+        }
     }
 
-    public boolean validateAndAddServer(final String server) {
-        var serverLength = server.length();
-        if (!serverList.contains(server)) {
-            if (serverLength >= 11 && serverLength <= 12) {
-                serverList.add(server);
-                return true;
-            }
-            return false;
-        }
-        return false;
+    private void validateIp(final String server) {
+        if (serverList.size() >= 10) throw new ServerException("out of threshold");
+        if (serverList.contains(server)) throw new ServerException("IP address already exist");
     }
 }
 
