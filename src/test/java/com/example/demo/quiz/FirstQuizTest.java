@@ -62,4 +62,18 @@ public class FirstQuizTest {
         assertEquals("unknown host", invalidLength.getMessage());
         firstQuiz.serverList.clear();
     }
+
+    @Test
+    public void find_next_server() {
+        firstQuiz.serverList.add("192.168.1.1");
+        firstQuiz.serverList.add("192.168.1.2");
+        firstQuiz.serverList.add("192.168.1.5");
+        firstQuiz.serverList.add("192.168.1.6");
+        firstQuiz.serverList.add("192.168.1.3");
+        assertEquals(firstQuiz.findNextServer(), "192.168.1.1");
+        assertEquals(firstQuiz.findNextServer(), "192.168.1.2");
+        assertEquals(firstQuiz.findNextServer(), "192.168.1.5");
+        assertEquals(firstQuiz.findNextServer(), "192.168.1.6");
+        assertEquals(firstQuiz.findNextServer(), "192.168.1.3");
+    }
 }
