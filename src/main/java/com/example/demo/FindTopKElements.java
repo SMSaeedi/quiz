@@ -3,9 +3,9 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FindTopKElement {
+public class FindTopKElements {
     public static void main(String[] args) {
-        System.out.println(FindTopKElement.findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
+        System.out.println(FindTopKElements.findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
     }
 
     public static List<Integer> findTopKElementUsingTreeSet(List<Integer> lst, int k) {
