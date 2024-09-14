@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.threadexamples;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

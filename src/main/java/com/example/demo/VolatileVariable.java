@@ -1,4 +1,4 @@
-package com.example.demo.threadexamples;
+package com.example.demo;
 
 import lombok.SneakyThrows;
 
