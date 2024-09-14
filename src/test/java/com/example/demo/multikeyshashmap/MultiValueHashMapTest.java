@@ -12,7 +12,9 @@ public class MultiValueHashMapTest {
     public void given_MultiValueHashMap_whenPuttingAndGettingSingleValue_thenValueIsRetrieved() {
         MultiValueHashMap<String, Integer> map = new MultiValueHashMap<>();
         map.put("key1", 10);
+        map.put("key2", 10);
         assertEquals(List.of(10), map.get("key1"));
+        assertEquals(List.of(10), map.get("key2"));
     }
 
     @Test
