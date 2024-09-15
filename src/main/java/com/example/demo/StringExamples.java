@@ -1,6 +1,51 @@
 package com.example.demo;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class StringExamples {
+}
+
+class SetStringArrayUnique {
+    public static void main(String[] args) {
+        int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
+        int[] uniqueAddresses = uniqueIntArray(addresses);
+        System.out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5, 4, 6]
+    }
+
+    private static int[] uniqueIntArray(int[] ads) {
+        Set<Integer> set = new HashSet<>();
+        for (int s : ads)
+            set.add(s);
+
+        int index = 0;
+        int[] result = new int[set.size()];
+        for (int s : set)
+            result[index++] = s;
+
+        return result;
+    }
+}
+
+class FindDuplicatedInStringArray {
+    public static void main(String[] args) {
+        System.out.println(findFirstDuplicateID(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
+        System.out.println(findFirstDuplicateID(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
+        System.out.println(findFirstDuplicateID(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+    }
+
+    private static String findFirstDuplicateID(String[] strings) {
+        Set<String> uniqueSet = new HashSet<>();
+        Set<String> duplicatedSet = new HashSet<>();
+
+        for (String s : strings)
+            if (!uniqueSet.add(s)) {
+                duplicatedSet.add(s);
+                return s;
+            }
+        return "";
+    }
 }
 
 class StringCount {
@@ -57,7 +102,7 @@ class StringReverse {
         System.out.println(new StringBuilder(str2).reverse());
 
         String str3 = "You're about to Reverse Me";
-        for(int i = str2.length() - 1; i >= 0; i--)
+        for (int i = str2.length() - 1; i >= 0; i--)
             System.out.print(str3.charAt(i));
     }
 }
