@@ -2,9 +2,8 @@ package com.example.demo;
 
 import java.util.*;
 
-public class StringExamples {
+public class StringSamples {
 }
-
 class StringAnagram {
     public static void main(String[] args) {
         if (isAnagram("aab", "baa")) System.out.println("aab and baa are anagrams.");
@@ -106,7 +105,7 @@ class WordsCount {
     }
 }
 
-class Replace {
+class StringReplace {
     public static void main(String[] args) {
         String str = "Java";
         //The replace method does not modify the original string
@@ -251,5 +250,25 @@ class FindFirstUniqueChar {
             }
 
         return null;
+    }
+}
+
+class StringContiguous {
+    public static void main(String[] args) {
+        String str1 = "ABDGFG";
+        System.out.println(isStringContiguous(str1));
+        String str2 = "ABCD";
+        System.out.println(isStringContiguous(str2));
+    }
+
+    private static boolean isStringContiguous(String str) {
+        if (str == null || str.isEmpty())
+            return false;
+
+        for (int i = 1; i < str.length(); i++)
+            if (str.charAt(i) - str.charAt(i - 1) != 1)
+                return false;
+
+        return true;
     }
 }
