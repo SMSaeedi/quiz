@@ -1,10 +1,14 @@
 package com.example.demo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CollectionSortExamples {
+public class CollectionExamples {
 }
 
 class SortListTest {
@@ -46,5 +50,28 @@ class SortMapTest {
         TreeMap<Integer, String> desc2 = new TreeMap<>(Comparator.reverseOrder());
         desc2.putAll(map2);
         System.out.println(desc2);
+    }
+}
+
+class FindMax {
+    public static void main(String[] args) {
+        List<Employee> employeeList = List.of(
+                new Employee("Alice", 30),
+                new Employee("David", 50),
+                new Employee("Bob", 45),
+                new Employee("Charlie", 25)
+        );
+
+        System.out.println(employeeList.stream()
+                .max(Comparator.comparing(Employee::getAge))
+                .orElse(new Employee()));
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Employee {
+        String name;
+        int age;
     }
 }

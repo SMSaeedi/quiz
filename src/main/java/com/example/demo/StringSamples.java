@@ -272,3 +272,20 @@ class StringContiguous {
         return true;
     }
 }
+
+class StringPalindrome{
+    public static void main(String[] args) {
+        String str1 = "abcdcba";
+        String str2 = "Madam";
+        String str3 = "mahsaa";
+
+        System.out.println(isPalindrome(str1));
+        System.out.println(isPalindrome(str2));
+        System.out.println(isPalindrome(str3));
+    }
+
+    private static boolean isPalindrome(String str) {
+        String sb = new StringBuilder(str).reverse().toString();
+        return sb.equalsIgnoreCase(str);
+    }
+}
