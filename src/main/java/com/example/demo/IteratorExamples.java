@@ -1,11 +1,14 @@
-package com.example.demo.iterator;
+package com.example.demo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class FailFastClass {
+public class IteratorExamples {
+}
+
+class FailFastClass {
     public static void main(String[] args) {
         List<String> list = new ArrayList<>();
         list.add("A");
