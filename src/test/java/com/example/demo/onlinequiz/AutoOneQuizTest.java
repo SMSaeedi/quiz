@@ -1,12 +1,12 @@
-package com.example.demo.autoquiz;
+package com.example.demo.onlinequiz;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-class AutoTest {
-    Auto c = new Auto();
+class AutoOneQuizTest {
+    AutoOneQuiz c = new AutoOneQuiz();
 
     @Test
     void test_get_key() {

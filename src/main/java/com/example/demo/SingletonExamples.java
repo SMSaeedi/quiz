@@ -2,7 +2,10 @@ package com.example.demo;
 
 import lombok.Getter;
 
-public class LazySingleToneClass {
+public class SingletonExamples {
+}
+
+class LazySingleToneClass {
     /**
      * Lazy initialize means the class initialized only when it's needed.
      * Pros: Simple implementation, instance is created only when needed.
@@ -40,6 +43,7 @@ class ThreadSafeLazySingleton {
 
 class DoubleCheckedLockingSingleton {
     /**
+     * Double-Checked Locking with volatile
      * Pros: Thread-safe, improved performance by reducing synchronization overhead.
      * Cons: More complex implementation.
      */
@@ -51,9 +55,8 @@ class DoubleCheckedLockingSingleton {
     public static DoubleCheckedLockingSingleton getInstance() {
         if (instance == null) {
             synchronized (DoubleCheckedLockingSingleton.class) {
-                if (instance == null) {
+                if (instance == null)
                     instance = new DoubleCheckedLockingSingleton();
-                }
             }
         }
         return instance;
@@ -69,6 +72,9 @@ class BillPughSingleton {
     }
 
     private static class SingletonHelper {
+        /**
+         * Use Immutable Objects for Shared State
+         */
         private static final BillPughSingleton INSTANCE = new BillPughSingleton();
     }
 
@@ -79,6 +85,7 @@ class BillPughSingleton {
 
 class EagerSingleToneClass {
     /**
+     * Use Immutable Objects for Shared State
      * Eager initialize means the SingleTon class is initialized on the class load.
      * Pros: Simple implementation, thread-safe without requiring synchronized methods.
      * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
@@ -91,50 +98,51 @@ class EagerSingleToneClass {
 }
 
 /**
-Lazy Initialization:
-A proxy can help in delaying the creation of the singleton instance until it is actually needed.
- This can be useful if the singleton object is resource-intensive to create,
- and you want to avoid instantiating it during the startup of the application.
-
- Access Control:
-A proxy can control access to the singleton instance.
- For example, you might want to restrict certain operations or ensure that only authorized components
- of the application can access specific methods of the singleton.
-
- Logging, Auditing, and Monitoring:
-Proxies can be used to add logging, auditing, or monitoring behavior without modifying the singleton class.
- The proxy can intercept method calls, log them, and then delegate the calls to the actual singleton instance.
-
- Remote Access:
-If the singleton object needs to be accessed across different JVMs (e.g., in a distributed application),
- a proxy can act as a local representative that communicates with the remote singleton instance.
-
- Mocking for Testing:
-Proxies can be used to mock or stub the singleton instance during testing.
- This allows for more flexible and controlled unit tests without the need to modify the singleton class.
-
- Effectiveness:
-Using a proxy pattern with a singleton largely depends on the specific requirements of the application.
- If the use case benefits from the additional functionality that a proxy provides
- (e.g., lazy initialization, access control, etc.), then it can be very effective.
-
- Overhead:
-Introducing a proxy adds a layer of indirection, which could introduce some performance overhead. However,
- in most cases, this overhead is negligible compared to the benefits it provides.
-
- Complexity:
-Using a proxy pattern can add complexity to your design.
- It's important to ensure that this complexity is justified by the added benefits.
-
- When to Use:
-1. You need to control or restrict access to the singleton.
-2. You want to add additional behavior like logging, monitoring, or lazy initialization.
-3. You are working in a distributed environment where remote access to the singleton is required.
-4. You need to mock the singleton in unit tests.
-
- When not to Use:
-1. The singleton is simple and does not require any additional behavior.
-2. The added complexity does not justify the benefits.*/
+ * Lazy Initialization:
+ * A proxy can help in delaying the creation of the singleton instance until it is actually needed.
+ * This can be useful if the singleton object is resource-intensive to create,
+ * and you want to avoid instantiating it during the startup of the application.
+ * <p>
+ * Access Control:
+ * A proxy can control access to the singleton instance.
+ * For example, you might want to restrict certain operations or ensure that only authorized components
+ * of the application can access specific methods of the singleton.
+ * <p>
+ * Logging, Auditing, and Monitoring:
+ * Proxies can be used to add logging, auditing, or monitoring behavior without modifying the singleton class.
+ * The proxy can intercept method calls, log them, and then delegate the calls to the actual singleton instance.
+ * <p>
+ * Remote Access:
+ * If the singleton object needs to be accessed across different JVMs (e.g., in a distributed application),
+ * a proxy can act as a local representative that communicates with the remote singleton instance.
+ * <p>
+ * Mocking for Testing:
+ * Proxies can be used to mock or stub the singleton instance during testing.
+ * This allows for more flexible and controlled unit tests without the need to modify the singleton class.
+ * <p>
+ * Effectiveness:
+ * Using a proxy pattern with a singleton largely depends on the specific requirements of the application.
+ * If the use case benefits from the additional functionality that a proxy provides
+ * (e.g., lazy initialization, access control, etc.), then it can be very effective.
+ * <p>
+ * Overhead:
+ * Introducing a proxy adds a layer of indirection, which could introduce some performance overhead. However,
+ * in most cases, this overhead is negligible compared to the benefits it provides.
+ * <p>
+ * Complexity:
+ * Using a proxy pattern can add complexity to your design.
+ * It's important to ensure that this complexity is justified by the added benefits.
+ * <p>
+ * When to Use:
+ * 1. You need to control or restrict access to the singleton.
+ * 2. You want to add additional behavior like logging, monitoring, or lazy initialization.
+ * 3. You are working in a distributed environment where remote access to the singleton is required.
+ * 4. You need to mock the singleton in unit tests.
+ * <p>
+ * When not to Use:
+ * 1. The singleton is simple and does not require any additional behavior.
+ * 2. The added complexity does not justify the benefits.
+ */
 
 class SingleTon {
     private static SingleTon instance;
@@ -156,7 +164,7 @@ class SingleTon {
     }
 }
 
-class SingletonProxy{
+class SingletonProxy {
     private SingleTon singleton;
 
     public SingletonProxy() {

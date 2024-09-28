@@ -1,4 +1,4 @@
-package com.example.demo.eventquiz;
+package com.example.demo.onlinequiz;
 
 import java.util.ArrayList;
 import java.util.HashMap;

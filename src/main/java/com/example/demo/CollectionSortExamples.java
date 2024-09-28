@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SortListTest {
+public class CollectionSortExamples {
+}
+
+class SortListTest {
     private static final List<LocalDate> dates = List.of(
             LocalDate.of(2024, 5, 11)
             , LocalDate.of(2024, 5, 16)

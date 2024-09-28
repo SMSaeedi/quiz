@@ -1,9 +1,9 @@
-package com.example.demo.autoquiz;
+package com.example.demo.onlinequiz;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Auto {
+public class AutoOneQuiz {
     public Map<String, String> map = new HashMap<>();
 
     public String getKey(String key, String secret) {

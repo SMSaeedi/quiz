@@ -1,4 +1,4 @@
-package com.example.demo.quiz;
+package com.example.demo.onlinequiz;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class FirstQuiz {
+class RevolutQuiz {
     public List<String> serverList = new ArrayList<>();
     private AtomicInteger index = new AtomicInteger(0);
 
