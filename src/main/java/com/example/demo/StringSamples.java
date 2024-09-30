@@ -4,6 +4,7 @@ import java.util.*;
 
 public class StringSamples {
 }
+
 class StringAnagram {
     public static void main(String[] args) {
         if (isAnagram("aab", "baa")) System.out.println("aab and baa are anagrams.");
@@ -253,6 +254,45 @@ class FindFirstUniqueChar {
     }
 }
 
+class FindSecondUniqueChar {
+    static String str = "efficient";
+    static String str1 = "mahsa";
+    static String str2 = "ssff";
+    static String str3 = "";
+    static String str4 = "raja";
+    static String str5 = "test";
+
+    public static void main(String[] args) {
+        System.out.println(findSecondUniqueCharacter(str));
+        System.out.println(findSecondUniqueCharacter(str2));
+        System.out.println(findSecondUniqueCharacter(str1));
+        System.out.println(findSecondUniqueCharacter(str3));
+        System.out.println(findSecondUniqueCharacter(str4));
+        System.out.println(findSecondUniqueCharacter(str5));
+    }
+
+    private static Character findSecondUniqueCharacter(String input) {
+        /**
+         *  Use LinkedHashMap to preserve insertion order --> {e=2, f=2, i=2, c=1, n=1, t=1}
+         *  HashMap demonstrate --> {c=1, t=1, e=2, f=2, i=2, n=1}
+         */
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        for (char ch : input.toCharArray())
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+        System.out.println(map);
+        int charCount = 0;
+        for (Map.Entry<Character, Integer> entry : map.entrySet())
+            if (entry.getValue() == 1) {
+                charCount++;
+                if (charCount == 2)
+                    return entry.getKey();
+            }
+
+        return null;
+    }
+}
+
 class StringContiguous {
     public static void main(String[] args) {
         String str1 = "ABDGFG";
@@ -273,7 +313,7 @@ class StringContiguous {
     }
 }
 
-class StringPalindrome{
+class StringPalindrome {
     public static void main(String[] args) {
         String str1 = "abcdcba";
         String str2 = "Madam";

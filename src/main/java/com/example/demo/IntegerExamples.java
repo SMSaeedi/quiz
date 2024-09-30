@@ -162,3 +162,23 @@ class NumberContiguousArray {
         return true;
     }
 }
+
+class AverageTwoArrays {
+    public static void main(String[] args) {
+        int[][] arr = {{2, 6, 3, 8, 1, 9, 11, 12}, {0, 3, 2, 1, 10, 5}};
+        int sum = 0;
+        double average = 0;
+        int totalElements = 0;
+
+        for (int i = 0; i < arr.length; i++)
+            for (int j = 0; j < arr[i].length; j++) {
+                sum += arr[i][j];
+                totalElements++;
+            }
+
+        average = sum / totalElements;
+        System.out.println("Sum " + sum);
+        System.out.println("Total Elements " + totalElements);
+        System.out.println("Average " + average);
+    }
+}
