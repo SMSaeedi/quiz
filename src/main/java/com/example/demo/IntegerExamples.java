@@ -43,7 +43,10 @@ class FindTopKElements {
 class FindSecondTopElement {
     public static void main(String[] args) {
         int[] list = {5, 3, 9, 7, 2, 8};
-        var result = Arrays.stream(list).boxed().sorted(Comparator.reverseOrder()).skip(1) //skip the first element to reach the second one
+        var result = Arrays.stream(list)
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .skip(1) //skip the first element to reach the second one
                 .mapToInt(Integer::intValue)// This line can be ignored
                 .findFirst();
         result.ifPresentOrElse(System.out::println, () -> {
