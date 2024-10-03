@@ -197,3 +197,117 @@ class FizzBuzz {
         }
     }
 }
+
+class CompareTriplets {
+    public static void main(String[] args) {
+        var list1 = List.of(5, 6, 7);
+        var list2 = List.of(3, 6, 10);
+        System.out.println(compareTriplets(list1, list2));
+    }
+
+    public static List<Integer> compareTriplets(List<Integer> a, List<Integer> b) {
+        List<Integer> result = new ArrayList<>(Arrays.asList(0, 0));
+
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i) > b.get(i))
+                result.set(0, result.get(0) + 1);
+            else if (a.get(i) < b.get(i))
+                result.set(1, result.get(1) + 1);
+        }
+        return result;
+    }
+}
+
+class DiagonalDifference {
+    public static void main(String[] args) {
+        List<List<Integer>> matrix = new ArrayList<>();
+        List<Integer> row1 = new ArrayList<>();
+        row1.add(1);
+        row1.add(2);
+        row1.add(3);
+
+        List<Integer> row2 = new ArrayList<>();
+        row2.add(4);
+        row2.add(5);
+        row2.add(6);
+
+        List<Integer> row3 = new ArrayList<>();
+        row3.add(9);
+        row3.add(8);
+        row3.add(9);
+
+        matrix.add(row1);
+        matrix.add(row2);
+        matrix.add(row3);
+        System.out.println(diagonalDifference(matrix));
+    }
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+        int leftDiagonalSum = 0;
+        int rightDiagonalSum = 0;
+        int n = arr.size();
+
+        for (int i = 0; i < n; i++) {
+            leftDiagonalSum += arr.get(i).get(i);
+            rightDiagonalSum += arr.get(i).get(n - i - 1);
+        }
+
+        return Math.abs(leftDiagonalSum - rightDiagonalSum);
+    }
+}
+
+class CalculateRatio {
+    public static void main(String[] args) {
+        System.out.println(calculateRatio(List.of(-4, 3, -9, 0, 4, 1)));
+    }
+
+    public static List<Double> calculateRatio(List<Integer> arr) {
+        int positive = 0;
+        int negative = 0;
+        int zero = 0;
+        int size = arr.size();
+        List<Double> result = new ArrayList<>();
+
+        for (int num : arr) {
+            if (num > 0)
+                positive++;
+            else if (num < 0)
+                negative++;
+            else
+                zero++;
+        }
+        result.add(positive / (double) size);
+        result.add(negative / (double) size);
+        result.add(zero / (double) size);
+        return result;
+    }
+}
+
+class SumMinAndMax {
+    public static void main(String[] args) {
+//        var list = List.of(1, 2, 3, 4, 5);
+        var list = List.of(256741038, 623958417, 467905213, 714532089, 938071625);
+        var allButMinValue = list.stream()
+                .sorted(Comparator.reverseOrder())
+                .limit(list.size() - 1)
+                .mapToLong(Integer::longValue)
+                .sum();
+        var allButMaxValue = list.stream()
+                .sorted(Comparator.naturalOrder())
+                .limit(list.size() - 1)
+                .mapToLong(Integer::longValue)
+                .sum();
+
+        System.out.println("MaxSum: " + allButMaxValue + ", MinSum: " + allButMinValue);
+    }
+}
+
+class BirthdayCakeCandles {
+    public static void main(String[] args) {
+//        var list = List.of(3, 2, 1, 3);
+        var list = List.of(2472649 , 2472649 ,9999907, 328325 , 9999907 );
+        OptionalLong max = list.stream().mapToLong(Integer::longValue).max();
+        long count = list.stream().filter(num -> num == max.getAsLong()).count();
+        System.out.println(count);
+    }
+}
