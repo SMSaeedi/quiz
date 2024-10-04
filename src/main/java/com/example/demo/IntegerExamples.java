@@ -308,9 +308,17 @@ class SumMinAndMax {
 class BirthdayCakeCandles {
     public static void main(String[] args) {
 //        var list = List.of(3, 2, 1, 3);
-        var list = List.of(2472649 , 2472649 ,9999907, 328325 , 9999907 );
+        var list = List.of(2472649, 2472649, 9999907, 328325, 9999907);
         OptionalLong max = list.stream().mapToLong(Integer::longValue).max();
         long count = list.stream().filter(num -> num == max.getAsLong()).count();
         System.out.println(count);
+    }
+}
+
+class MultipleIntegerList {
+    public static void main(String[] args) {
+        List<Integer> list = List.of(1, 2, 3, 4, 5);
+        System.out.println(list.stream().reduce(1,Math::multiplyExact));
+        System.out.println(list.stream().reduce(1,(a,b)->a*b));
     }
 }
