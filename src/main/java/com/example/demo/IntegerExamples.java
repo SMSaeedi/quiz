@@ -318,7 +318,64 @@ class BirthdayCakeCandles {
 class MultipleListElements {
     public static void main(String[] args) {
         List<Integer> list = List.of(1, 2, 3, 4, 5);
-        System.out.println(list.stream().reduce(1,Math::multiplyExact));
-        System.out.println(list.stream().reduce(1,(a,b)->a*b));
+        System.out.println(list.stream().reduce(1, Math::multiplyExact));
+        System.out.println(list.stream().reduce(1, (a, b) -> a * b));
+    }
+}
+
+class MatrixToArray {
+    public static void main(String[] args) {
+        List<List<Integer>> matrix = new ArrayList<>();
+        List<Integer> row1 = new ArrayList<>();
+        row1.add(1);
+        row1.add(2);
+        row1.add(3);
+
+        List<Integer> row2 = new ArrayList<>();
+        row2.add(4);
+        row2.add(5);
+        row2.add(6);
+
+        List<Integer> row3 = new ArrayList<>();
+        row3.add(9);
+        row3.add(8);
+        row3.add(9);
+
+        matrix.add(row1);
+        matrix.add(row2);
+        matrix.add(row3);
+        System.out.println(matrixToArray(matrix));
+    }
+
+    private static List<Integer> matrixToArray(List<List<Integer>> matrix) {
+        return matrix.stream().flatMap(List::stream).collect(Collectors.toList());
+    }
+}
+
+class PairSum {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9}; // if arr is not sorted, we sort it before the process
+        int target = 8;
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            if (sum == target) {
+                List<Integer> pairNr = new ArrayList<>();
+                pairNr.add(arr[left]);
+                pairNr.add(arr[right]);
+                map.put(left, pairNr);
+                left++; // Move the left pointer up
+                right--; // Move the right pointer down
+            } else if (sum < target)
+                left++;  // Move the left pointer up to increase the sum
+            else
+                right--; // Move the right pointer down to decrease the sum
+        }
+
+        System.out.println(map);
     }
 }
