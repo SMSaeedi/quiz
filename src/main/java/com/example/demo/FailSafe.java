@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
 
 public class FailSafe {
     public static void main(String[] args) {
@@ -39,11 +41,12 @@ class FailFast_Iterator {
     }
 }
 
-class FailFast_List_Map{
+class FailFast_List_Map {
     static final Map<Integer, String> map = new HashMap<>();
     static final List<Integer> list = new ArrayList<>();
 
-    public static void main(String[] args) {   map.put(1, "one");
+    public static void main(String[] args) {
+        map.put(1, "one");
         map.put(2, "two");
         map.put(3, "three");
         list.add(1);
@@ -58,7 +61,7 @@ class FailFast_List_Map{
                  * which invalidates the Iterator that is being used to iterate over the map.
                  * This change to the map's structure causes a mismatch in the modCount,
                  * leading to a ConcurrentModificationException.
-                 * */
+                 */
                 map.put(4, "four");
                 list.add(5);
             }
