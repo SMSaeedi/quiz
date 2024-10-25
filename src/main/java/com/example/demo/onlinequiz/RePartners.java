@@ -43,7 +43,7 @@ final class MutablePerson {
 }
 
 class Person {
-    String name;
+   String name;
 
     public Person(String name) {
         this.name = name;
@@ -73,6 +73,11 @@ class SetQuestion {
         persons.add(person1);
         persons.add(person2);
 
+        /**
+         * HashSet could not detect this change,
+         * because HashSet manages unique elements based on the hashCode computed at the time of insertion.
+         * To prevent this duplication, we can set person's name as final
+         */
         person2.name = "John";
 
         System.out.println(persons.size()); // 2
