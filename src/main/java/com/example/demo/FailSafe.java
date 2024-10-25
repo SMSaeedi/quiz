@@ -2,8 +2,6 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Supplier;
 
 public class FailSafe {
     public static void main(String[] args) {
