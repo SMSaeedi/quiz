@@ -7,7 +7,7 @@ public class RePartners {
         String str1 = "greeting";
         String str2 = new String("greeting"); // a new String in the heap, distinct from str1 in the string pool
         System.out.println(str1 == str2); // false (not in the same memory location)
-        System.out.println(str1.hashCode() == str2.hashCode()); // true (compared the content of the string rather than the memory location)
+        System.out.println(str1.hashCode() == str2.hashCode()); // true (compared the content of the strings)
         System.out.println(str1.equals(str2)); // true
 
         String str3 = "greeting";
