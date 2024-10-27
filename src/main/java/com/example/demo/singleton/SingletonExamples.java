@@ -18,7 +18,6 @@ public class SingletonExamples {
 
 class LazySingleToneClass {
     /**
-     * Lazy initialize means the class initialized only when it's needed.
      * Pros: Simple implementation, instance is created only when needed.
      * Cons: Not thread-safe, multiple threads could create multiple instances
      */
@@ -37,8 +36,7 @@ class LazySingleToneClass {
 
 class EagerSingleToneClassNumber_1 {
     /**
-     * Use Immutable Objects for Shared State
-     * Eager initialize means the SingleTon class is initialized on the class load.
+     * Eager initialize means the SingleTon class is initialized on the class load with an immutable object.
      * Pros: Simple implementation, thread-safe without requiring synchronized methods.
      * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
      */
@@ -94,8 +92,7 @@ class ThreadSafeBlockSingleton {
 
 class DoubleCheckedLockingSingleton {
     /**
-     * Double-Checked Locking with volatile
-     * Pros: Thread-safe, improved performance by reducing synchronization overhead.
+     * Pros: Thread-safe locking with volatile, improved performance by reducing synchronization overhead.
      * Cons: More complex implementation.
      */
     private static volatile DoubleCheckedLockingSingleton instance;
