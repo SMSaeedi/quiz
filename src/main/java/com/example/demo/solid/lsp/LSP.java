@@ -1,5 +1,7 @@
 package com.example.demo.solid.lsp;
 
+import static java.lang.System.out;
+
 public class LSP {
     public static void main(String[] args) {
         FlyingBird eagle = new Eagle();
@@ -12,13 +14,13 @@ public class LSP {
 
 class Bird {
     public void makeSound() {
-        System.out.println("Bird is making a sound");
+        out.println("Bird is making a sound");
     }
 }
 
 class FlyingBird extends Bird {
     public void fly() {
-        System.out.println("Bird is flying");
+        out.println("Bird is flying");
     }
 }
 
@@ -30,6 +32,6 @@ class Penguin extends Bird {
     // Penguins can't fly, so they do not have a fly method
     @Override
     public void makeSound() {
-        System.out.println("Penguin is making a sound");
+        out.println("Penguin is making a sound");
     }
 }

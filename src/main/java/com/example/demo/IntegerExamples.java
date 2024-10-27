@@ -3,6 +3,8 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.System.out;
+
 public class IntegerExamples {
 }
 
@@ -10,14 +12,14 @@ class DuplicatedIntArray {
     public static void main(String[] args) {
         int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
         int[] uniqueAddresses = findDuplicates(addresses);
-        System.out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5, 4, 6]
+        out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5, 4, 6]
     }
 
     private static int[] findDuplicates(int[] ads) {
         Set<Integer> set = new HashSet<>();
         for (int s : ads)
             set.add(s);
-        System.out.println(set);
+        out.println(set);
 
         int i = 0;
         int[] result = new int[set.size()];
@@ -30,7 +32,7 @@ class DuplicatedIntArray {
 
 class FindTopKElements {
     public static void main(String[] args) {
-        System.out.println(FindTopKElements.findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
+        out.println(FindTopKElements.findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
     }
 
     public static List<Integer> findTopKElementUsingTreeSet(List<Integer> lst, int k) {
@@ -49,34 +51,9 @@ class FindSecondTopElement {
                 .skip(1) //skip the first element to reach the second one
                 .mapToInt(Integer::intValue)// This line can be ignored
                 .findFirst();
-        result.ifPresentOrElse(System.out::println, () -> {
+        result.ifPresentOrElse(out::println, () -> {
             throw new IllegalArgumentException("Arrays too small");
         });
-    }
-}
-
-class FindMaxUsingBinarySearch {
-    public static void main(String[] args) {
-        int[] nums = new int[]{4, 3, 2, 1, 7, 6, 5};
-        System.out.println(findMax(nums));  // Output: 7
-
-        int[] nums2 = new int[]{3, 2, 1};
-        System.out.println(findMax(nums2));  // Output: 3
-
-        int[] nums3 = new int[]{6, 5, 4, 3, 2, 1, 7};
-        System.out.println(findMax(nums3));  // Output: 7
-    }
-
-    public static int findMax(int[] nums) {
-        int low = 0;
-        int high = nums.length - 1;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
-
-            if (nums[mid] > nums[mid + 1]) high = mid;
-            else low = mid + 1;
-        }
-        return nums[low];
     }
 }
 
@@ -91,7 +68,7 @@ class findUniqueInt {
 
     public static void main(String[] args) {
         int[] arr = new int[]{4, 3, 2, 4, 1, 3, 2};
-        System.out.println("The unique integer is: " + findUniqueInteger(arr));  // Output should be 1
+        out.println("The unique integer is: " + findUniqueInteger(arr));  // Output should be 1
     }
 }
 
@@ -115,7 +92,7 @@ class FindUniqueIntArray {
 
     public static void main(String[] args) {
         int[] arr1 = new int[]{4, 3, 2, 4, 1, 3, 2, 5, 7, 7, 9, 8, 11};
-        System.out.println("The unique integers are: " + Arrays.toString(findUniqueIntegerArray(arr1)));  // Output should be 1
+        out.println("The unique integers are: " + Arrays.toString(findUniqueIntegerArray(arr1)));  // Output should be 1
     }
 }
 
@@ -123,10 +100,10 @@ class NumberContiguousList {
 
     public static void main(String[] args) {
         List<Integer> numbers = List.of(1, 5, 3, 4, 2);
-        System.out.println(isNumberContiguous(numbers) ? "Yes" : "No");
+        out.println(isNumberContiguous(numbers) ? "Yes" : "No");
 
         List<Integer> numbers1 = List.of(1, 3, 5, 4, 6);
-        System.out.println(isNumberContiguous(numbers1) ? "Yes" : "No");
+        out.println(isNumberContiguous(numbers1) ? "Yes" : "No");
     }
 
     private static boolean isNumberContiguous(List<Integer> numbers) {
@@ -147,9 +124,9 @@ class NumberContiguousList {
 class NumberContiguousArray {
     public static void main(String[] args) {
         int[] arr1 = {2, 6, 3, 8, 1, 9, 11, 12};
-        System.out.println(isNumberContinueSequentially(arr1));
+        out.println(isNumberContinueSequentially(arr1));
         int[] arr2 = {2, 6, 3, 8, 1, 7, 4, 5};
-        System.out.println(isNumberContinueSequentially(arr2));
+        out.println(isNumberContinueSequentially(arr2));
     }
 
     private static boolean isNumberContinueSequentially(int[] arr1) {
@@ -180,9 +157,9 @@ class AverageTwoArrays {
             }
 
         average = sum / totalElements;
-        System.out.println("Sum " + sum);
-        System.out.println("Total Elements " + totalElements);
-        System.out.println("Average " + average);
+        out.println("Sum " + sum);
+        out.println("Total Elements " + totalElements);
+        out.println("Average " + average);
     }
 }
 
@@ -190,13 +167,13 @@ class FizzBuzz {
     public static void main(String[] args) {
         for (int i = 1; i <= 15; i++) {
             if (i % 3 == 0 && i % 5 == 0)
-                System.out.println("FizzBuzz");
+                out.println("FizzBuzz");
             else if (i % 3 == 0)
-                System.out.println("Fizz");
+                out.println("Fizz");
             else if (i % 5 == 0)
-                System.out.println("Buzz");
+                out.println("Buzz");
             else
-                System.out.println(i);
+                out.println(i);
         }
     }
 }
@@ -205,7 +182,7 @@ class CompareTriplets {
     public static void main(String[] args) {
         var list1 = List.of(5, 6, 7);
         var list2 = List.of(3, 6, 10);
-        System.out.println(compareTriplets(list1, list2));
+        out.println(compareTriplets(list1, list2));
     }
 
     public static List<Integer> compareTriplets(List<Integer> a, List<Integer> b) {
@@ -242,7 +219,7 @@ class DiagonalDifference {
         matrix.add(row1);
         matrix.add(row2);
         matrix.add(row3);
-        System.out.println(diagonalDifference(matrix));
+        out.println(diagonalDifference(matrix));
     }
 
     public static int diagonalDifference(List<List<Integer>> arr) {
@@ -261,7 +238,7 @@ class DiagonalDifference {
 
 class CalculateRatio {
     public static void main(String[] args) {
-        System.out.println(calculateRatio(List.of(-4, 3, -9, 0, 4, 1)));
+        out.println(calculateRatio(List.of(-4, 3, -9, 0, 4, 1)));
     }
 
     public static List<Double> calculateRatio(List<Integer> arr) {
@@ -288,7 +265,6 @@ class CalculateRatio {
 
 class SumMinAndMax {
     public static void main(String[] args) {
-//        var list = List.of(1, 2, 3, 4, 5);
         var list = List.of(256741038, 623958417, 467905213, 714532089, 938071625);
         var allButMinValue = list.stream()
                 .sorted(Comparator.reverseOrder())
@@ -301,7 +277,7 @@ class SumMinAndMax {
                 .mapToLong(Integer::longValue)
                 .sum();
 
-        System.out.println("MaxSum: " + allButMaxValue + ", MinSum: " + allButMinValue);
+        out.println("MaxSum: " + allButMaxValue + ", MinSum: " + allButMinValue);
     }
 }
 
@@ -311,15 +287,15 @@ class BirthdayCakeCandles {
         var list = List.of(2472649, 2472649, 9999907, 328325, 9999907);
         OptionalLong max = list.stream().mapToLong(Integer::longValue).max();
         long count = list.stream().filter(num -> num == max.getAsLong()).count();
-        System.out.println(count);
+        out.println(count);
     }
 }
 
 class MultipleListElements {
     public static void main(String[] args) {
         List<Integer> list = List.of(1, 2, 3, 4, 5);
-        System.out.println(list.stream().reduce(1, Math::multiplyExact));
-        System.out.println(list.stream().reduce(1, (a, b) -> a * b));
+        out.println(list.stream().reduce(1, Math::multiplyExact));
+        out.println(list.stream().reduce(1, (a, b) -> a * b));
     }
 }
 
@@ -344,7 +320,7 @@ class MatrixToArray {
         matrix.add(row1);
         matrix.add(row2);
         matrix.add(row3);
-        System.out.println(matrixToArray(matrix));
+        out.println(matrixToArray(matrix));
     }
 
     private static List<Integer> matrixToArray(List<List<Integer>> matrix) {
@@ -376,6 +352,53 @@ class PairSum {
                 right--; // Move the right pointer down to decrease the sum
         }
 
-        System.out.println(map);
+        out.println(map);
+    }
+}
+
+class FindMaxUsingBinarySearch {
+    public static void main(String[] args) {
+        int[] nums = new int[]{4, 3, 2, 1, 7, 6, 5};
+        out.println(findMax(nums));  // Output: 7
+
+        int[] nums2 = new int[]{3, 2, 1};
+        out.println(findMax(nums2));  // Output: 3
+
+        int[] nums3 = new int[]{6, 5, 4, 3, 2, 1, 7};
+        out.println(findMax(nums3));  // Output: 7
+    }
+
+    public static int findMax(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] > nums[mid + 1]) high = mid;
+            else low = mid + 1;
+        }
+        return nums[low];
+    }
+}
+
+class FindMaxArrayElement {
+    public static void main(String[] args) {
+        int[] arr = {1, 9, 8, 6, 5, 3, 7};
+
+        //For Loop
+        int max1 = arr[0];
+        for (int i : arr)
+            if (i > max1)
+                max1 = i;
+        out.println(max1);
+
+        // Sort and Fetch first
+        Arrays.sort(arr);
+        int max2 = arr[arr.length - 1];
+        out.println(max2);
+
+        //Stream API
+        int max3 = Arrays.stream(arr).max().orElse(0);
+        out.println(max3);
     }
 }

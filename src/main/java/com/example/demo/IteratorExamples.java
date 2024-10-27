@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static java.lang.System.out;
+
 public class IteratorExamples {
 }
 
@@ -16,7 +18,7 @@ class FailFastClass {
 
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            out.println(iterator.next());
             list.add("C"); // This will cause a ConcurrentModificationException
         }
     }
@@ -30,7 +32,7 @@ class FailSafeClass {
 
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            out.println(iterator.next());
             list.add("C"); // This will not cause a ConcurrentModificationException
         }
     }

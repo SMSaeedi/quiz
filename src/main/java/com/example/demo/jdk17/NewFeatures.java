@@ -1,5 +1,7 @@
 package com.example.demo.jdk17;
 
+import static java.lang.System.out;
+
 /**
  * Immutable by default, fields in records are final and cannot be changed.
  * Compact syntax, Java generates the constructor, equals(), hashCode(), and toString() methods.
@@ -9,9 +11,9 @@ package com.example.demo.jdk17;
 public record NewFeatures(int id, String name) {
     public static void main(String[] args) {
         NewFeatures newFeatures = new NewFeatures(1, "Records");
-        System.out.println(newFeatures.id());
-        System.out.println(newFeatures.name());
-        System.out.println(newFeatures);
+        out.println(newFeatures.id());
+        out.println(newFeatures.name());
+        out.println(newFeatures);
     }
 }
 
@@ -59,8 +61,8 @@ class Main {
         Shape circle = new Circle(3);
         Shape rectangle = new Rectangle(2, 5);
 
-        System.out.println(circle.area());
-        System.out.println(rectangle.area());
+        out.println(circle.area());
+        out.println(rectangle.area());
     }
 }
 
@@ -73,6 +75,6 @@ class TypePatternSwitchCase {
             case String s -> "String" + s.toString();
             default -> "Unexpected type";
         };
-        System.out.println(result);
+        out.println(result);
     }
 }

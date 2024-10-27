@@ -1,5 +1,7 @@
 package com.example.demo.solid.dip.violation;
 
+import static java.lang.System.out;
+
 public class DIP {
     public static void main(String[] args) {
         OrderProcessor orderProcessor = new OrderProcessor();
@@ -9,7 +11,7 @@ public class DIP {
 
 class CreditCardProcessor {
     public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " using Credit Card");
+        out.println("Processing payment of $" + amount + " using Credit Card");
     }
 }
 

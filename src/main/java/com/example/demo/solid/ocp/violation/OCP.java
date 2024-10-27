@@ -2,6 +2,8 @@ package com.example.demo.solid.ocp.violation;
 
 import lombok.Getter;
 
+import static java.lang.System.out;
+
 public class OCP {
     public static void main(String[] args) {
         Circle circle = new Circle(5);
@@ -9,8 +11,8 @@ public class OCP {
 
         AreaCalculator calculator = new AreaCalculator();
 
-        System.out.println("Circle area: " + calculator.calculateArea(circle));
-        System.out.println("Rectangle area: " + calculator.calculateArea(rectangle));
+        out.println("Circle area: " + calculator.calculateArea(circle));
+        out.println("Rectangle area: " + calculator.calculateArea(rectangle));
     }
 }
 

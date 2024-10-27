@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.out;
+
 class EventQuiz {
     public static void main(String[] args) {
         Map<String, Long> map = new HashMap<>();
@@ -18,7 +20,7 @@ class EventQuiz {
         checkDuplicateInMap(map, keySequence, "baz", 1000017L);
         checkDuplicateInMap(map, keySequence, "foo", 1000020L);
 
-        System.out.println(String.join(", ", keySequence));
+        out.println(String.join(", ", keySequence));
     }
 
     private static void checkDuplicateInMap(Map<String, Long> map, List<String> keySequence, String key, Long value) {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.System.out;
+
 public class ComparableTest {
     public static void main(String[] args) {
         List<Student> studentList = new ArrayList<>();
@@ -14,7 +16,7 @@ public class ComparableTest {
         studentList.add(new Student("Ali", 30));
 
         Collections.sort(studentList);
-        System.out.println(studentList);
+        out.println(studentList);
     }
 }
 

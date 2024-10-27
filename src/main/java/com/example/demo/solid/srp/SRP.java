@@ -2,6 +2,8 @@ package com.example.demo.solid.srp;
 
 import lombok.Getter;
 
+import static java.lang.System.out;
+
 public class SRP {
     public static void main(String[] args) {
         User user = new User("john_doe", "password123");
@@ -13,9 +15,9 @@ public class SRP {
 
             UserJsonConverter jsonConverter = new UserJsonConverter();
             String userJson = jsonConverter.toJson(user);
-            System.out.println(userJson);
+            out.println(userJson);
         } else {
-            System.out.println("User validation failed.");
+            out.println("User validation failed.");
         }
     }
 }

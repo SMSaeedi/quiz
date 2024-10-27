@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.lang.System.out;
+
 public class VolatileVariable {
     /**
      * Use Cases for volatile
@@ -24,14 +26,14 @@ public class VolatileVariable {
                 throw new RuntimeException(e);
             }
             flag = true;
-            System.out.println("Thread write the flag true");
+            out.println("Thread write the flag true");
         });
 
         Thread read = new Thread(() -> {
             while (!flag) {
-                System.out.println("flag is still true");
+                out.println("flag is still true");
             }
-            System.out.println("Thread Read teh flag has changed");
+            out.println("Thread Read teh flag has changed");
         });
 
         write.start();
@@ -57,7 +59,7 @@ class AtomicVariable {
 
         thread2.start();
         thread2.join();
-        System.out.println("Increment value of counter is " + atomicCounter.get());
+        out.println("Increment value of counter is " + atomicCounter.get());
 
         Runnable decrementTask = () -> {
             for (int i = 0; i < 50; i++)
@@ -71,6 +73,6 @@ class AtomicVariable {
         thread4.start();
         thread3.join();
         thread4.join();
-        System.out.println("Decrement value of counter is " + atomicCounter.get());
+        out.println("Decrement value of counter is " + atomicCounter.get());
     }
 }

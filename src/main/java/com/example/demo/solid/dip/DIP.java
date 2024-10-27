@@ -1,5 +1,7 @@
 package com.example.demo.solid.dip;
 
+import static java.lang.System.out;
+
 public class DIP {
 
     public static void main(String[] args) {
@@ -21,14 +23,14 @@ interface PaymentProcessor {
 class CreditCardProcessor implements PaymentProcessor {
     @Override
     public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " using Credit Card");
+        out.println("Processing payment of $" + amount + " using Credit Card");
     }
 }
 
 class PayPalProcessor implements PaymentProcessor {
     @Override
     public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " using PayPal");
+        out.println("Processing payment of $" + amount + " using PayPal");
     }
 }
 

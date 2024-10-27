@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.lang.System.out;
+
 public class ComparatorTest {
     public static void main(String[] args) {
         List<Studentt> studentList = new ArrayList<>();
@@ -15,7 +17,7 @@ public class ComparatorTest {
 
         Studentt student = new Studentt();
         Collections.sort(studentList, student);
-        System.out.println(studentList);
+        out.println(studentList);
     }
 }
 

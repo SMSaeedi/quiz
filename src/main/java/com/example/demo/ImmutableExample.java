@@ -3,6 +3,8 @@ package com.example.demo;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.out;
+
 public class ImmutableExample {
     static final Map<Integer, String> map = Map.of(1, "one", 2, "two", 3, "three");
     static final List<Integer> list = List.of(1, 2, 3, 4);
@@ -17,7 +19,7 @@ public class ImmutableExample {
                 list.add(5);
             }
         }
-        System.out.println(map);
-        System.out.println(list);
+        out.println(map);
+        out.println(list);
     }
 }

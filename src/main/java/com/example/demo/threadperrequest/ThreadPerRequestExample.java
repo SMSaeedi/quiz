@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static java.lang.System.out;
+
 /**
  * each incoming request is handled by a separate thread.
  * This is a simple model for handling concurrent requests,
@@ -21,12 +23,12 @@ public class ThreadPerRequestExample {
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Server started on port " + PORT);
+            out.println("Server started on port " + PORT);
 
             while (true) {
                 // Accept incoming client connections
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("New client connected");
+                out.println("New client connected");
 
                 // Handle the request in a new thread
                 new Thread(new ClientHandler(clientSocket)).start();

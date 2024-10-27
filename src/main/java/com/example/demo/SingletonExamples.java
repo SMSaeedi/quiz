@@ -2,6 +2,8 @@ package com.example.demo;
 
 import lombok.Getter;
 
+import static java.lang.System.out;
+
 public class SingletonExamples {
 }
 
@@ -115,7 +117,7 @@ class SingleTon {
 
     private SingleTon() {
         /** Simulate an expensive operation, like connecting to a database */
-        System.out.println("SingleTon is being created...");
+        out.println("SingleTon is being created...");
     }
 
     public static SingleTon getInstance() {
@@ -126,7 +128,7 @@ class SingleTon {
     }
 
     public void performOperation() {
-        System.out.println("Performing an operation on the singleton...");
+        out.println("Performing an operation on the singleton...");
     }
 }
 
@@ -135,24 +137,24 @@ class SingletonProxy {
 
     public SingletonProxy() {
         /** The singleton is not created here*/
-        System.out.println("Proxy created, singleton is not yet instantiated.");
+        out.println("Proxy created, singleton is not yet instantiated.");
     }
 
     public void performOperation() {
         /** Access control: Only allow access if some condition is met*/
         if (!hasAccess()) {
-            System.out.println("Access denied to the singleton.");
+            out.println("Access denied to the singleton.");
             return;
         }
 
         /** Lazy initialization*/
         if (singleton == null) {
-            System.out.println("Initializing the singleton inside the proxy...");
+            out.println("Initializing the singleton inside the proxy...");
             singleton = SingleTon.getInstance();
         }
 
         /** Logging*/
-        System.out.println("Logging: Singleton method is being called.");
+        out.println("Logging: Singleton method is being called.");
 
         /** Delegate the call to the singleton*/
         singleton.performOperation();

@@ -2,14 +2,16 @@ package com.example.demo;
 
 import java.util.*;
 
+import static java.lang.System.out;
+
 public class StringSamples {
 }
 
 class StringAnagram {
     public static void main(String[] args) {
-        if (isAnagram("aab", "baa")) System.out.println("aab and baa are anagrams.");
-        if (!isAnagram("aaa", "baa")) System.out.println("aaa and baa are not anagrams.");
-        if (isAnagramUsingHashMap("listen", "silent")) System.out.println("listen and silent are anagrams.");
+        if (isAnagram("aab", "baa")) out.println("aab and baa are anagrams.");
+        if (!isAnagram("aaa", "baa")) out.println("aaa and baa are not anagrams.");
+        if (isAnagramUsingHashMap("listen", "silent")) out.println("listen and silent are anagrams.");
     }
 
     private static boolean isAnagramUsingHashMap(String str1, String str2) {
@@ -51,9 +53,9 @@ class StringAnagram {
 
 class FindDuplicatedInStringArray {
     public static void main(String[] args) {
-        System.out.println(findFirstDuplicateID(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
-        System.out.println(findFirstDuplicateID(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
-        System.out.println(findFirstDuplicateID(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+        out.println(findFirstDuplicateID(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
+        out.println(findFirstDuplicateID(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
+        out.println(findFirstDuplicateID(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
     }
 
     private static String findFirstDuplicateID(String[] strings) {
@@ -72,7 +74,7 @@ class FindDuplicatedInStringArray {
 class CharCount {
     public static void main(String[] args) {
         String str = "aabbbccaaa";
-        System.out.println(encode(str));
+        out.println(encode(str));
     }
 
     public static String encode(String input) {
@@ -101,8 +103,8 @@ class CharCount {
 class WordsCount {
     public static void main(String[] args) {
         String str1 = "Welcome to Java world!";
-        System.out.println(str1.split(" ").length);
-        System.out.println(Arrays.stream(str1.split(" ")).count());
+        out.println(str1.split(" ").length);
+        out.println(Arrays.stream(str1.split(" ")).count());
     }
 }
 
@@ -112,10 +114,10 @@ class StringReplace {
         //The replace method does not modify the original string
         // but instead returns a new string with the replacements made
         str.replace('a', 'o');
-        System.out.println(str);
-        System.out.println(str.replace('a', 'o'));
-        System.out.println(str.replace("a", "o"));
-        System.out.println(str.replaceAll("a", "o"));
+        out.println(str);
+        out.println(str.replace('a', 'o'));
+        out.println(str.replace("a", "o"));
+        out.println(str.replaceAll("a", "o"));
     }
 }
 
@@ -125,14 +127,14 @@ class CharReverse {
         StringBuilder sb = new StringBuilder();
         for (int i = str.length() - 1; i >= 0; i--)
             sb.append(str.charAt(i));
-        System.out.println(sb);
+        out.println(sb);
 
         String str2 = "You Reversed Me";
-        System.out.println(new StringBuilder(str2).reverse());
+        out.println(new StringBuilder(str2).reverse());
 
         String str3 = "You're about to Reverse Me";
         for (int i = str2.length() - 1; i >= 0; i--)
-            System.out.print(str3.charAt(i));
+            out.print(str3.charAt(i));
     }
 }
 
@@ -140,8 +142,8 @@ class StringWellFormed {
     public static void main(String[] args) {
         String strFormed = "[{()}]";
         String strNotFormed = "[{(}]";
-        System.out.println(isStringFormed(strFormed));
-        System.out.println(isStringFormed(strNotFormed));
+        out.println(isStringFormed(strFormed));
+        out.println(isStringFormed(strNotFormed));
     }
 
     private static boolean isStringFormed(String strFormed) {
@@ -168,7 +170,7 @@ class PrintLength {
         String srt = "Hi World";
         for (String s : srt.split(" "))
             if (s.length() % 2 == 0) //if the length is Even then print it
-                System.out.println(s);
+                out.println(s);
     }
 }
 
@@ -177,7 +179,7 @@ class SunInteger {
         String str1 = "554";
         String str2 = "896";
         int sum = Integer.parseInt(str1) + Integer.parseInt(str2);
-        System.out.println(sum);
+        out.println(sum);
     }
 }
 
@@ -188,7 +190,7 @@ class WordsReverse {
         String[] s1 = str1.split(" ");
         for (int i = s1.length - 1; i >= 0; i--)
             sb.append(s1[i]).append(" ");
-        System.out.println(sb);
+        out.println(sb);
     }
 }
 
@@ -206,22 +208,22 @@ class DuplicatedCharCount {
                 duplicatedMap.put(entry.getKey(), entry.getValue());
             else uniqueMap.put(entry.getKey(), uniqueMap.getOrDefault(entry.getKey(), 0) + 1);
 
-        System.out.println("Map: " + map);
-        System.out.println("Duplicated Map: " + duplicatedMap);
-        System.out.println("Unique Map: " + uniqueMap);
+        out.println("Map: " + map);
+        out.println("Duplicated Map: " + duplicatedMap);
+        out.println("Unique Map: " + uniqueMap);
     }
 }
 
 class WordsAndCharsCount {
     public static void main(String[] args) {
         String str = "This is a Java Program";
-        System.out.println(str);
-        System.out.println("Nr of words: " + str.split(" ").length);
+        out.println(str);
+        out.println("Nr of words: " + str.split(" ").length);
         int charCount = 0;
         for (String c : str.split(" "))
             charCount += c.length();
-        System.out.println("Nr of chars without spaces: " + charCount);
-        System.out.println("Nr of chars with spaces: " + str.length());
+        out.println("Nr of chars without spaces: " + charCount);
+        out.println("Nr of chars with spaces: " + str.length());
     }
 }
 
@@ -232,10 +234,10 @@ class FindFirstUniqueChar {
     static String str3 = "";
 
     public static void main(String[] args) {
-        System.out.println(findFirstUniqueCharacter(str));
-        System.out.println(findFirstUniqueCharacter(str2));
-        System.out.println(findFirstUniqueCharacter(str1));
-        System.out.println(findFirstUniqueCharacter(str3));
+        out.println(findFirstUniqueCharacter(str));
+        out.println(findFirstUniqueCharacter(str2));
+        out.println(findFirstUniqueCharacter(str1));
+        out.println(findFirstUniqueCharacter(str3));
     }
 
     private static Character findFirstUniqueCharacter(String input) {
@@ -263,12 +265,12 @@ class FindSecondUniqueChar {
     static String str5 = "test";
 
     public static void main(String[] args) {
-        System.out.println(findSecondUniqueCharacter(str));
-        System.out.println(findSecondUniqueCharacter(str2));
-        System.out.println(findSecondUniqueCharacter(str1));
-        System.out.println(findSecondUniqueCharacter(str3));
-        System.out.println(findSecondUniqueCharacter(str4));
-        System.out.println(findSecondUniqueCharacter(str5));
+        out.println(findSecondUniqueCharacter(str));
+        out.println(findSecondUniqueCharacter(str2));
+        out.println(findSecondUniqueCharacter(str1));
+        out.println(findSecondUniqueCharacter(str3));
+        out.println(findSecondUniqueCharacter(str4));
+        out.println(findSecondUniqueCharacter(str5));
     }
 
     private static Character findSecondUniqueCharacter(String input) {
@@ -280,7 +282,7 @@ class FindSecondUniqueChar {
         for (char ch : input.toCharArray())
             map.put(ch, map.getOrDefault(ch, 0) + 1);
 
-        System.out.println(map);
+        out.println(map);
         int charCount = 0;
         for (Map.Entry<Character, Integer> entry : map.entrySet())
             if (entry.getValue() == 1) {
@@ -296,9 +298,9 @@ class FindSecondUniqueChar {
 class StringContiguous {
     public static void main(String[] args) {
         String str1 = "ABDGFG";
-        System.out.println(isStringContiguous(str1));
+        out.println(isStringContiguous(str1));
         String str2 = "ABCD";
-        System.out.println(isStringContiguous(str2));
+        out.println(isStringContiguous(str2));
     }
 
     private static boolean isStringContiguous(String str) {
@@ -319,9 +321,9 @@ class StringPalindrome {
         String str2 = "Madam";
         String str3 = "mahsaa";
 
-        System.out.println(isPalindrome(str1));
-        System.out.println(isPalindrome(str2));
-        System.out.println(isPalindrome(str3));
+        out.println(isPalindrome(str1));
+        out.println(isPalindrome(str2));
+        out.println(isPalindrome(str3));
     }
 
     private static boolean isPalindrome(String str) {
@@ -335,12 +337,12 @@ class StarCase {
         int n = 10;
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n - i; j++)
-                System.out.print(" ");
+                out.print(" ");
 
             for (int m = 1; m <= i; m++)
-                System.out.print("*");
+                out.print("*");
 
-            System.out.println();
+            out.println();
         }
     }
 }

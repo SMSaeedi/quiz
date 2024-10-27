@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.out;
+
 public class MultiValueHashMap<K, V> {
     private final HashMap<K, ArrayList<V>> map = new HashMap<>();
 
@@ -14,8 +16,8 @@ public class MultiValueHashMap<K, V> {
 
     public List<V> get(K key) {
         /**
-         *map.get returns 'null' or a mapped value.
-         *map.getOrDefault returns default key value (new ArrayList<>()) or the specific key value.
+         * map.get returns 'null' or a mapped value.
+         * map.getOrDefault returns default key value (new ArrayList<>()) or the specific key value.
          */
         return map.getOrDefault(key, new ArrayList<>());
     }
@@ -35,6 +37,6 @@ class SingleValueHashMap {
         map.put(1, "one");
         map.put(2, "two");
         map.put(1, "first");
-        System.out.println(map.get(1)); //returning 'first', 'one' is replaced by the second duplicated key
+        out.println(map.get(1)); //returning 'first', 'one' is replaced by the second duplicated key
     }
 }

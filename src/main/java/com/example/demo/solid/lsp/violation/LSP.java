@@ -1,5 +1,7 @@
 package com.example.demo.solid.lsp.violation;
 
+import static java.lang.System.out;
+
 public class LSP {
     public static void main(String[] args) {
         Bird eagle = new Eagle();
@@ -12,7 +14,7 @@ public class LSP {
 
 class Bird {
     public void fly() {
-        System.out.println("Bird is flying");
+        out.println("Bird is flying");
     }
 }
 

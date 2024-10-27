@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.System.out;
+
 public class CollectionExamples {
 }
 
@@ -19,9 +21,9 @@ class SortListTest {
             , LocalDate.of(2024, 6, 1));
 
     public static void main(String[] args) {
-        System.out.println(dates.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
-        System.out.println(dates.stream().sorted().collect(Collectors.toList()));
-        System.out.println(dates.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList()));
+        out.println(dates.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+        out.println(dates.stream().sorted().collect(Collectors.toList()));
+        out.println(dates.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList()));
     }
 
 }
@@ -34,10 +36,10 @@ class SortMapTest {
         map1.put("Orange", 3);
         map1.put("Peach", 4);
         TreeMap<String, Integer> asc = new TreeMap<>(map1);
-        System.out.println(asc);
+        out.println(asc);
         TreeMap<String, Integer> desc = new TreeMap<>(Comparator.reverseOrder());
         desc.putAll(map1);
-        System.out.println(desc);
+        out.println(desc);
 
         Map<Integer, String> map2 = new HashMap<>();
         map2.put(5, "Bnanna");
@@ -46,10 +48,10 @@ class SortMapTest {
         map2.put(4, "Peach");
         map2.put(3, "Melon");
         TreeMap<Integer, String> asc2 = new TreeMap<>(map2);
-        System.out.println(asc2);
+        out.println(asc2);
         TreeMap<Integer, String> desc2 = new TreeMap<>(Comparator.reverseOrder());
         desc2.putAll(map2);
-        System.out.println(desc2);
+        out.println(desc2);
     }
 }
 
@@ -62,7 +64,7 @@ class FindMax {
                 new Employee("Charlie", 25)
         );
 
-        System.out.println(employeeList.stream()
+        out.println(employeeList.stream()
                 .max(Comparator.comparing(Employee::getAge))
                 .orElse(new Employee()));
     }

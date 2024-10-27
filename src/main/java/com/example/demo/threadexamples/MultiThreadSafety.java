@@ -4,6 +4,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.System.out;
+
 /**
  * Multi-thread safety extends the concept into the entire app/system,
  * ensuring multi-threads run concurrently without interfering each other
@@ -17,7 +19,7 @@ public class MultiThreadSafety {
     public void process(String key) {
         executor.submit(() -> {
             map.merge(key, 1, Integer::sum);
-            System.out.println(map.get(key));
+            out.println(map.get(key));
         });
     }
 

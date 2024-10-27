@@ -3,6 +3,8 @@ package com.example.demo.threadexamples;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static java.lang.System.out;
+
 public class BlockingQueueSharedDataThread {
     static BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
 
@@ -27,7 +29,7 @@ class Producer implements Runnable {
         try {
             for (int i = 0; i < 2; i++) {
                 queue.put(i);
-                System.out.println("Produced " + i);
+                out.println("Produced " + i);
                 Thread.sleep(100);
             }
         } catch (InterruptedException ignored) {
@@ -47,7 +49,7 @@ class Consumer implements Runnable {
     public void run() {
         try {
             while (true)
-                System.out.println("Consumer " + queue.take());
+                out.println("Consumer " + queue.take());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

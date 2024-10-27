@@ -2,6 +2,8 @@ package com.example.demo.solid.srp.violation;
 
 import lombok.Setter;
 
+import static java.lang.System.out;
+
 public class SRP {
     public static void main(String[] args) {
         User user = new User();
@@ -12,9 +14,9 @@ public class SRP {
             user.saveToDatabase();
 
             String userJson = user.toJson();
-            System.out.println(userJson);
+            out.println(userJson);
         } else {
-            System.out.println("User validation failed.");
+            out.println("User validation failed.");
         }
     }
 }

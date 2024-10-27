@@ -1,5 +1,7 @@
 package com.example.demo.threadexamples;
 
+import static java.lang.System.out;
+
 class ConcurrentEventsCaseOne {
     public static void main(String[] args) {
         Thread e4 = new Thread(new Event4());
@@ -17,7 +19,7 @@ class ConcurrentEventsCaseOne {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("All tasks completed");
+        out.println("All tasks completed");
     }
 }
 
@@ -36,12 +38,12 @@ class Event1 implements Runnable {
              * Thread lifecycle: Running -> Timed-Waiting
              */
             event4.join();
-            System.out.println("Event1 is running ... ");
+            out.println("Event1 is running ... ");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Event1 is finished ... ");
+        out.println("Event1 is finished ... ");
     }
 }
 
@@ -56,12 +58,12 @@ class Event2 implements Runnable {
     public void run() {
         try {
             event4.join();
-            System.out.println("Event2 is running ... ");
+            out.println("Event2 is running ... ");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Event2 is finished ... ");
+        out.println("Event2 is finished ... ");
     }
 }
 
@@ -69,49 +71,49 @@ class Event4 implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Event4 is running ... ");
+        out.println("Event4 is running ... ");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Event4 is finished ... ");
+        out.println("Event4 is finished ... ");
     }
 }
 
 class ConcurrentEventsCaseTwo {
     public static void main(String[] args) {
         Runnable two = () -> {
-            System.out.println("Two is running ... ");
+            out.println("Two is running ... ");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("Two is finished ... ");
+            out.println("Two is finished ... ");
         };
 
         Thread t2 = new Thread(two);
         Runnable four = () -> {
             try {
                 t2.join();
-                System.out.println("Four is running ... ");
+                out.println("Four is running ... ");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("Four is finished ... ");
+            out.println("Four is finished ... ");
         };
 
         Runnable five = () -> {
             try {
                 t2.join();
-                System.out.println("Five is running ... ");
+                out.println("Five is running ... ");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("Five is finished ... ");
+            out.println("Five is finished ... ");
         };
 
         Thread t4 = new Thread(four);
@@ -128,22 +130,22 @@ class ConcurrentEventsCaseTwo {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("All tasks completed.");
+        out.println("All tasks completed.");
     }
 }
 
 class ConcurrentEventsCaseThree {
     public static void main(String[] args) {
         Runnable three = () -> {
-            System.out.println("Three is running ... ");
+            out.println("Three is running ... ");
             for (int i = 0; i < 3; i++)
-                System.out.println("Three task number: " + i);
-            System.out.println("Three is finished ... ");
+                out.println("Three task number: " + i);
+            out.println("Three is finished ... ");
         };
 
         Thread t3 = new Thread(three);
         t3.run();
-        System.out.println("Task completed.");
+        out.println("Task completed.");
     }
 }
 
@@ -153,17 +155,17 @@ class ConcurrentEventsCaseFour {
      */
     public static void main(String[] args) {
         Runnable alpha = () -> {
-            System.out.println("Alpha is running ... ");
+            out.println("Alpha is running ... ");
             for (int i = 0; i < 2; i++)
-                System.out.println("Alpha task number: " + i);
-            System.out.println("Alpha is finished ... ");
+                out.println("Alpha task number: " + i);
+            out.println("Alpha is finished ... ");
         };
 
         Runnable gamma = () -> {
-            System.out.println("Gamma is running ... ");
+            out.println("Gamma is running ... ");
             for (int i = 0; i < 3; i++)
-                System.out.println("Gamma task number: " + i);
-            System.out.println("Gamma is finished ... ");
+                out.println("Gamma task number: " + i);
+            out.println("Gamma is finished ... ");
         };
 
         Thread tAlpha = new Thread(alpha);
@@ -178,6 +180,6 @@ class ConcurrentEventsCaseFour {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("All tasks completed.");
+        out.println("All tasks completed.");
     }
 }

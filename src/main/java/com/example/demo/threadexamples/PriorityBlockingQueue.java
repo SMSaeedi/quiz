@@ -2,6 +2,8 @@ package com.example.demo.threadexamples;
 
 import java.util.concurrent.*;
 
+import static java.lang.System.out;
+
 public class PriorityBlockingQueue implements Runnable, Comparable<PriorityBlockingQueue> {
     private final int priority;
     private final String taskName;
@@ -18,7 +20,7 @@ public class PriorityBlockingQueue implements Runnable, Comparable<PriorityBlock
 
     @Override
     public void run() {
-        System.out.println("Executing task: " + taskName + " with priority: " + priority);
+        out.println("Executing task: " + taskName + " with priority: " + priority);
     }
 }
 

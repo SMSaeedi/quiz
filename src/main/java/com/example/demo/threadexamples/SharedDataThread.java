@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.System.out;
+
 @Getter
 @Setter
 class SimpleIntSharedData {
@@ -28,17 +30,17 @@ class SimpleIntSharedData {
 
         Runnable task1 = () -> {
             simpleIntSharedData.setData(25);
-            System.out.println("1st thread --> " + simpleIntSharedData.getData());
+            out.println("1st thread --> " + simpleIntSharedData.getData());
         };
 
         Runnable task2 = () -> {
             simpleIntSharedData.setData(35);
-            System.out.println("2nd thread --> " + simpleIntSharedData.getData());
+            out.println("2nd thread --> " + simpleIntSharedData.getData());
         };
 
         Runnable task3 = () -> {
             simpleIntSharedData.setData(150);
-            System.out.println("3nd thread --> " + simpleIntSharedData.getData());
+            out.println("3nd thread --> " + simpleIntSharedData.getData());
         };
 
         Thread thread1 = new Thread(task1);
@@ -54,7 +56,7 @@ class SimpleIntSharedData {
         thread3.start();
         thread3.join();
 
-        System.out.println("Shared data final value --> " + simpleIntSharedData.getData());
+        out.println("Shared data final value --> " + simpleIntSharedData.getData());
     }
 }
 
@@ -70,17 +72,17 @@ class AtomicSharedData {
 
         Runnable task1 = () -> {
             useSharedData.sharedData.addAndGet(25);
-            System.out.println("1st thread --> " + useSharedData.sharedData.get());
+            out.println("1st thread --> " + useSharedData.sharedData.get());
         };
 
         Runnable task2 = () -> {
             useSharedData.sharedData.addAndGet(35);
-            System.out.println("2nd thread --> " + useSharedData.sharedData.get());
+            out.println("2nd thread --> " + useSharedData.sharedData.get());
         };
 
         Runnable task3 = () -> {
             useSharedData.sharedData.addAndGet(150);
-            System.out.println("3rd thread --> " + useSharedData.sharedData.get());
+            out.println("3rd thread --> " + useSharedData.sharedData.get());
         };
 
         try (ExecutorService executor = Executors.newFixedThreadPool(3)) {
@@ -114,12 +116,12 @@ class ConcurrentHashMapSharedData {
 
         Runnable task1 = () -> {
             useSharedData.modifyingSharedData(25);
-            System.out.println("1st thread --> " + useSharedData.concurrentMap.get("data"));
+            out.println("1st thread --> " + useSharedData.concurrentMap.get("data"));
         };
 
         Runnable task2 = () -> {
             useSharedData.modifyingSharedData(35);
-            System.out.println("2nd thread --> " + useSharedData.concurrentMap.get("data"));
+            out.println("2nd thread --> " + useSharedData.concurrentMap.get("data"));
         };
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -161,12 +163,12 @@ class ReentrantLockSharedData {
 
         Runnable task1 = () -> {
             reentrantLockSharedData.setData(25);
-            System.out.println("1st thread --> " + reentrantLockSharedData.getData());
+            out.println("1st thread --> " + reentrantLockSharedData.getData());
         };
 
         Runnable task2 = () -> {
             reentrantLockSharedData.setData(35);
-            System.out.println("2nd thread --> " + reentrantLockSharedData.getData());
+            out.println("2nd thread --> " + reentrantLockSharedData.getData());
         };
 
         ExecutorService executor = Executors.newFixedThreadPool(2);

@@ -1,5 +1,7 @@
 package com.example.demo.solid.ia;
 
+import static java.lang.System.out;
+
 public class InterfaceAggregation {
     public static void main(String[] args) {
         Car myCar = new Car();
@@ -36,31 +38,31 @@ class Car implements Vehicle, Engine, Steering, Braking {
     @Override
     public void drive() {
         startEngine();
-        System.out.println("Driving the car");
+        out.println("Driving the car");
     }
 
     @Override
     public void startEngine() {
-        System.out.println("Engine started");
+        out.println("Engine started");
     }
 
     @Override
     public void stopEngine() {
-        System.out.println("Engine stopped");
+        out.println("Engine stopped");
     }
 
     @Override
     public void steerLeft() {
-        System.out.println("Steering left");
+        out.println("Steering left");
     }
 
     @Override
     public void steerRight() {
-        System.out.println("Steering right");
+        out.println("Steering right");
     }
 
     @Override
     public void applyBrakes() {
-        System.out.println("Applying brakes");
+        out.println("Applying brakes");
     }
 }

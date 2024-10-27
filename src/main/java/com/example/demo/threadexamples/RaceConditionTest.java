@@ -1,5 +1,7 @@
 package com.example.demo.threadexamples;
 
+import static java.lang.System.out;
+
 public class RaceConditionTest {
     private int regularInt = 5;
 
@@ -21,13 +23,13 @@ public class RaceConditionTest {
     public static void main(String[] args) {
         RaceConditionTest test = new RaceConditionTest();
 
-        new Thread(() -> System.out.println(test.addAndGet(10))).start();
-        new Thread(() -> System.out.println(test.getAndAdd(5))).start();
+        new Thread(() -> out.println(test.addAndGet(10))).start();
+        new Thread(() -> out.println(test.getAndAdd(5))).start();
 
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {
-            System.out.println(test.get());
+            out.println(test.get());
         }
     }
 }

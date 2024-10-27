@@ -1,5 +1,7 @@
 package com.example.demo.threadexamples;
 
+import static java.lang.System.out;
+
 public class ThreadLocalSharedData {
     /**
      * Local threads are local variables in which each thread can access them through getter/setter,
@@ -10,17 +12,17 @@ public class ThreadLocalSharedData {
     public static void main(String[] args) {
         Runnable task1 = () -> {
             threadLocal.set(100);
-            System.out.println("Thread 1 --> " + threadLocal.get());
+            out.println("Thread 1 --> " + threadLocal.get());
         };
 
         Runnable task2 = () -> {
             threadLocal.set(200);
-            System.out.println("Thread 2 --> " + threadLocal.get());
+            out.println("Thread 2 --> " + threadLocal.get());
         };
 
         Runnable task3 = () -> {
             threadLocal.set(250);
-            System.out.println("thread 3 --> " + threadLocal.get());
+            out.println("thread 3 --> " + threadLocal.get());
         };
 
         Thread thread1 = new Thread(task1);
