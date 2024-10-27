@@ -5,6 +5,15 @@ import lombok.Getter;
 import static java.lang.System.out;
 
 public class SingletonExamples {
+    public static void main(String[] args) {
+        out.println(LazySingleToneClass.getSingleToneClass());
+        out.println(EagerSingleToneClassNumber_1.getEagerSingleToneClass());
+        out.println(EagerSingleToneClassNumber_2.EAGER_INSTANCE);
+        out.println(ThreadSafeMethodSingleton.getInstance());
+        out.println(ThreadSafeBlockSingleton.getInstance());
+        out.println(DoubleCheckedLockingSingleton.getInstance());
+        out.println(BillPughSingleton.getInstance());
+    }
 }
 
 class LazySingleToneClass {
@@ -19,26 +28,66 @@ class LazySingleToneClass {
     }
 
     public static LazySingleToneClass getSingleToneClass() {
+        out.println("Lazy SingleTone is being called");
         if (lazySingleToneClass == null)
             return lazySingleToneClass = new LazySingleToneClass();
         return lazySingleToneClass;
     }
 }
 
-class ThreadSafeLazySingleton {
+class EagerSingleToneClassNumber_1 {
+    /**
+     * Use Immutable Objects for Shared State
+     * Eager initialize means the SingleTon class is initialized on the class load.
+     * Pros: Simple implementation, thread-safe without requiring synchronized methods.
+     * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
+     */
+    @Getter
+    private final static EagerSingleToneClassNumber_1 eagerSingleToneClass = new EagerSingleToneClassNumber_1();
+
+    private EagerSingleToneClassNumber_1() {
+        out.println("Eager SingleTon with private instance is being called");
+    }
+}
+
+class EagerSingleToneClassNumber_2 {
+    public final static EagerSingleToneClassNumber_2 EAGER_INSTANCE = new EagerSingleToneClassNumber_2();
+}
+
+class ThreadSafeMethodSingleton {
     /**
      * Pros: Thread-safe.
      * Cons: Synchronized method can reduce performance due to the overhead of acquiring locks.
      */
-    private static ThreadSafeLazySingleton instance;
+    private static ThreadSafeMethodSingleton instance;
 
-    private ThreadSafeLazySingleton() {
+    private ThreadSafeMethodSingleton() {
     }
 
-    public static synchronized ThreadSafeLazySingleton getInstance() {
-        if (instance == null) {
-            instance = new ThreadSafeLazySingleton();
-        }
+    public static synchronized ThreadSafeMethodSingleton getInstance() {
+        out.println("Thread safe Lazy SingleTone with method locked is being called");
+        if (instance == null)
+            instance = new ThreadSafeMethodSingleton();
+        return instance;
+    }
+}
+
+class ThreadSafeBlockSingleton {
+    /**
+     * Pros: Thread-safe.
+     * Cons: Synchronized method can reduce performance due to the overhead of acquiring locks.
+     */
+    private static ThreadSafeBlockSingleton instance;
+
+    private ThreadSafeBlockSingleton() {
+    }
+
+    public static ThreadSafeBlockSingleton getInstance() {
+        out.println("Thread safe Lazy SingleTone with method locked is being called");
+        if (instance == null)
+            synchronized (ThreadSafeBlockSingleton.class) {
+                instance = new ThreadSafeBlockSingleton();
+            }
         return instance;
     }
 }
@@ -55,6 +104,7 @@ class DoubleCheckedLockingSingleton {
     }
 
     public static DoubleCheckedLockingSingleton getInstance() {
+        out.println("Thread safe Lazy SingleTone with volatile instance and block locked is being called");
         if (instance == null)
             synchronized (DoubleCheckedLockingSingleton.class) {
                 instance = new DoubleCheckedLockingSingleton();
@@ -79,21 +129,8 @@ class BillPughSingleton {
     }
 
     public static BillPughSingleton getInstance() {
+        out.println("Pugh SingleTone with immutable instance is being called");
         return SingletonHelper.INSTANCE;
-    }
-}
-
-class EagerSingleToneClass {
-    /**
-     * Use Immutable Objects for Shared State
-     * Eager initialize means the SingleTon class is initialized on the class load.
-     * Pros: Simple implementation, thread-safe without requiring synchronized methods.
-     * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
-     */
-    @Getter
-    private final static EagerSingleToneClass eagerSingleToneClass = new EagerSingleToneClass();
-
-    private EagerSingleToneClass() {
     }
 }
 
@@ -101,13 +138,13 @@ class EagerSingleToneClass {
  * A proxy can help in delaying the creation of the singleton instance until it is actually needed.
  * This can be useful if the singleton object is resource-intensive to create,
  * and you want to avoid instantiating it during the startup of the application.
- *
+ * <p>
  * When to Use:
  * 1. You need to control or restrict access to the singleton.
  * 2. You want to add additional behavior like logging, monitoring, or lazy initialization.
  * 3. You are working in a distributed environment where remote access to the singleton is required.
  * 4. You need to mock the singleton in unit tests.
- *
+ * <p>
  * When not to Use:
  * 1. The singleton is simple and does not require any additional behavior.
  * 2. The added complexity does not justify the benefits.
@@ -123,7 +160,6 @@ class SingleTon {
     public static SingleTon getInstance() {
         if (instance == null)
             instance = new SingleTon();
-
         return instance;
     }
 
