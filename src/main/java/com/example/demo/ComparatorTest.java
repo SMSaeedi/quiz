@@ -1,44 +1,34 @@
 package com.example.demo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.lang.System.out;
-
 public class ComparatorTest {
     public static void main(String[] args) {
-        List<Studentt> studentList = new ArrayList<>();
-        studentList.add(new Studentt("Mahsa", 30));
-        studentList.add(new Studentt("Sara", 38));
-        studentList.add(new Studentt("Mahshid", 29));
-        studentList.add(new Studentt("Dara", 27));
+        List<MyString> list = new ArrayList<>();
+        list.add(new MyString("Ali", 36, 11, LocalDate.of(1988, 4, 4)));
+        list.add(new MyString("Mahsa", 33, 8, LocalDate.of(1991, 4, 4)));
+        list.add(new MyString("Sara", 38, 16, LocalDate.of(1986, 4, 16)));
 
-        Studentt student = new Studentt();
-        Collections.sort(studentList, student);
-        out.println(studentList);
+        list.sort(new MyComparator());
+        list.forEach(System.out::println);
     }
 }
 
-class Studentt implements Comparator<Studentt> {
-    String name;
-    int age;
+record MyString(String name, int age, int yearsExperience, LocalDate birthDay) {
+}
 
-    public Studentt() {
-    }
-
-    public Studentt(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public String toString() {
-        return "Student{name: " + name + ", age: " + age + '}';
-    }
-
+class MyComparator implements Comparator<MyString> {
     @Override
-    public int compare(Studentt s1, Studentt s2) {
-        return Integer.compare(s1.age, s2.age);
+    public int compare(MyString o1, MyString o2) {
+        if (o1.age() > o2.age()) return 1;
+        if (o1.age() < o2.age()) return -1;
+        if (o1.yearsExperience() > o2.yearsExperience()) return 1;
+        if (o1.yearsExperience() < o2.yearsExperience()) return -1;
+        if (o1.birthDay().isAfter(o2.birthDay())) return 1;
+        if (o1.birthDay().isBefore(o2.birthDay())) return -1;
+        return 0;
     }
 }

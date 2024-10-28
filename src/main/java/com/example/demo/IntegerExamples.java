@@ -3,7 +3,7 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.lang.System.out;
+import static java.lang.System.*;
 
 public class IntegerExamples {
 }
@@ -386,19 +386,59 @@ class FindMaxArrayElement {
         int[] arr = {1, 9, 8, 6, 5, 3, 7};
 
         //For Loop
+        long start = nanoTime();
         int max1 = arr[0];
         for (int i : arr)
             if (i > max1)
                 max1 = i;
-        out.println(max1);
+        long end = nanoTime();
+        out.println(max1 + ", execution time (ms): " + (end - start) / 1000000);
 
         // Sort and Fetch first
+        long start1 = nanoTime();
         Arrays.sort(arr);
         int max2 = arr[arr.length - 1];
-        out.println(max2);
+        long end1 = nanoTime();
+        out.println(max2 + ", execution time (ms): " + (end1 - start1) / 1000000);
 
         //Stream API
+        long start2 = nanoTime();
         int max3 = Arrays.stream(arr).max().orElse(0);
-        out.println(max3);
+        long end2 = nanoTime();
+        out.println(max3 + ", execution time (ms): " + (end2 - start2) / 1000000);
+    }
+}
+
+class ProcessInputIntegers {
+    public static List<Integer> processInputIntegers(int[] numbers) {
+        Map<Integer, Integer> resultMap = new LinkedHashMap<>();
+        int currentIndex = 0;
+
+        for (int number : numbers) {
+            if (number > 100 || number < -100) {
+                err.println("Array out of Range");
+                return null;
+            }
+
+            if (number < 0)
+                resultMap.put(currentIndex++, number);
+            else if (number > 0) {
+                int indexToRemove = number - 1;
+                try {
+                    resultMap.remove(indexToRemove);
+                } catch (Exception e) {
+                    err.println(e.getCause());
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new ArrayList<>(resultMap.values());
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {-1, -2, -3, 2};
+        System.out.println(processInputIntegers(arr));
+        int[] arr1 = {-111, -2, -3, 2};
+        System.out.println(processInputIntegers(arr1));
     }
 }
