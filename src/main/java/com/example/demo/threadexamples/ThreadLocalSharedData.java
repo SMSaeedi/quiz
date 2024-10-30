@@ -2,6 +2,11 @@ package com.example.demo.threadexamples;
 
 import lombok.SneakyThrows;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import static java.lang.System.out;
 
 public class ThreadLocalSharedData {
@@ -38,4 +43,35 @@ public class ThreadLocalSharedData {
         thread2.join();
         thread3.start();
     }
+}
+class Test {
+    public static void main(String[] args) {
+        Future<String> future=new Future<String>() {
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning) {
+                return false;
+            }
+
+            @Override
+            public boolean isCancelled() {
+                return false;
+            }
+
+            @Override
+            public boolean isDone() {
+                return false;
+            }
+
+            @Override
+            public String get() throws InterruptedException, ExecutionException {
+                return "";
+            }
+
+            @Override
+            public String get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+                return "";
+            }
+        };
+    }
+
 }

@@ -144,7 +144,7 @@ class ConcurrentEventsCaseThree {
         };
 
         Thread t3 = new Thread(three);
-        t3.run();
+        t3.start();
         out.println("Task completed.");
     }
 }

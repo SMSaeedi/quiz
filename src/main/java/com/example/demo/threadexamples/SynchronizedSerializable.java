@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Thread-safe serialization a single mutex (is a synchronization mechanism to control access to a shared resource)
  * for all resources
  */
-public class ThreadSafeSerializable implements Serializable {
+public class SynchronizedSerializable implements Serializable {
     private static final long serialVersionUID = 1L;
     private int count;
 

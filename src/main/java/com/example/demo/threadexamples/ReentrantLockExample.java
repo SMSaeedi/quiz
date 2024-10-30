@@ -38,19 +38,15 @@ class TestLock {
     static ReentrantLockExample lockObj = new ReentrantLockExample();
 
     public static void main(String[] args) {
-        Thread t1 = new Thread() {
-            public void run() {
-                out.println("t1 started");
-                lockObj.m1();
-            }
-        };
+        Thread t1 = new Thread(() -> {
+            out.println("t1 started");
+            lockObj.m1();
+        });
 
-        Thread t2 = new Thread() {
-            public void run() {
-                out.println("t2 started");
-                lockObj.m1();
-            }
-        };
+        Thread t2 = new Thread(() -> {
+            out.println("t2 started");
+            lockObj.m1();
+        });
 
         t1.setName("Tread 1");
         t1.start();
