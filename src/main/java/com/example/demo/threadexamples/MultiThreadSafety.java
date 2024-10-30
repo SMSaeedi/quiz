@@ -7,10 +7,7 @@ import java.util.concurrent.Executors;
 import static java.lang.System.out;
 
 /**
- * Multi-thread safety extends the concept into the entire app/system,
- * ensuring multi-threads run concurrently without interfering each other
- * Multi-thread safety a mutex for a single resource (A Mutex (short for Mutual Exclusion) is a synchronization
- * primitive used in concurrent programming to control access to a shared resource)
+ * Multi-threads run concurrently without interfering each other
  */
 public class MultiThreadSafety {
     private final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();

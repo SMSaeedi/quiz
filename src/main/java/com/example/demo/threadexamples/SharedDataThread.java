@@ -20,10 +20,6 @@ class SimpleIntSharedData {
         this.data = sharedData;
     }
 
-//    public void modifyingSharedData(int data) {
-//        setData(data + 125);
-//    }
-
     @SneakyThrows
     public static void main(String[] args) {
         SimpleIntSharedData simpleIntSharedData = new SimpleIntSharedData(100);
@@ -48,7 +44,7 @@ class SimpleIntSharedData {
         Thread thread3 = new Thread(task3);
 
         thread1.start();
-        thread1.join(); //wait the thread/s until thread1 to finish
+        thread1.join(); //wait the thread/s until thread1 finish
 
         thread2.start();
         thread2.join();
@@ -105,8 +101,8 @@ class ConcurrentHashMapSharedData {
 
     public void modifyingSharedData(int data) {
         /**
-         * merge method provides a convenient way to update a value based on its current value,
-         * and is particularly useful for atomic updates in a concurrent environment.
+         * merge() is a convenient way to update a value based on its current value,
+         * and is particularly useful for atomic updates in a concurrent environment
         */
         concurrentMap.merge("data", data, Integer::sum);
     }

@@ -1,5 +1,7 @@
 package com.example.demo.threadexamples;
 
+import lombok.SneakyThrows;
+
 import static java.lang.System.out;
 
 public class ThreadLocalSharedData {
@@ -9,6 +11,7 @@ public class ThreadLocalSharedData {
      */
     private static final ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
+    @SneakyThrows
     public static void main(String[] args) {
         Runnable task1 = () -> {
             threadLocal.set(100);
@@ -30,7 +33,9 @@ public class ThreadLocalSharedData {
         Thread thread3 = new Thread(task3);
 
         thread1.start();
+        thread1.join();
         thread2.start();
+        thread2.join();
         thread3.start();
     }
 }

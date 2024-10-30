@@ -8,13 +8,10 @@ import static java.lang.System.out;
 
 public class VolatileVariable {
     /**
-     * Use Cases for volatile
-     * State Flags: indicating the completion/cancellation of a task, or other simple state changes.
+     * used to ensure that a variable's value is always read from and written to the main memory,
+     * rather than being cached in the thread's local memory (CPU cache).
      *
-     * Pros: Simplicity, Visibility, Performance
-     * Cons: Does not provide atomicity for compound actions like incrementing a counter,
-     * Suitable only for simple flags or state variables.
-     * If not used carefully, it can lead to inefficient busy-waiting loops
+     * In multi-threaded environments provide visibility of changes to variables across threads.
      */
     private static volatile boolean flag = false;
 

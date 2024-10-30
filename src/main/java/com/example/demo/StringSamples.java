@@ -108,11 +108,26 @@ class WordsCount {
     }
 }
 
+class WordCounter {
+    public static Map<String, Integer> countWords(String text) {
+        Map<String, Integer> wordCount = new HashMap<>();
+
+        for (String word : text.toLowerCase().split(""))
+                wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+
+        return wordCount;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(countWords("Mahsa"));
+        System.out.println(Arrays.stream("Mahsa".split(" ")).count());
+    }
+}
+
 class StringReplace {
     public static void main(String[] args) {
         String str = "Java";
-        //The replace method does not modify the original string
-        // but instead returns a new string with the replacements made
+        // replace() does not modify the original string, it returns a new string
         str.replace('a', 'o');
         out.println(str);
         out.println(str.replace('a', 'o'));
