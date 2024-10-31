@@ -2,6 +2,7 @@ package com.example.demo.onlinequiz;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.net.InetAddress;
 
@@ -22,13 +23,15 @@ public class RevolutQuizTest {
         String ip = "192.168.1.1";
         InetAddress mockInetAdd = mock(InetAddress.class);
 
-        when(mockInetAdd.getHostAddress()).thenReturn(ip);
-        mockStatic(InetAddress.class).when(() -> InetAddress.getByName(ip)).thenReturn(mockInetAdd);
+        try (MockedStatic<InetAddress> mockedInetAddress = mockStatic(InetAddress.class)) {
+            when(mockInetAdd.getHostAddress()).thenReturn(ip);
+            mockedInetAddress.when(() -> InetAddress.getByName(ip)).thenReturn(mockInetAdd);
 
-        revolutQuiz.registerServer(ip);
+            revolutQuiz.registerServer(ip);
 
-        assertEquals(1, revolutQuiz.serverList.size());
-        assertTrue(revolutQuiz.serverList.contains(ip));
+            assertEquals(1, revolutQuiz.serverList.size());
+            assertTrue(revolutQuiz.serverList.contains(ip));
+        }
     }
 
     @Test
@@ -36,15 +39,19 @@ public class RevolutQuizTest {
         for (int i = 1; i <= 10; i++)
             revolutQuiz.serverList.add("192.168.1." + i);
 
-        var exception = assertThrows(ServerException.class, () -> revolutQuiz.registerServer("192.168.1.10"));
-        assertEquals("out of threshold", exception.getMessage());
+        var exception = assertThrows(ServerException.class, () -> revolutQuiz.registerServer(revolutQuiz.serverList.get(revolutQuiz.serverList.size()-1)));
+        assertEquals("out of domain range!", exception.getMessage());
     }
 
     @Test
     public void unknown_host_exception() {
-        var unknownIP = assertThrows(ServerException.class, () -> revolutQuiz.registerServer("invalid.server"));
-        assertEquals("unknown host", unknownIP.getMessage());
-        revolutQuiz.serverList.clear();
+        try (MockedStatic<InetAddress> mockedInetAddress = mockStatic(InetAddress.class)) {
+            mockedInetAddress.when(() -> InetAddress.getByName("invalid.server"))
+                    .thenThrow(new ServerException("unknown host"));
+
+            var unknownIP = assertThrows(ServerException.class, () -> revolutQuiz.registerServer("invalid.server"));
+            assertEquals("unknown host", unknownIP.getMessage());
+        }
     }
 
     @Test
@@ -52,15 +59,19 @@ public class RevolutQuizTest {
         String newIP = "192.168.1.1";
         revolutQuiz.serverList.add(newIP);
         var existIP = assertThrows(ServerException.class, () -> revolutQuiz.registerServer(newIP));
-        assertEquals("IP address already exist", existIP.getMessage());
-        revolutQuiz.serverList.clear();
+        assertEquals("duplicated IP address!", existIP.getMessage());
     }
 
     @Test
-    public void invalid_ip_already() {
-        var invalidLength = assertThrows(ServerException.class, () -> revolutQuiz.registerServer("192.168.1.1" + "-"));
-        assertEquals("unknown host", invalidLength.getMessage());
-        revolutQuiz.serverList.clear();
+    public void invalid_ip() {
+        var invalidLength = assertThrows(ServerException.class, () -> revolutQuiz.registerServer("192.168.1.1" + "1"));
+        assertEquals("out of domain range!", invalidLength.getMessage());
+    }
+
+    @Test
+    public void null_ip() {
+        var nullIp = assertThrows(ServerException.class, () -> revolutQuiz.registerServer(null));
+        assertEquals("null ip address!", nullIp.getMessage());
     }
 
     @Test

@@ -2,11 +2,8 @@ package com.example.demo.threadexamples;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Random;
+import java.util.concurrent.*;
 
 import static java.lang.System.out;
 
@@ -79,5 +76,20 @@ class SingleThreadPool {
             throw new RuntimeException(e);
         }
         executorService.shutdown();
+    }
+}
+
+class ScheduledThreadPool {
+    public static void main(String[] args) {
+        ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutor.scheduleAtFixedRate(() -> {
+            int code = new Random().nextInt(4);
+            out.println("connection code is " + code);
+            if (code == 0) {
+                out.println("connection created");
+                scheduledExecutor.shutdownNow();
+            } else out.println("connection failed!");
+        }, 1, 2, TimeUnit.SECONDS);
+        out.println("the rest of code ...");
     }
 }

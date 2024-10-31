@@ -385,7 +385,7 @@ class FindMaxArrayElement {
     public static void main(String[] args) {
         int[] arr = {1, 9, 8, 6, 5, 3, 7};
 
-        //For Loop
+        // For Loop o(n)
         long start = nanoTime();
         int max1 = arr[0];
         for (int i : arr)
@@ -394,14 +394,14 @@ class FindMaxArrayElement {
         long end = nanoTime();
         out.println(max1 + ", execution time (ms): " + (end - start) / 1000000);
 
-        // Sort and Fetch first
+        // Sort and Fetch the last O(nlogn)
         long start1 = nanoTime();
         Arrays.sort(arr);
         int max2 = arr[arr.length - 1];
         long end1 = nanoTime();
         out.println(max2 + ", execution time (ms): " + (end1 - start1) / 1000000);
 
-        //Stream API
+        // Stream API o(n)
         long start2 = nanoTime();
         int max3 = Arrays.stream(arr).max().orElse(0);
         long end2 = nanoTime();
@@ -414,7 +414,7 @@ class ProcessInputIntegers {
         Map<Integer, Integer> resultMap = new LinkedHashMap<>();
         int currentIndex = 0;
 
-        for (int number : numbers) {
+        for (int number : numbers) { // o(n)
             if (number > 100 || number < -100) {
                 err.println("Array out of Range");
                 return null;
@@ -440,5 +440,67 @@ class ProcessInputIntegers {
         System.out.println(processInputIntegers(arr));
         int[] arr1 = {-111, -2, -3, 2};
         System.out.println(processInputIntegers(arr1));
+    }
+}
+
+class FindSmallestPositiveInt {
+    public int solution(int[] A) {
+        Set<Integer> set = new HashSet<>();
+        for (int i : A)
+            if (i > 0)
+                set.add(i);
+
+        int smallest = 1;
+        while (set.contains(smallest))
+            smallest++;
+
+        return smallest;
+    }
+
+    public static void main(String[] args) {
+        int[] arr1 = {1, 3, 6, 4, 1, 2};
+        out.println(arr1);
+        int[] arr2 = {1, 2, 3};
+        out.println(arr2);
+        int[] arr3 = {-1, -3};
+        out.println(arr3);
+    }
+}
+
+class UserStats {
+    private Optional<Long> visitCount;
+
+    public UserStats(Optional<Long> visitCount) {
+        this.visitCount = visitCount;
+    }
+
+    public Optional<Long> getVisitCount() {
+        return visitCount;
+    }
+}
+
+class VisitCounter {
+
+    public Map<Long, Long> count(Map<String, UserStats>... visits) {
+        Map<Long, Long> resultMap = new HashMap<>();
+        if (visits == null)
+            return resultMap;
+
+        for (Map<String, UserStats> visit : visits) {
+            if (visit == null)
+                continue;
+
+            visit.forEach((key, userStats) -> {
+                try {
+                    Long userId = Long.parseLong(key);
+                    if (userStats != null) {
+                        userStats.getVisitCount().ifPresent(count -> resultMap.merge(userId, count, Long::sum));
+                    }
+                } catch (NumberFormatException e) {
+                    // handle invalid key that cannot be parsed to Long
+                }
+            });
+        }
+        return resultMap;
     }
 }

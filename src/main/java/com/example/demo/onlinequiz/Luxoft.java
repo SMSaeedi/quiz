@@ -1,0 +1,25 @@
+package com.example.demo.onlinequiz;
+
+import java.util.Arrays;
+
+import static java.lang.System.out;
+
+public class Luxoft {
+    // LargestNumber At Least Twice Of Others
+    public static void main(String[] args) {
+        int[] arr1 = {3, 2};
+        out.println(getLargestNumber(arr1));
+        int[] arr2 = {3, 2, 1};
+        out.println(getLargestNumber(arr2));
+    }
+
+    static int getLargestNumber(int[] arr) {
+        Arrays.sort(arr);
+        int max = arr[arr.length - 1];
+        int counter = 0;
+        for (int i : arr)
+            if (i * i <= max)
+                counter++;
+        return counter > 0 ? max : -1;
+    }
+}

@@ -11,10 +11,12 @@ class RevolutQuiz {
     private AtomicInteger index = new AtomicInteger(0);
 
     public void registerServer(final String server) {
-        validateIp(server);
+        if(server == null)
+            throw new ServerException("null ip address!");
 
         try {
             InetAddress addressIP = InetAddress.getByName(server);
+            validateIp(addressIP.getHostAddress());
             serverList.add(addressIP.getHostAddress());
         } catch (UnknownHostException e) {
             throw new ServerException("unknown host");
@@ -22,8 +24,8 @@ class RevolutQuiz {
     }
 
     private void validateIp(final String server) {
-        if (serverList.size() >= 10) throw new ServerException("out of threshold");
-        if (serverList.contains(server)) throw new ServerException("IP address already exist");
+        if (server.length() >= 12) throw new ServerException("out of domain range!");
+        if (serverList.contains(server)) throw new ServerException("duplicated IP address!");
     }
 
     public String findNextServer() {
