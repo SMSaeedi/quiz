@@ -5,6 +5,30 @@ import java.util.*;
 import static java.lang.System.out;
 
 public class StringSamples {
+    public static void main(String[] args) {
+        out.println(commonChild("WEWOUCUIDGCGTRMEZEPXZFEJWISRSBBSYXAYDFEJJDLEBVHHKS", "FDAGCXGKCTKWNECHMRXZWMLRYUCOCZHJRRJBOAJOQJZZVUYXIC"));
+        out.println(commonChild("Mahsa", "Sara"));
+        out.println(commonChild("Mahsa", "Jonnei"));
+        out.println(commonChild("Setareh", "setar0h0"));
+    }
+
+    public static int commonChild(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 1; i <= m; i++)
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1))
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                else
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+
+            }
+
+        return dp[m][n];
+    }
 }
 
 class StringAnagram {
@@ -113,7 +137,7 @@ class WordCounter {
         Map<String, Integer> wordCount = new HashMap<>();
 
         for (String word : text.toLowerCase().split(""))
-                wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
 
         return wordCount;
     }
