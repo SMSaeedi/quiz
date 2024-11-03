@@ -12,7 +12,7 @@ public class ImmutableExample {
     public static void main(String[] args) {
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (!entry.getValue().equals("four")) {
-                /**
+                /*
                  * Any operations (add(), remove()) causes UnsupportedOperationException from ImmutableCollections class
                  * */
                 map.put(4, "four");

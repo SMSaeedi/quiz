@@ -33,7 +33,7 @@ class Event1 implements Runnable {
     @Override
     public void run() {
         try {
-            /**
+            /*
              * pause the execution of current Thread for 1000 ms
              * Thread lifecycle: Running -> Timed-Waiting
              */

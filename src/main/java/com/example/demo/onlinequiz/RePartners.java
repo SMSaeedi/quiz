@@ -21,7 +21,7 @@ final class MutablePerson {
 
     public MutablePerson(int age, List<String> hobbies) {
         this.age = age;
-        /**
+        /*
          * Collections.unmodifiableList(new ArrayList<>(hobbies))
          */
         this.hobbies = List.copyOf(hobbies);
@@ -73,7 +73,7 @@ class SetQuestion {
         persons.add(person1);
         persons.add(person2);
 
-        /**
+        /*
          * HashSet could not detect this change, because it manages unique elements based on the hashCode computed insertion time
          * To prevent this duplication, we can set person's name as final
          */

@@ -15,7 +15,7 @@ public class MultiValueHashMap<K, V> {
     }
 
     public List<V> get(K key) {
-        /**
+        /*
          * map.get returns 'null' or a mapped value.
          * map.getOrDefault returns default key value (new ArrayList<>()) or the specific key value.
          */

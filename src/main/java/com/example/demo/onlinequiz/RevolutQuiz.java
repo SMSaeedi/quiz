@@ -31,7 +31,7 @@ class RevolutQuiz {
     public String findNextServer() {
         if (serverList.isEmpty())
             return "Server list is empty";
-        /**
+        /*
          * getAndUpdate to automatically update the current index and ensure the increment is thread-safe
          * '(o + 1) % serverList.size()' ensures if it reaches the end of list, wraps over to the start
          * */

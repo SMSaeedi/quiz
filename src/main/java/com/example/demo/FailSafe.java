@@ -32,7 +32,7 @@ class FailFast_Iterator {
             list.add("Four");
             out.println(list);
             out.println(iterator.next());
-            /**
+            /*
              * the ConcurrentModificationException is only thrown when the iterator's next() method is called,
              * as the iterator tracks modifications to the list.
              * from checkForComodification method of ArrayList class
@@ -56,7 +56,7 @@ class FailFast_List_Map {
         out.println(list);
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (!entry.getValue().equals("four")) {
-                /**
+                /*
                  * The second time you call map.put(4, "four"),
                  * which invalidates the Iterator that is being used to iterate over the map.
                  * This change to the map's structure causes a mismatch in the modCount,

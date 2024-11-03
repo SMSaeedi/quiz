@@ -100,7 +100,7 @@ class ConcurrentHashMapSharedData {
     }
 
     public void modifyingSharedData(int data) {
-        /**
+        /*
          * merge() is a convenient way to update a value based on its current value,
          * and is particularly useful for atomic updates in a concurrent environment
         */

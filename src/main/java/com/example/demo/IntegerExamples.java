@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

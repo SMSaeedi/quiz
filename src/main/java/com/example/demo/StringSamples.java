@@ -4,7 +4,7 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-public class StringSamples {
+class CommonChars{
     public static void main(String[] args) {
         out.println(commonChild("WEWOUCUIDGCGTRMEZEPXZFEJWISRSBBSYXAYDFEJJDLEBVHHKS", "FDAGCXGKCTKWNECHMRXZWMLRYUCOCZHJRRJBOAJOQJZZVUYXIC"));
         out.println(commonChild("Mahsa", "Sara"));
@@ -61,14 +61,14 @@ class StringAnagram {
     }
 
     private static boolean isAnagram(String str1, String str2) {
-        int count[] = new int[256];
+        int[] count = new int[256];
         for (int i = 0; i < str1.length(); i++) {
             count[str1.charAt(i)]++;
             count[str2.charAt(i)]--;
         }
 
-        for (int i = 0; i < count.length; i++)
-            if (count[i] != 0)
+        for (int j : count)
+            if (j != 0)
                 return false;
 
         return true;
@@ -236,9 +236,9 @@ class WordsReverse {
 class DuplicatedCharCount {
     public static void main(String[] args) {
         String str = "Mmahhssa"; // to ignore case .toLowerCase()
-        HashMap<Character, Integer> duplicatedMap = new HashMap();
-        HashMap<Character, Integer> uniqueMap = new HashMap();
-        HashMap<Character, Integer> map = new HashMap();
+        HashMap<Character, Integer> duplicatedMap = new HashMap<>();
+        HashMap<Character, Integer> uniqueMap = new HashMap<>();
+        HashMap<Character, Integer> map = new HashMap<>();
         for (char c : str.toCharArray())
             map.put(c, map.getOrDefault(c, 0) + 1);
 
@@ -313,7 +313,7 @@ class FindSecondUniqueChar {
     }
 
     private static Character findSecondUniqueCharacter(String input) {
-        /**
+        /*
          *  Use LinkedHashMap to preserve insertion order --> {e=2, f=2, i=2, c=1, n=1, t=1}
          *  HashMap demonstrate --> {c=1, t=1, e=2, f=2, i=2, n=1}
          */
