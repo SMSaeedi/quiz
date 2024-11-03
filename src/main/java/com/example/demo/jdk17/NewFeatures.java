@@ -7,7 +7,7 @@ import static java.lang.System.out;
  * Compact syntax, Java generates the constructor, equals(), hashCode(), and toString() methods.
  * Ideal for use in data transfer objects (DTOs), immutable data structures,
  * or wherever minimalistic, immutable, and value-based classes are needed.
- */
+ * */
 public record NewFeatures(int id, String name) {
     public static void main(String[] args) {
         NewFeatures newFeatures = new NewFeatures(1, "Records");

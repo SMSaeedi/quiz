@@ -6,7 +6,9 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import static java.lang.System.out;
-
+/**
+ * Serialization is saved an object's state into a stream of bytes to restore it later.
+ * */
 public class Serialization {
     public static void main(String[] args) {
         BankAccount acc = new BankAccount(123, "Saving", 15000L);

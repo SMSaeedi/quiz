@@ -1,12 +1,12 @@
 package com.example.demo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.System.*;
-
-public class IntegerExamples {
-}
 
 class DuplicatedIntArray {
     public static void main(String[] args) {
@@ -147,16 +147,16 @@ class AverageTwoArrays {
     public static void main(String[] args) {
         int[][] arr = {{2, 6, 3, 8, 1, 9, 11, 12}, {0, 3, 2, 1, 10, 5}};
         int sum = 0;
-        double average = 0;
+        float average = 0;
         int totalElements = 0;
 
-        for (int i = 0; i < arr.length; i++)
-            for (int j = 0; j < arr[i].length; j++) {
-                sum += arr[i][j];
+        for (int[] ints : arr)
+            for (int anInt : ints) {
+                sum += anInt;
                 totalElements++;
             }
 
-        average = sum / totalElements;
+        average = (float) sum / totalElements;
         out.println("Sum " + sum);
         out.println("Total Elements " + totalElements);
         out.println("Average " + average);
@@ -444,7 +444,7 @@ class ProcessInputIntegers {
 }
 
 class FindSmallestPositiveInt {
-    public int solution(int[] A) {
+    public static int solution(int[] A) {
         Set<Integer> set = new HashSet<>();
         for (int i : A)
             if (i > 0)
@@ -459,29 +459,42 @@ class FindSmallestPositiveInt {
 
     public static void main(String[] args) {
         int[] arr1 = {1, 3, 6, 4, 1, 2};
-        out.println(arr1);
+        out.println(solution(arr1));
         int[] arr2 = {1, 2, 3};
-        out.println(arr2);
+        out.println(solution(arr2));
         int[] arr3 = {-1, -3};
-        out.println(arr3);
-    }
-}
-
-class UserStats {
-    private Optional<Long> visitCount;
-
-    public UserStats(Optional<Long> visitCount) {
-        this.visitCount = visitCount;
-    }
-
-    public Optional<Long> getVisitCount() {
-        return visitCount;
+        out.println(solution(arr3));
     }
 }
 
 class VisitCounter {
+    public static void main(String[] args) {
+        // Map1 with valid user IDs and visit counts
+        Map<String, UserStats> map1 = new HashMap<>();
+        map1.put("1", new UserStats(Optional.of(5L)));
+        map1.put("2", new UserStats(Optional.of(10L)));
 
-    public Map<Long, Long> count(Map<String, UserStats>... visits) {
+        // Map2 with overlapping user IDs
+        Map<String, UserStats> map2 = new HashMap<>();
+        map2.put("1", new UserStats(Optional.of(3L))); // Should be added to the count of userId 1
+        map2.put("3", new UserStats(Optional.of(7L))); // New userId, should be added as-is
+
+        // Map3 with null values and invalid user ID
+        Map<String, UserStats> map3 = new HashMap<>();
+        map3.put("abc", new UserStats(Optional.of(4L))); // Invalid key, should be skipped
+        map3.put("2", null); // Null UserStats, should be skipped
+        map3.put("4", new UserStats(null)); // Null visit count, should be skipped
+
+        // Map4 null should be skipped
+        Map<String, UserStats> nullMap = null;
+
+        Map<Long, Long> result = count(map1, map2, map3, nullMap);
+
+        out.println("Result: " + result);
+    }
+
+    @SafeVarargs
+    public static Map<Long, Long> count(Map<String, UserStats>... visits) {
         Map<Long, Long> resultMap = new HashMap<>();
         if (visits == null)
             return resultMap;
@@ -490,17 +503,22 @@ class VisitCounter {
             if (visit == null)
                 continue;
 
-            visit.forEach((key, userStats) -> {
+            for (Map.Entry<String, UserStats> entry : visit.entrySet()) {
                 try {
-                    Long userId = Long.parseLong(key);
-                    if (userStats != null) {
-                        userStats.getVisitCount().ifPresent(count -> resultMap.merge(userId, count, Long::sum));
-                    }
+                    Long userId = Long.parseLong(entry.getKey());
+                    UserStats userStats = entry.getValue();
+                    if (userStats == null || userStats.visitCount().isEmpty())
+                        break;
+
+                    userStats.visitCount().ifPresent(count -> resultMap.merge(userId, count, Long::sum));
                 } catch (NumberFormatException e) {
-                    // handle invalid key that cannot be parsed to Long
+                    e.printStackTrace();
                 }
-            });
+            }
         }
         return resultMap;
+    }
+
+    record UserStats(Optional<Long> visitCount) {
     }
 }

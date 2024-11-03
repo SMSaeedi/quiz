@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 class RevolutQuiz {
     public List<String> serverList = new ArrayList<>();
-    private AtomicInteger index = new AtomicInteger(0);
+    private final AtomicInteger index = new AtomicInteger(0);
 
     public void registerServer(final String server) {
         if(server == null)
