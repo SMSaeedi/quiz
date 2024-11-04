@@ -5,23 +5,47 @@ import java.util.stream.Collectors;
 
 import static java.lang.System.*;
 
-class DuplicatedIntArray {
+class RemoveDuplicatedIntArray {
     public static void main(String[] args) {
         int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
-        int[] uniqueAddresses = findDuplicates(addresses);
+        int[] uniqueAddresses = removeDuplicates(addresses);
         out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5, 4, 6]
     }
 
-    private static int[] findDuplicates(int[] ads) {
+    private static int[] removeDuplicates(int[] ads) {
         Set<Integer> set = new HashSet<>();
-        for (int s : ads)
+        for (int s : ads) // O(n)
             set.add(s);
         out.println(set);
 
         int i = 0;
         int[] result = new int[set.size()];
-        for (int s : set)
+        for (int s : set) // O(n)
             result[i++] = s;
+
+        return result;
+    }
+}
+
+class FindDuplicatedIntArray {
+    public static void main(String[] args) {
+        int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
+        int[] uniqueAddresses = findDuplicates(addresses);
+        out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5]
+    }
+
+    private static int[] findDuplicates(int[] ads) {
+        Map<Integer, Integer> map = new TreeMap<>();
+        for (int i : ads) // O(n)
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        out.println(map);
+
+        long duplicatedCount = map.entrySet().stream().filter(entry -> entry.getValue() > 1).count(); // O(n)
+        int i = 0;
+        int[] result = new int[(int) duplicatedCount];
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(n)
+            if (entry.getValue() != 1)
+                result[i++] = entry.getKey();
 
         return result;
     }
@@ -29,13 +53,21 @@ class DuplicatedIntArray {
 
 class FindTopKElements {
     public static void main(String[] args) {
-        out.println(FindTopKElements.findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
+        out.println(findTopKElementUsingTreeSet(List.of(1, 2, 3, 3, 4, 4, 5, 6), 2));
+        out.println(findTopKElementUsingStream(List.of(9, 2, 5, 6, 11), 2));
     }
 
     public static List<Integer> findTopKElementUsingTreeSet(List<Integer> lst, int k) {
-        Set<Integer> sortedSet = new TreeSet<>(Comparator.reverseOrder());
-        sortedSet.addAll(lst);
-        return sortedSet.stream().limit(k).collect(Collectors.toList());
+        Set<Integer> sortedSet = new TreeSet<>(Comparator.reverseOrder()); // O(1)
+        sortedSet.addAll(lst); // O(nLogn)
+        return sortedSet.stream().limit(k).collect(Collectors.toList()); // O(k)
+    }
+
+    public static List<Integer> findTopKElementUsingStream(List<Integer> lst, int k) {
+        return lst.stream()
+                .sorted(Comparator.reverseOrder()) // O(nLogn)
+                .limit(k) // O(k)
+                .collect(Collectors.toList()); // O(k)
     }
 }
 
@@ -43,58 +75,65 @@ class FindSecondTopElement {
     public static void main(String[] args) {
         int[] list = {5, 3, 9, 7, 2, 8};
         var result = Arrays.stream(list)
-                .boxed()
-                .sorted(Comparator.reverseOrder())
-                .skip(1) //skip the first element to reach the second one
+                .boxed() // O(n), converts each primitive int in the array to an Integer object
+                .sorted(Comparator.reverseOrder()) // O(nLogn)
+                .skip(1) // O(1), skip the first element to reach the second one
                 .mapToInt(Integer::intValue)// This line can be ignored
-                .findFirst();
+                .findFirst(); // O(1)
         result.ifPresentOrElse(out::println, () -> {
             throw new IllegalArgumentException("Arrays too small");
         });
     }
 }
 
-class findUniqueInt {
-    public static int findUniqueInteger(int[] arr) {
+class FindTheOnlyUniqueElement {
+    public static int findTheOnlyUniqueElement(int[] arr) {
         int unique = 0;
+        // O(n), XOR (^) helps identifying a unique element in an array where every other element is repeated
         for (int num : arr)
             unique ^= num;
 
         return unique;
     }
 
+    public static int findTheOnlyUniqueElementUsingMap(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i : arr) //O(n)
+            map.put(i, map.getOrDefault(i, 0) + 1);
+
+        return map.keySet().stream().filter(k -> map.get(k) == 1).findAny().get(); // O(n)
+    }
+
     public static void main(String[] args) {
         int[] arr = new int[]{4, 3, 2, 4, 1, 3, 2};
-        out.println("The unique integer is: " + findUniqueInteger(arr));  // Output should be 1
+        out.println("The unique integer is: " + findTheOnlyUniqueElement(arr));  // Output should be 1
+        out.println("The unique integer, by using Map, is: " + findTheOnlyUniqueElementUsingMap(arr));  // Output should be 1
     }
 }
 
-class FindUniqueIntArray {
-    public static int[] findUniqueIntegerArray(int[] arr) {
+class FindUniqueElements {
+    public static int[] findUniqueElements(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
-        for (int num : arr)
+        for (int num : arr) //O(n)
             map.put(num, map.getOrDefault(num, 0) + 1);
 
-        List<Integer> uniqueList = new ArrayList<>();
-        for (Integer num : arr)
-            if (map.get(num) == 1) uniqueList.add(num);
-
-        int[] result = new int[uniqueList.size()];
+        var uniqueElements = map.keySet().stream().filter(e -> map.get(e) == 1).count(); // O(n)
+        int[] result = new int[(int) uniqueElements];
         int i = 0;
-        for (Integer num : uniqueList)
-            result[i++] = num;
+        for (Integer num : map.keySet()) // O(n)
+            if (map.get(num) == 1)
+                result[i++] = num;
 
         return result;
     }
 
     public static void main(String[] args) {
         int[] arr1 = new int[]{4, 3, 2, 4, 1, 3, 2, 5, 7, 7, 9, 8, 11};
-        out.println("The unique integers are: " + Arrays.toString(findUniqueIntegerArray(arr1)));  // Output should be 1
+        out.println("The unique integers are: " + Arrays.toString(findUniqueElements(arr1)));
     }
 }
 
 class NumberContiguousList {
-
     public static void main(String[] args) {
         List<Integer> numbers = List.of(1, 5, 3, 4, 2);
         out.println(isNumberContiguous(numbers) ? "Yes" : "No");
@@ -104,59 +143,103 @@ class NumberContiguousList {
     }
 
     private static boolean isNumberContiguous(List<Integer> numbers) {
-        if (numbers.isEmpty())
+        if (numbers.isEmpty()) // O(1)
             return false;
 
-        var sortedList = numbers.stream().sorted(Comparator.naturalOrder()).toList();
+        var sortedList = numbers.stream().sorted(Comparator.naturalOrder()).toList(); // O(nLogn)
 
-        for (int i = 1; i < sortedList.size() - 1; i++)
+        for (int i = 1; i < sortedList.size() - 1; i++) // O(n)
             if (sortedList.get(i) - sortedList.get(i - 1) != 1)
                 return false;
 
         return true;
     }
-
 }
 
 class NumberContiguousArray {
     public static void main(String[] args) {
         int[] arr1 = {2, 6, 3, 8, 1, 9, 11, 12};
-        out.println(isNumberContinueSequentially(arr1));
+        out.println(isNumberContinue(arr1));
         int[] arr2 = {2, 6, 3, 8, 1, 7, 4, 5};
-        out.println(isNumberContinueSequentially(arr2));
+        out.println(isNumberContinue(arr2));
+
+        int[] arr3 = {2, 6, 3, 8, 1, 9, 11, 12};
+        out.println(isNumberContinueUsingSet(arr3));
+        int[] arr4 = {2, 6, 3, 8, 1, 7, 4, 5};
+        out.println(isNumberContinueUsingSet(arr4));
     }
 
-    private static boolean isNumberContinueSequentially(int[] arr1) {
+    static boolean isNumberContinue(int[] arr1) {
         if (arr1 == null || arr1.length == 0)
             return false;
 
-        Arrays.sort(arr1);
+        Arrays.sort(arr1); // O(nLogn)
 
-        for (int i = 1; i < arr1.length - 1; i++)
-            if (arr1[i] - arr1[i - 1] != 1)
+        for (int i = 1; i < arr1.length - 1; i++) // O(n)
+            if (arr1[i] - arr1[i - 1] != 1) // O(1)
                 return false;
 
         return true;
+    }
+
+    static boolean isNumberContinueUsingSet(int[] arr1) {
+        TreeSet<Integer> set = new TreeSet<>();
+        for (int i : arr1)
+            set.add(i);
+
+        int smallest = 1;
+        while (set.contains(smallest))
+            smallest++;
+
+        return smallest >= arr1.length;
     }
 }
 
 class AverageTwoArrays {
     public static void main(String[] args) {
         int[][] arr = {{2, 6, 3, 8, 1, 9, 11, 12}, {0, 3, 2, 1, 10, 5}};
+        out.println("Average " + averageArray(arr));
+        List<List<Integer>> matrix = Arrays.asList(
+                Arrays.asList(2, 6, 3, 8, 1, 9, 11, 12),
+                Arrays.asList(0, 3, 2, 1, 10, 5));
+        out.println("Average " + averageList(matrix));
+
+    }
+
+    static float averageArray(int[][] arr) {
         int sum = 0;
         float average = 0;
-        int totalElements = 0;
+        int elementCount = 0;
 
-        for (int[] ints : arr)
-            for (int anInt : ints) {
+        for (int[] ints : arr) //O(n)
+            for (int anInt : ints) { //O(n)
                 sum += anInt;
-                totalElements++;
+                elementCount++;
             }
 
-        average = (float) sum / totalElements;
+        average = (float) sum / elementCount;
         out.println("Sum " + sum);
-        out.println("Total Elements " + totalElements);
-        out.println("Average " + average);
+        out.println("Total Elements " + elementCount);
+
+        return average;
+    }
+
+    static float averageList(List<List<Integer>> matrix) {
+        int sum = 0;
+        float average = 0;
+
+        var elementCount = matrix.stream().flatMap(List::stream).count(); // O(n)
+
+        for (List<Integer> ints : matrix) //O(n)
+            for (int anInt : ints) // O(n)
+                sum += anInt;
+
+
+        average = (float) sum / elementCount;
+        out.println("Sum " + sum);
+        out.println("Total Elements " + elementCount);
+
+        return average;
     }
 }
 
@@ -238,12 +321,12 @@ class CalculateRatio {
         out.println(calculateRatio(List.of(-4, 3, -9, 0, 4, 1)));
     }
 
-    public static List<Double> calculateRatio(List<Integer> arr) {
+    public static List<Float> calculateRatio(List<Integer> arr) {
         int positive = 0;
         int negative = 0;
         int zero = 0;
         int size = arr.size();
-        List<Double> result = new ArrayList<>();
+        List<Float> result = new ArrayList<>();
 
         for (int num : arr) {
             if (num > 0)
@@ -253,16 +336,17 @@ class CalculateRatio {
             else
                 zero++;
         }
-        result.add(positive / (double) size);
-        result.add(negative / (double) size);
-        result.add(zero / (double) size);
+
+        result.add(positive / (float) size);
+        result.add(negative / (float) size);
+        result.add(zero / (float) size);
         return result;
     }
 }
 
 class SumMinAndMax {
     public static void main(String[] args) {
-        var list = List.of(256741038, 623958417, 467905213, 714532089, 938071625);
+        var list = List.of(256, 64, 1024, 32, 4);
         var allButMinValue = list.stream()
                 .sorted(Comparator.reverseOrder())
                 .limit(list.size() - 1)
@@ -280,19 +364,27 @@ class SumMinAndMax {
 
 class BirthdayCakeCandles {
     public static void main(String[] args) {
-//        var list = List.of(3, 2, 1, 3);
-        var list = List.of(2472649, 2472649, 9999907, 328325, 9999907);
+        var list = List.of(3, 2, 1, 3);
         OptionalLong max = list.stream().mapToLong(Integer::longValue).max();
         long count = list.stream().filter(num -> num == max.getAsLong()).count();
         out.println(count);
     }
 }
 
-class MultipleListElements {
+class ListElementsMultiply {
     public static void main(String[] args) {
         List<Integer> list = List.of(1, 2, 3, 4, 5);
-        out.println(list.stream().reduce(1, Math::multiplyExact));
-        out.println(list.stream().reduce(1, (a, b) -> a * b));
+        out.println("Multiply stream API: " + list.stream().reduce(1, Math::multiplyExact));
+        out.println("Multiply stream API: " + list.stream().reduce(1, (a, b) -> a * b));
+        out.println("Multiply: " + multiply(list));
+    }
+
+    static float multiply(List<Integer> list) {
+        float multiplier = 1;
+        for (int i : list)
+            multiplier *= i;
+
+        return multiplier;
     }
 }
 
@@ -317,11 +409,22 @@ class MatrixToArray {
         matrix.add(row1);
         matrix.add(row2);
         matrix.add(row3);
+        out.println(matrixToArrayStreamAPI(matrix));
         out.println(matrixToArray(matrix));
     }
 
+    private static List<Integer> matrixToArrayStreamAPI(List<List<Integer>> matrix) {
+        return matrix.stream().flatMap(List::stream).collect(Collectors.toList()); // O(n)
+    }
+
     private static List<Integer> matrixToArray(List<List<Integer>> matrix) {
-        return matrix.stream().flatMap(List::stream).collect(Collectors.toList());
+        List<Integer> result = new ArrayList<>();
+
+        for (List<Integer> integers : matrix) //O(n)
+            for (int j = 0; j < integers.size(); j++) //O(n)
+                result.add(integers.get(j));
+
+        return result;
     }
 }
 
@@ -344,9 +447,9 @@ class PairSum {
                 left++; // Move the left pointer up
                 right--; // Move the right pointer down
             } else if (sum < target)
-                left++;  // Move the left pointer up to increase the sum
-            else
-                right--; // Move the right pointer down to decrease the sum
+                left++;  // Move the left pointer up
+            else if (sum > target)
+                right--; // Move the right pointer down
         }
 
         out.println(map);
@@ -382,25 +485,22 @@ class FindMaxArrayElement {
     public static void main(String[] args) {
         int[] arr = {1, 9, 8, 6, 5, 3, 7};
 
-        // For Loop o(n)
         long start = nanoTime();
         int max1 = arr[0];
-        for (int i : arr)
+        for (int i : arr) //O(n)
             if (i > max1)
                 max1 = i;
         long end = nanoTime();
         out.println(max1 + ", execution time (ms): " + (end - start) / 1000000);
 
-        // Sort and Fetch the last O(nlogn)
         long start1 = nanoTime();
-        Arrays.sort(arr);
+        Arrays.sort(arr); // O(nlogn)
         int max2 = arr[arr.length - 1];
         long end1 = nanoTime();
         out.println(max2 + ", execution time (ms): " + (end1 - start1) / 1000000);
 
-        // Stream API o(n)
         long start2 = nanoTime();
-        int max3 = Arrays.stream(arr).max().orElse(0);
+        int max3 = Arrays.stream(arr).max().orElse(0); // O(n)
         long end2 = nanoTime();
         out.println(max3 + ", execution time (ms): " + (end2 - start2) / 1000000);
     }
@@ -434,20 +534,20 @@ class ProcessInputIntegers {
 
     public static void main(String[] args) {
         int[] arr = {-1, -2, -3, 2};
-        System.out.println(processInputIntegers(arr));
+        out.println(processInputIntegers(arr));
         int[] arr1 = {-111, -2, -3, 2};
-        System.out.println(processInputIntegers(arr1));
+        out.println(processInputIntegers(arr1));
     }
 }
 
-class FindSmallestPositiveInt {
-    public static int solution(int[] A) {
+class FindFirstMissingPositive {
+    public static int firstMissingPositiveElement(int[] A) {
         Set<Integer> set = new HashSet<>();
         for (int i : A)
             if (i > 0)
                 set.add(i);
 
-        int smallest = 1;
+        int smallest = 1; // smallest positive integers start from 1 and go upward: 1, 2, 3, 4, 5, ....
         while (set.contains(smallest))
             smallest++;
 
@@ -456,11 +556,11 @@ class FindSmallestPositiveInt {
 
     public static void main(String[] args) {
         int[] arr1 = {1, 3, 6, 4, 1, 2};
-        out.println(solution(arr1));
+        out.println(firstMissingPositiveElement(arr1));
         int[] arr2 = {1, 2, 3};
-        out.println(solution(arr2));
+        out.println(firstMissingPositiveElement(arr2));
         int[] arr3 = {-1, -3};
-        out.println(solution(arr3));
+        out.println(firstMissingPositiveElement(arr3));
     }
 }
 
@@ -496,18 +596,18 @@ class VisitCounter {
         if (visits == null)
             return resultMap;
 
-        for (Map<String, UserStats> visit : visits) {
+        for (Map<String, UserStats> visit : visits) { //O(m)
             if (visit == null)
                 continue;
 
-            for (Map.Entry<String, UserStats> entry : visit.entrySet()) {
+            for (Map.Entry<String, UserStats> entry : visit.entrySet()) { // O(k)
                 try {
-                    Long userId = Long.parseLong(entry.getKey());
+                    Long userId = Long.parseLong(entry.getKey()); // O(1)
                     UserStats userStats = entry.getValue();
                     if (userStats == null || userStats.visitCount().isEmpty())
                         break;
 
-                    userStats.visitCount().ifPresent(count -> resultMap.merge(userId, count, Long::sum));
+                    userStats.visitCount().ifPresent(count -> resultMap.merge(userId, count, Long::sum)); // O(1)
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
