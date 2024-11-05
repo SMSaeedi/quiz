@@ -14,10 +14,10 @@ public class Luxoft {
     }
 
     static int getLargestNumber(int[] arr) {
-        Arrays.sort(arr);
+        Arrays.sort(arr); // O(nLogn)
         int max = arr[arr.length - 1];
         int counter = 0;
-        for (int i : arr)
+        for (int i : arr) // O(n)
             if (i * i <= max)
                 counter++;
         return counter > 0 ? max : -1;

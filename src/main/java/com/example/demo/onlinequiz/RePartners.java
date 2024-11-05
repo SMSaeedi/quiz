@@ -74,7 +74,7 @@ class SetQuestion {
         persons.add(person2);
 
         /*
-         * HashSet could not detect this change, because it manages unique elements based on the hashCode computed insertion time
+         * HashSet could not detect this change, because it manages unique elements based on the hashCode at insertion time
          * To prevent this duplication, we can set person's name as final
          */
         person2.name = "John";
@@ -93,7 +93,7 @@ class WordCounter {
     public static Map<String, Integer> countWords(String text) {
         Map<String, Integer> wordCount = new HashMap<>();
 
-        for (String word : text.toLowerCase().split(""))
+        for (String word : text.toLowerCase().split("")) // O(n)
             if (!word.isEmpty())
                 wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
 
