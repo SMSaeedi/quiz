@@ -4,7 +4,7 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-class CommonChars{
+class CommonChars {
     public static void main(String[] args) {
         out.println(commonChild("WEWOUCUIDGCGTRMEZEPXZFEJWISRSBBSYXAYDFEJJDLEBVHHKS", "FDAGCXGKCTKWNECHMRXZWMLRYUCOCZHJRRJBOAJOQJZZVUYXIC"));
         out.println(commonChild("Mahsa", "Sara"));
@@ -12,14 +12,14 @@ class CommonChars{
         out.println(commonChild("Setareh", "setar0h0"));
     }
 
-    public static int commonChild(String s1, String s2) {
+    static int commonChild(String s1, String s2) {
         int m = s1.length();
         int n = s2.length();
 
         int[][] dp = new int[m + 1][n + 1];
 
-        for (int i = 1; i <= m; i++)
-            for (int j = 1; j <= n; j++) {
+        for (int i = 1; i <= m; i++) //O(n)
+            for (int j = 1; j <= n; j++) { //O(n)
                 if (s1.charAt(i - 1) == s2.charAt(j - 1))
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 else
@@ -33,35 +33,35 @@ class CommonChars{
 
 class StringAnagram {
     public static void main(String[] args) {
-        if (isAnagram("aab", "baa")) out.println("aab and baa are anagrams.");
-        if (!isAnagram("aaa", "baa")) out.println("aaa and baa are not anagrams.");
-        if (isAnagramUsingHashMap("listen", "silent")) out.println("listen and silent are anagrams.");
+        if (isAnagram1("aab", "baa")) out.println("aab and baa are anagrams.");
+        if (!isAnagram1("aaa", "baa")) out.println("aaa and baa are not anagrams.");
+        if (isAnagramHashMap("listen", "silent")) out.println("listen and silent are anagrams.");
     }
 
-    private static boolean isAnagramUsingHashMap(String str1, String str2) {
+    static boolean isAnagramHashMap(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
 
         if (str1.length() != str2.length())
             return false;
 
-        HashMap<Character, Integer> map1 = new HashMap<>();
+        HashMap<Character, Integer> map = new HashMap<>();
         for (char c : str1.toCharArray())
-            map1.put(c, map1.getOrDefault(c, 0) + 1);
+            map.put(c, map.getOrDefault(c, 0) + 1);
 
         for (char c : str2.toCharArray()) {
-            if (!map1.containsKey(c))
+            if (!map.containsKey(c))
                 return false;
-            map1.put(c, map1.get(c) + 1);
-            if (map1.get(c) == 1)
-                map1.remove(c);
+            map.put(c, map.get(c) + 1);
+            if (map.get(c) == 1)
+                map.remove(c);
         }
 
         return true;
     }
 
-    private static boolean isAnagram(String str1, String str2) {
-        int[] count = new int[256];
+    static boolean isAnagram1(String str1, String str2) {
+        int[] count = new int[128];
         for (int i = 0; i < str1.length(); i++) {
             count[str1.charAt(i)]++;
             count[str2.charAt(i)]--;
@@ -80,28 +80,41 @@ class FindDuplicatedInStringArray {
         out.println(findFirstDuplicateID(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
         out.println(findFirstDuplicateID(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
         out.println(findFirstDuplicateID(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+
+        out.println(findDuplicateIDs(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"}));
+        out.println(findDuplicateIDs(new String[]{"Z999", "Y888", "Z999", "Y888"}));
+        out.println(findDuplicateIDs(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"}));
     }
 
-    private static String findFirstDuplicateID(String[] strings) {
+    static String findFirstDuplicateID(String[] strings) {
         Set<String> uniqueSet = new HashSet<>();
-        Set<String> duplicatedSet = new HashSet<>();
 
         for (String s : strings)
-            if (!uniqueSet.add(s)) {
-                duplicatedSet.add(s);
+            if (!uniqueSet.add(s))
                 return s;
-            }
+
         return "";
+    }
+
+    static List<String> findDuplicateIDs(String[] strings) {
+        Set<String> uniqueSet = new HashSet<>();
+        List<String> duplicatedElements = new ArrayList<>();
+
+        for (String s : strings)
+            if (!uniqueSet.add(s))
+                duplicatedElements.add(s);
+
+        return duplicatedElements;
     }
 }
 
 class CharCount {
     public static void main(String[] args) {
-        String str = "aabbbccaaa";
-        out.println(encode(str));
+        out.println(charCount1("aabbbccaaa"));
+        out.println(charCount2("aabbbccaaa"));
     }
 
-    public static String encode(String input) {
+    static String charCount1(String input) {
         if (input == null || input.isEmpty())
             return "";
 
@@ -122,9 +135,21 @@ class CharCount {
         result.append(count).append(currentChar).append(" ");
         return result.toString();
     }
+
+    static String charCount2(String input) {
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+        for (String s : input.split(""))
+            map.put(s, map.getOrDefault(s, 0) + 1);
+
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : map.entrySet())
+            result.append(entry.getValue()).append(entry.getKey()).append(" ");
+
+        return result.toString();
+    }
 }
 
-class WordsCount {
+class StringLength {
     public static void main(String[] args) {
         String str1 = "Welcome to Java world!";
         out.println(str1.split(" ").length);
@@ -177,7 +202,7 @@ class CharReverse {
     }
 }
 
-class StringWellFormed {
+class WellFormedString {
     public static void main(String[] args) {
         String strFormed = "[{()}]";
         String strNotFormed = "[{(}]";
@@ -267,19 +292,19 @@ class WordsAndCharsCount {
 }
 
 class FindFirstUniqueChar {
-    static String str = "efficient";
-    static String str1 = "mahsa";
-    static String str2 = "ssff";
-    static String str3 = "";
-
     public static void main(String[] args) {
-        out.println(findFirstUniqueCharacter(str));
-        out.println(findFirstUniqueCharacter(str2));
-        out.println(findFirstUniqueCharacter(str1));
-        out.println(findFirstUniqueCharacter(str3));
+        out.println(findFirstUniqueCharacter("efficient"));
+        out.println(findFirstUniqueCharacter("mahsa"));
+        out.println(findFirstUniqueCharacter("ssff"));
+        out.println(findFirstUniqueCharacter(""));
+
+        out.println(findFirstUniqueCharUsingMap("efficient"));
+        out.println(findFirstUniqueCharacter("mahsa"));
+        out.println(findFirstUniqueCharacter("ssff"));
+        out.println(findFirstUniqueCharacter(""));
     }
 
-    private static Character findFirstUniqueCharacter(String input) {
+    static Character findFirstUniqueCharacter(String input) {
         char outPut;
 
         if (input.isEmpty())
@@ -293,26 +318,31 @@ class FindFirstUniqueChar {
 
         return null;
     }
+
+    static Character findFirstUniqueCharUsingMap(String input) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String ch : input.split(""))
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+       for (Map.Entry<String, Integer> entry : map.entrySet())
+           if(entry.getValue() == 1)
+               return entry.getKey().charAt(0);
+
+        return null;
+    }
 }
 
 class FindSecondUniqueChar {
-    static String str = "efficient";
-    static String str1 = "mahsa";
-    static String str2 = "ssff";
-    static String str3 = "";
-    static String str4 = "raja";
-    static String str5 = "test";
-
     public static void main(String[] args) {
-        out.println(findSecondUniqueCharacter(str));
-        out.println(findSecondUniqueCharacter(str2));
-        out.println(findSecondUniqueCharacter(str1));
-        out.println(findSecondUniqueCharacter(str3));
-        out.println(findSecondUniqueCharacter(str4));
-        out.println(findSecondUniqueCharacter(str5));
+        out.println(findSecondUniqueCharacter("efficient"));
+        out.println(findSecondUniqueCharacter("mahsa"));
+        out.println(findSecondUniqueCharacter("ssff"));
+        out.println(findSecondUniqueCharacter(""));
+        out.println(findSecondUniqueCharacter("raja"));
+        out.println(findSecondUniqueCharacter("test"));
     }
 
-    private static Character findSecondUniqueCharacter(String input) {
+    static Character findSecondUniqueCharacter(String input) {
         /*
          *  Use LinkedHashMap to preserve insertion order --> {e=2, f=2, i=2, c=1, n=1, t=1}
          *  HashMap demonstrate --> {c=1, t=1, e=2, f=2, i=2, n=1}
@@ -342,7 +372,7 @@ class StringContiguous {
         out.println(isStringContiguous(str2));
     }
 
-    private static boolean isStringContiguous(String str) {
+    static boolean isStringContiguous(String str) {
         if (str == null || str.isEmpty())
             return false;
 
@@ -365,9 +395,8 @@ class StringPalindrome {
         out.println(isPalindrome(str3));
     }
 
-    private static boolean isPalindrome(String str) {
-        String sb = new StringBuilder(str).reverse().toString();
-        return sb.equalsIgnoreCase(str);
+    static boolean isPalindrome(String str) {
+        return new StringBuilder(str).reverse().toString().equalsIgnoreCase(str);
     }
 }
 

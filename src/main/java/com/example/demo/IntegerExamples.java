@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static java.lang.System.*;
@@ -29,12 +30,15 @@ class RemoveDuplicatedIntArray {
 
 class FindDuplicatedIntArray {
     public static void main(String[] args) {
-        int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
-        int[] uniqueAddresses = findDuplicates(addresses);
-        out.println(Arrays.toString(uniqueAddresses));   // Returns [1, 2, 3, 5]
+        int[] arr1 = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
+        out.println(Arrays.toString(findDuplicates(arr1)));   // Returns [1, 2, 3, 5]
+        out.println(Arrays.toString(findDuplicateElements(arr1)));   // Returns [1, 2, 3, 5]
+        out.println(findDuplicateElementsUsingMap(arr1));
+        int[] arr2 = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
+        out.println(findFirstDuplicate(arr2));   // Returns 1
     }
 
-    private static int[] findDuplicates(int[] ads) {
+    static int[] findDuplicates(int[] ads) {
         Map<Integer, Integer> map = new TreeMap<>();
         for (int i : ads) // O(n)
             map.put(i, map.getOrDefault(i, 0) + 1);
@@ -48,6 +52,44 @@ class FindDuplicatedIntArray {
                 result[i++] = entry.getKey();
 
         return result;
+    }
+
+    static int[] findDuplicateElements(int[] ads) {
+        Set<Integer> set = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
+
+        for (int i : ads)
+            if (!set.add(i))
+                list.add(i);
+
+        int[] result = new int[list.size()];
+        int i = 0;
+        for (int num : list)
+            result[i++] = num;
+
+        return result;
+    }
+
+    static Map<Integer, Integer> findDuplicateElementsUsingMap(int[] ads) {
+        Map<Integer, Integer> map = new ConcurrentHashMap<>();
+        for (int i : ads) // O(n)
+            map.put(i, map.getOrDefault(i, 0) + 1);
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(n)
+            if (entry.getValue() == 1)
+                map.remove(entry.getKey());
+
+        return map;
+    }
+
+    static int findFirstDuplicate(int[] ads) {
+        Set<Integer> set = new HashSet<>();
+        Arrays.sort(ads);
+        for (int i : ads)
+            if (!set.add(i))
+                return i;
+
+        return 0;
     }
 }
 
@@ -543,12 +585,12 @@ class ProcessInputIntegers {
 class FindFirstMissingPositive {
     public static int firstMissingPositiveElement(int[] A) {
         Set<Integer> set = new HashSet<>();
-        for (int i : A)
+        for (int i : A) //O(n)
             if (i > 0)
                 set.add(i);
 
         int smallest = 1; // smallest positive integers start from 1 and go upward: 1, 2, 3, 4, 5, ....
-        while (set.contains(smallest))
+        while (set.contains(smallest)) //O(n)
             smallest++;
 
         return smallest;
@@ -566,23 +608,19 @@ class FindFirstMissingPositive {
 
 class VisitCounter {
     public static void main(String[] args) {
-        // Map1 with valid user IDs and visit counts
         Map<String, UserStats> map1 = new HashMap<>();
         map1.put("1", new UserStats(Optional.of(5L)));
         map1.put("2", new UserStats(Optional.of(10L)));
 
-        // Map2 with overlapping user IDs
         Map<String, UserStats> map2 = new HashMap<>();
         map2.put("1", new UserStats(Optional.of(3L))); // Should be added to the count of userId 1
         map2.put("3", new UserStats(Optional.of(7L))); // New userId, should be added as-is
 
-        // Map3 with null values and invalid user ID
         Map<String, UserStats> map3 = new HashMap<>();
         map3.put("abc", new UserStats(Optional.of(4L))); // Invalid key, should be skipped
         map3.put("2", null); // Null UserStats, should be skipped
         map3.put("4", new UserStats(null)); // Null visit count, should be skipped
 
-        // Map4 null should be skipped
         Map<String, UserStats> nullMap = null;
 
         Map<Long, Long> result = count(map1, map2, map3, nullMap);
