@@ -9,9 +9,12 @@ public class RePartners {
         System.out.println(str1 == str2); // false (not in the same memory location)
         System.out.println(str1.hashCode() == str2.hashCode()); // true (compared the content of the strings)
         System.out.println(str1.equals(str2)); // true
+        String str3 = new String("greeting"); // a new String in the heap, distinct from str1 in the string pool
+        System.out.println(str2 == str3); // false (not in the same memory location)
+        System.out.println(str2.equals(str3)); // true
 
-        String str3 = "greeting";
-        System.out.println(str1 == str3);  // true  (same memory location in the string pool)
+        String str4 = "greeting";
+        System.out.println(str1 == str4);  // true  (same memory location in the string pool)
     }
 }
 
@@ -101,6 +104,8 @@ class WordCounter {
     }
 
     public static void main(String[] args) {
+        System.out.println(1.0 / 0.0); //Infinity
+        System.out.println(1 / 0); //ArithmeticException: / by zero
         System.out.println(countWords("Mahsa"));
         System.out.println(Arrays.stream("Mahsa".split(" ")).count());
     }
