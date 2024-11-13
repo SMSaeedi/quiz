@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import static java.lang.System.*;
@@ -470,34 +471,6 @@ class MatrixToArray {
     }
 }
 
-class PairSum {
-    public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9}; // if arr is not sorted, we sort it before the process
-        int target = 8;
-        Map<Integer, List<Integer>> map = new HashMap<>();
-
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left < right) {
-            int sum = arr[left] + arr[right];
-            if (sum == target) {
-                List<Integer> pairNr = new ArrayList<>();
-                pairNr.add(arr[left]);
-                pairNr.add(arr[right]);
-                map.put(left, pairNr);
-                left++; // Move the left pointer up
-                right--; // Move the right pointer down
-            } else if (sum < target)
-                left++;  // Move the left pointer up
-            else if (sum > target)
-                right--; // Move the right pointer down
-        }
-
-        out.println(map);
-    }
-}
-
 class FindMaxUsingBinarySearch {
     public static void main(String[] args) {
         int[] nums = new int[]{4, 3, 2, 1, 7, 6, 5};
@@ -511,15 +484,15 @@ class FindMaxUsingBinarySearch {
     }
 
     public static int findMax(int[] nums) {
-        int low = 0;
-        int high = nums.length - 1;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
 
-            if (nums[mid] > nums[mid + 1]) high = mid;
-            else low = mid + 1;
+            if (nums[mid] > nums[mid + 1]) right = mid;
+            else left = mid + 1;
         }
-        return nums[low];
+        return nums[left];
     }
 }
 
@@ -606,6 +579,25 @@ class FindFirstMissingPositive {
     }
 }
 
+class LargestNumberTwiceSize {
+    public static void main(String[] args) {
+        int[] arr1 = {3, 2};
+        out.println(largestNumberTwiceSize(arr1));
+        int[] arr2 = {3, 2, 1};
+        out.println(largestNumberTwiceSize(arr2));
+    }
+
+    static int largestNumberTwiceSize(int[] arr) {
+        Arrays.sort(arr); // O(nLogn)
+        int max = arr[arr.length - 1];
+        int counter = 0;
+        for (int i : arr) // O(n)
+            if (i * i <= max)
+                counter++;
+        return counter > 0 ? max : -1;
+    }
+}
+
 class VisitCounter {
     public static void main(String[] args) {
         Map<String, UserStats> map1 = new HashMap<>();
@@ -655,5 +647,125 @@ class VisitCounter {
     }
 
     record UserStats(Optional<Long> visitCount) {
+    }
+}
+
+class PairSum {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9}; // if arr is not sorted, we sort it before the process
+        out.println(pairSum(arr, 8));
+        int[] arr2 = {9, 1, 2, 8, 7, 4, 3, 4, 6, 5, 4};
+        out.println(optimizedPairSum(arr2, 8));
+    }
+
+    static boolean optimizedPairSum(int[] arr, int target) {
+        Set<Integer> set = new HashSet<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        int count = 0;
+        for (int i : arr) { // O(n)
+            if (set.contains(target - i)) {
+                count++;
+                List<Integer> pairNr = new ArrayList<>();
+                pairNr.add(i);
+                pairNr.add(target - i);
+                map.put(count, pairNr);
+            }
+            set.add(i); // O(1)
+        }
+        out.println(map);
+        return count > 0;
+    }
+
+    static Map<Integer, List<Integer>> pairSum(int[] arr, int target) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            if (sum == target) {
+                List<Integer> pairNr = new ArrayList<>();
+                pairNr.add(arr[left]);
+                pairNr.add(arr[right]);
+                map.put(left, pairNr);
+                left++; // Move the left pointer up
+                right--; // Move the right pointer down
+            } else if (sum < target)
+                left++;  // Move the left pointer up
+            else if (sum > target)
+                right--; // Move the right pointer down
+        }
+
+        return map;
+    }
+}
+
+class ZeroSumTriplets {
+    public static void main(String[] args) {
+        int[] arr = {0, -2, 7, 2, 4, -6};
+        zeroSumTriplets(arr);
+    }
+
+    static void zeroSumTriplets(int[] arr) {
+        Arrays.sort(arr); // O(nLogn)
+
+        for (int i = 0; i < arr.length - 2; i++) { // O(n)
+            int min = i + 1;
+            int max = arr.length - 1;
+            int target = -arr[i];
+
+            while (min < max) { // O(n)
+                int sum = arr[min] + arr[max];
+
+                if (sum == target) {
+                    System.out.println(arr[i] + ", " + arr[min] + ", " + arr[max]);
+                    min++;
+                    max--;
+                } else if (sum < target) {
+                    min++;
+                } else {
+                    max--;
+                }
+            }
+        }
+    }
+}
+
+class SubArrayWithGivenSum {
+    public static void main(String[] args) {
+        int[] arr = {10, 3, 5, 8, 6, 12, 20, 15, 31};
+        out.println(subArrayWithGivenSum(arr, arr.length, 31));
+    }
+
+    static List<List<Integer>> subArrayWithGivenSum(int[] arr, int length, int targetSum) {
+        List<List<Integer>> subArrays = new ArrayList<>();
+
+        for (int start = 0; start < length; start++) {
+            int sum = 0;
+            List<Integer> list = new ArrayList<>();
+
+            for (int end = start + 1; end < length; end++) {
+                sum += arr[end];
+                list.add(arr[end]);
+
+                if (sum == targetSum)
+                    subArrays.add(new ArrayList<>(list));
+            }
+        }
+        return subArrays;
+    }
+}
+
+class Test {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 1);
+        map.put("b", null);
+        out.println(map.get("b") == null ? null : map.get("b") + 1);
+
+        Set<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(2);
+        out.println(set);
     }
 }

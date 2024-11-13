@@ -324,9 +324,9 @@ class FindFirstUniqueChar {
         for (String ch : input.split(""))
             map.put(ch, map.getOrDefault(ch, 0) + 1);
 
-       for (Map.Entry<String, Integer> entry : map.entrySet())
-           if(entry.getValue() == 1)
-               return entry.getKey().charAt(0);
+        for (Map.Entry<String, Integer> entry : map.entrySet())
+            if (entry.getValue() == 1)
+                return entry.getKey().charAt(0);
 
         return null;
     }
@@ -340,6 +340,13 @@ class FindSecondUniqueChar {
         out.println(findSecondUniqueCharacter(""));
         out.println(findSecondUniqueCharacter("raja"));
         out.println(findSecondUniqueCharacter("test"));
+        out.println("-------------------------------------");
+        out.println(findSecondUniqueChar("efficient"));
+        out.println(findSecondUniqueChar("mahsa"));
+        out.println(findSecondUniqueChar("ssff"));
+        out.println(findSecondUniqueChar(""));
+        out.println(findSecondUniqueChar("raja"));
+        out.println(findSecondUniqueChar("test"));
     }
 
     static Character findSecondUniqueCharacter(String input) {
@@ -358,6 +365,25 @@ class FindSecondUniqueChar {
                 charCount++;
                 if (charCount == 2)
                     return entry.getKey();
+            }
+
+        return null;
+    }
+
+    static Character findSecondUniqueChar(String input) {
+        char outPut;
+        int count = 0;
+
+        if (input.isEmpty())
+            return null;
+
+        for (char ch : input.toCharArray())
+            if (input.indexOf(ch) == input.lastIndexOf(ch)) {
+                count++;
+                if (count == 2) {
+                    outPut = ch;
+                    return outPut;
+                }
             }
 
         return null;
