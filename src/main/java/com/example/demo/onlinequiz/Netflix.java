@@ -4,7 +4,7 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-class EventQuiz {
+class Netflix {
     public static void main(String[] args) {
         Map<String, Long> map = new HashMap<>();
         List<String> keySequence = new ArrayList<>();

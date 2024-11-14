@@ -2,7 +2,7 @@ package com.example.demo.onlinequiz;
 
 import static java.lang.System.out;
 
-public class GoogleQuiz {
+public class Google {
     public static void main(String[] args) {
         String str = "bad";
         int result = 0;

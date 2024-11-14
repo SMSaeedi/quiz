@@ -3,7 +3,7 @@ package com.example.demo.onlinequiz;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AutoOneQuiz {
+public class AutoOne {
     public Map<String, String> map = new HashMap<>();
 
     public String getKey(String key, String secret) {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class RevolutQuiz {
+class Revolut {
     public List<String> serverList = new ArrayList<>();
     private final AtomicInteger index = new AtomicInteger(0);
 

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-class AutoOneQuizTest {
-    AutoOneQuiz c = new AutoOneQuiz();
+class AutoOneTest {
+    AutoOne c = new AutoOne();
 
     @Test
     void test_get_key() {
