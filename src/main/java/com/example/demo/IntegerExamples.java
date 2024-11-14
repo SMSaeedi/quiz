@@ -755,17 +755,3 @@ class SubArrayWithGivenSum {
         return subArrays;
     }
 }
-
-class Test {
-    public static void main(String[] args) {
-        Map<String, Integer> map = new HashMap<>();
-        map.put("a", 1);
-        map.put("b", null);
-        out.println(map.get("b") == null ? null : map.get("b") + 1);
-
-        Set<Integer> set = new HashSet<>();
-        set.add(1);
-        set.add(2);
-        out.println(set);
-    }
-}
