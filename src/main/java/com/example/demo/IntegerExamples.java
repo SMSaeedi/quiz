@@ -246,7 +246,6 @@ class AverageTwoArrays {
                 Arrays.asList(2, 6, 3, 8, 1, 9, 11, 12),
                 Arrays.asList(0, 3, 2, 1, 10, 5));
         out.println("Average " + averageList(matrix));
-
     }
 
     static float averageArray(int[][] arr) {
@@ -276,7 +275,6 @@ class AverageTwoArrays {
         for (List<Integer> ints : matrix) //O(n)
             for (int anInt : ints) // O(n)
                 sum += anInt;
-
 
         average = (float) sum / elementCount;
         out.println("Sum " + sum);
