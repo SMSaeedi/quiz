@@ -324,9 +324,8 @@ class FindFirstUniqueChar {
         for (String ch : input.split(""))
             map.put(ch, map.getOrDefault(ch, 0) + 1);
 
-        for (Map.Entry<String, Integer> entry : map.entrySet())
-            if (entry.getValue() == 1)
-                return entry.getKey().charAt(0);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) // 𝑂(𝑘), where 𝑘 is the number of entries in the map(size of the map).        if (entry.getValue() == 1)
+            return entry.getKey().charAt(0);
 
         return null;
     }
