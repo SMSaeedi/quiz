@@ -2,19 +2,24 @@ package com.example.demo.onlinequiz;
 
 import java.util.*;
 
+import static java.lang.System.out;
+
 public class RePartners {
     public static void main(String[] args) {
         String str1 = "greeting";
-        String str2 = new String("greeting"); // a new String in the heap, distinct from str1 in the string pool
-        System.out.println(str1 == str2); // false (not in the same memory location)
-        System.out.println(str1.hashCode() == str2.hashCode()); // true (compared the content of the strings)
-        System.out.println(str1.equals(str2)); // true
+        String str2 = new String("greeting"); // a new String in the heap, distinct from string pool
+        out.println(str1 == str2); // false (not in the same heap memory location)
+        out.println(str1.hashCode() == str2.hashCode()); // true (compared the content of the strings)
+        out.println(str1.equals(str2)); // true
         String str3 = new String("greeting"); // a new String in the heap, distinct from str1 in the string pool
-        System.out.println(str2 == str3); // false (not in the same memory location)
-        System.out.println(str2.equals(str3)); // true
+        out.println(str2 == str3); // false (not in the same memory location)
+        out.println(str2.equals(str3)); // true
 
         String str4 = "greeting";
-        System.out.println(str1 == str4);  // true  (same memory location in the string pool)
+        out.println(str1 == str4);  // true  (same memory location in the string pool)
+
+        String str5 = str1.intern();
+        out.println(str1 == str5); //true, for both refer to the same object in string pool
     }
 }
 
@@ -41,7 +46,7 @@ final class MutablePerson {
     public static void main(String[] args) {
         List<String> hobbies = List.of("one", "two", "three", "four", "five");
         MutablePerson mutablePerson = new MutablePerson(1, hobbies);
-        System.out.println(mutablePerson.getAge() + " " + mutablePerson.getHobbies());
+        out.println(mutablePerson.getAge() + " " + mutablePerson.getHobbies());
     }
 }
 
@@ -82,13 +87,13 @@ class SetQuestion {
          */
         person2.name = "John";
 
-        System.out.println(persons.size()); // 2
-        System.out.println(persons.contains(person1)); // true
-        System.out.println(persons.contains(person2)); // true
+        out.println(persons.size()); // 2
+        out.println(persons.contains(person1)); // true
+        out.println(persons.contains(person2)); // true
 
-        System.out.println(persons.remove(person2)); // true
-        System.out.println(persons.remove(person1)); // false
-        System.out.println(persons.size()); // 1
+        out.println(persons.remove(person2)); // true
+        out.println(persons.remove(person1)); // false
+        out.println(persons.size()); // 1
     }
 }
 
@@ -104,9 +109,9 @@ class WordCounter {
     }
 
     public static void main(String[] args) {
-        System.out.println(1.0 / 0.0); //Infinity
-        System.out.println(1 / 0); //ArithmeticException: / by zero
-        System.out.println(countWords("Mahsa"));
-        System.out.println(Arrays.stream("Mahsa".split(" ")).count());
+        out.println(1.0 / 0.0); //Infinity
+        out.println(1 / 0); //ArithmeticException: / by zero
+        out.println(countWords("Mahsa"));
+        out.println(Arrays.stream("Mahsa".split(" ")).count());
     }
 }
