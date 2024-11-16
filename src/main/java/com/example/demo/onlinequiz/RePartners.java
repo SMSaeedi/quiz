@@ -1,5 +1,7 @@
 package com.example.demo.onlinequiz;
 
+import lombok.Getter;
+
 import java.util.*;
 
 import static java.lang.System.out;
@@ -23,11 +25,12 @@ public class RePartners {
     }
 }
 
-final class MutablePerson {
-    private int age;
-    private List<String> hobbies;
+@Getter
+final class ImmutablePerson {
+    private final int age;
+    private final List<String> hobbies;
 
-    public MutablePerson(int age, List<String> hobbies) {
+    public ImmutablePerson(int age, List<String> hobbies) {
         this.age = age;
         /*
          * Collections.unmodifiableList(new ArrayList<>(hobbies))
@@ -35,18 +38,10 @@ final class MutablePerson {
         this.hobbies = List.copyOf(hobbies);
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public List<String> getHobbies() {
-        return hobbies;
-    }
-
     public static void main(String[] args) {
         List<String> hobbies = List.of("one", "two", "three", "four", "five");
-        MutablePerson mutablePerson = new MutablePerson(1, hobbies);
-        out.println(mutablePerson.getAge() + " " + mutablePerson.getHobbies());
+        ImmutablePerson immutablePerson = new ImmutablePerson(1, hobbies);
+        out.println(immutablePerson.getAge() + " " + immutablePerson.getHobbies());
     }
 }
 
