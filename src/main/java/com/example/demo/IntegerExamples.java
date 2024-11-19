@@ -2,12 +2,11 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import static java.lang.System.*;
 
-class RemoveDuplicatedIntArray {
+class RemoveDuplicatedElementsInArray {
     public static void main(String[] args) {
         int[] addresses = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
         int[] uniqueAddresses = removeDuplicates(addresses);
@@ -29,7 +28,7 @@ class RemoveDuplicatedIntArray {
     }
 }
 
-class FindDuplicatedIntArray {
+class FindDuplicatedElementsInArray {
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
         out.println(Arrays.toString(findDuplicates(arr1)));   // Returns [1, 2, 3, 5]
@@ -45,10 +44,10 @@ class FindDuplicatedIntArray {
             map.put(i, map.getOrDefault(i, 0) + 1);
         out.println(map);
 
-        long duplicatedCount = map.entrySet().stream().filter(entry -> entry.getValue() > 1).count(); // O(n)
+        long duplicatedElementsSize = map.entrySet().stream().filter(entry -> entry.getValue() > 1).count(); // O(n)
         int i = 0;
-        int[] result = new int[(int) duplicatedCount];
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(n)
+        int[] result = new int[(int) duplicatedElementsSize];
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(k)
             if (entry.getValue() != 1)
                 result[i++] = entry.getKey();
 
@@ -76,7 +75,7 @@ class FindDuplicatedIntArray {
         for (int i : ads) // O(n)
             map.put(i, map.getOrDefault(i, 0) + 1);
 
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(n)
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(k)
             if (entry.getValue() == 1)
                 map.remove(entry.getKey());
 
@@ -117,19 +116,32 @@ class FindTopKElements {
 class FindSecondTopElement {
     public static void main(String[] args) {
         int[] list = {5, 3, 9, 7, 2, 8};
-        var result = Arrays.stream(list)
+        out.println(secondTopElement1(list));
+        out.println(secondTopElement2(list));
+    }
+
+    private static int secondTopElement1(int[] list) {
+        return Arrays.stream(list)
                 .boxed() // O(n), converts each primitive int in the array to an Integer object
                 .sorted(Comparator.reverseOrder()) // O(nLogn)
                 .skip(1) // O(1), skip the first element to reach the second one
                 .mapToInt(Integer::intValue)// This line can be ignored
-                .findFirst(); // O(1)
-        result.ifPresentOrElse(out::println, () -> {
-            throw new IllegalArgumentException("Arrays too small");
-        });
+                .findFirst().orElse(0); // O(1)
+    }
+
+    private static int secondTopElement2(int[] list) {
+        Arrays.sort(list); //O(nlogn)
+        return list[list.length - 2];
     }
 }
 
 class FindTheOnlyUniqueElement {
+    public static void main(String[] args) {
+        int[] arr = new int[]{4, 3, 2, 4, 1, 3, 2};
+        out.println("The unique integer is: " + findTheOnlyUniqueElement(arr));  // Output should be 1
+        out.println("The unique integer, by using Map, is: " + findTheOnlyUniqueElementUsingMap(arr));  // Output should be 1
+    }
+
     public static int findTheOnlyUniqueElement(int[] arr) {
         int unique = 0;
         // O(n), XOR (^) helps identifying a unique element in an array where every other element is repeated
@@ -144,35 +156,29 @@ class FindTheOnlyUniqueElement {
         for (int i : arr) //O(n)
             map.put(i, map.getOrDefault(i, 0) + 1);
 
-        return map.keySet().stream().filter(k -> map.get(k) == 1).findAny().get(); // O(n)
-    }
-
-    public static void main(String[] args) {
-        int[] arr = new int[]{4, 3, 2, 4, 1, 3, 2};
-        out.println("The unique integer is: " + findTheOnlyUniqueElement(arr));  // Output should be 1
-        out.println("The unique integer, by using Map, is: " + findTheOnlyUniqueElementUsingMap(arr));  // Output should be 1
+        return map.keySet().stream().filter(k -> map.get(k) == 1).findFirst().orElse(0); // O(n)
     }
 }
 
 class FindUniqueElements {
+    public static void main(String[] args) {
+        int[] arr1 = new int[]{4, 3, 2, 4, 1, 3, 2, 5, 7, 7, 9, 8, 11};
+        out.println("The unique integers are: " + Arrays.toString(findUniqueElements(arr1)));
+    }
+
     public static int[] findUniqueElements(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : arr) //O(n)
             map.put(num, map.getOrDefault(num, 0) + 1);
 
-        var uniqueElements = map.keySet().stream().filter(e -> map.get(e) == 1).count(); // O(n)
-        int[] result = new int[(int) uniqueElements];
+        var uniqueElementsCount = map.keySet().stream().filter(e -> map.get(e) == 1).count(); // O(n)
+        int[] result = new int[(int) uniqueElementsCount];
         int i = 0;
-        for (Integer num : map.keySet()) // O(n)
+        for (int num : map.keySet()) // O(n)
             if (map.get(num) == 1)
                 result[i++] = num;
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        int[] arr1 = new int[]{4, 3, 2, 4, 1, 3, 2, 5, 7, 7, 9, 8, 11};
-        out.println("The unique integers are: " + Arrays.toString(findUniqueElements(arr1)));
     }
 }
 
@@ -238,14 +244,15 @@ class NumberContiguousArray {
     }
 }
 
-class AverageTwoArrays {
+class MatrixAverage {
     public static void main(String[] args) {
         int[][] arr = {{2, 6, 3, 8, 1, 9, 11, 12}, {0, 3, 2, 1, 10, 5}};
-        out.println("Average " + averageArray(arr));
+        out.println("Average array " + averageArray(arr));
+
         List<List<Integer>> matrix = Arrays.asList(
                 Arrays.asList(2, 6, 3, 8, 1, 9, 11, 12),
                 Arrays.asList(0, 3, 2, 1, 10, 5));
-        out.println("Average " + averageList(matrix));
+        out.println("Average list<list<>> " + averageList(matrix));
     }
 
     static float averageArray(int[][] arr) {
@@ -270,15 +277,14 @@ class AverageTwoArrays {
         int sum = 0;
         float average = 0;
 
-        var elementCount = matrix.stream().flatMap(List::stream).count(); // O(n)
+        var flatArray = matrix.stream().flatMap(List::stream).toList(); // O(n)
 
-        for (List<Integer> ints : matrix) //O(n)
-            for (int anInt : ints) // O(n)
-                sum += anInt;
+        for (int anInt : flatArray) //O(n)
+            sum += anInt;
 
-        average = (float) sum / elementCount;
+        average = (float) sum / flatArray.size();
         out.println("Sum " + sum);
-        out.println("Total Elements " + elementCount);
+        out.println("Total Elements " + flatArray.size());
 
         return average;
     }
@@ -301,9 +307,9 @@ class FizzBuzz {
 
 class CompareTriplets {
     public static void main(String[] args) {
-        var list1 = List.of(5, 6, 7);
-        var list2 = List.of(3, 6, 10);
-        out.println(compareTriplets(list1, list2));
+        var a = List.of(5, 6, 7);
+        var b = List.of(3, 6, 10);
+        out.println(compareTriplets(a, b));
     }
 
     public static List<Integer> compareTriplets(List<Integer> a, List<Integer> b) {
@@ -412,11 +418,12 @@ class BirthdayCakeCandles {
     }
 }
 
-class ListElementsMultiply {
+class Multiply {
     public static void main(String[] args) {
         List<Integer> list = List.of(1, 2, 3, 4, 5);
-        out.println("Multiply stream API: " + list.stream().reduce(1, Math::multiplyExact));
-        out.println("Multiply stream API: " + list.stream().reduce(1, (a, b) -> a * b));
+        // .reduce: the operation of reduction on element to have a single result by repeatedly applying binary operation
+        out.println("Multiply1 stream API: " + list.stream().reduce(1, Math::multiplyExact));
+        out.println("Multiply2 stream API: " + list.stream().reduce(1, (a, b) -> a * b));
         out.println("Multiply: " + multiply(list));
     }
 
@@ -455,6 +462,7 @@ class MatrixToArray {
     }
 
     private static List<Integer> matrixToArrayStreamAPI(List<List<Integer>> matrix) {
+        // .flatMap() combines multiple collections into a stream
         return matrix.stream().flatMap(List::stream).collect(Collectors.toList()); // O(n)
     }
 
