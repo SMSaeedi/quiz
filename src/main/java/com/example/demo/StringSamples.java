@@ -311,16 +311,12 @@ class FindFirstUniqueChar {
     }
 
     static Character findFirstUniqueCharacter(String input) {
-        char outPut;
-
         if (input.isEmpty())
             return null;
 
         for (char ch : input.toCharArray())
-            if (input.indexOf(ch) == input.lastIndexOf(ch)) {
-                outPut = ch;
-                return outPut;
-            }
+            if (input.indexOf(ch) == input.lastIndexOf(ch))
+                return ch;
 
         return null;
     }
