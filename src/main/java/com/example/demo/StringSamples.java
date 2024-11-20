@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -299,9 +300,14 @@ class FindFirstUniqueChar {
         out.println(findFirstUniqueCharacter(""));
 
         out.println(findFirstUniqueCharUsingMap("efficient"));
-        out.println(findFirstUniqueCharacter("mahsa"));
-        out.println(findFirstUniqueCharacter("ssff"));
-        out.println(findFirstUniqueCharacter(""));
+        out.println(findFirstUniqueCharUsingMap("mahsa"));
+        out.println(findFirstUniqueCharUsingMap("ssff"));
+        out.println(findFirstUniqueCharUsingMap(""));
+
+        out.println(findFirstUniqueCharUsingStreamAPI("efficient"));
+        out.println(findFirstUniqueCharUsingStreamAPI("mahsa"));
+        out.println(findFirstUniqueCharUsingStreamAPI("ssff"));
+        out.println(findFirstUniqueCharUsingStreamAPI(""));
     }
 
     static Character findFirstUniqueCharacter(String input) {
@@ -324,10 +330,21 @@ class FindFirstUniqueChar {
         for (String ch : input.split(""))
             map.put(ch, map.getOrDefault(ch, 0) + 1);
 
-        for (Map.Entry<String, Integer> entry : map.entrySet()) // 𝑂(𝑘), where 𝑘 is the number of entries in the map(size of the map).        if (entry.getValue() == 1)
-            return entry.getKey().charAt(0);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) // 𝑂(𝑘), where 𝑘 is nr of map's entries (size of the map)
+            if (entry.getValue() == 1 && !entry.getKey().isEmpty())
+                return entry.getKey().charAt(0);
 
         return null;
+    }
+
+    static Character findFirstUniqueCharUsingStreamAPI(String input) {
+        return input.chars()
+                .mapToObj(c -> (char) c) // Convert int stream to character stream
+                .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting())) // Group and count
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() == 1) // Filter entries with count == 1
+                .map(Map.Entry::getKey) // Extract the character
+                .findFirst().orElse(null); // Get the first one
     }
 }
 

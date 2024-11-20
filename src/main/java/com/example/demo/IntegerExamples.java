@@ -34,8 +34,12 @@ class FindDuplicatedElementsInArray {
         out.println(Arrays.toString(findDuplicates(arr1)));   // Returns [1, 2, 3, 5]
         out.println(Arrays.toString(findDuplicateElements(arr1)));   // Returns [1, 2, 3, 5]
         out.println(findDuplicateElementsUsingMap(arr1));
+
         int[] arr2 = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
         out.println(findFirstDuplicate(arr2));   // Returns 1
+
+        int[] arr3 = {45, 12, 56, 15, 24, 75, 31, 12, 56, 89};
+        out.println(findDuplicateElementsUsingStreamAPI(arr3)); // Returns [56, 12]
     }
 
     static int[] findDuplicates(int[] ads) {
@@ -80,6 +84,15 @@ class FindDuplicatedElementsInArray {
                 map.remove(entry.getKey());
 
         return map;
+    }
+
+    static Set<Integer> findDuplicateElementsUsingStreamAPI(int[] ads) {
+        return Arrays.stream(ads).boxed()
+                .collect(Collectors.groupingBy(i -> i, Collectors.counting())) // Group by element and count
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() > 1) // Filter entries with count > 1
+                .map(Map.Entry::getKey) // Extract keys (duplicates)
+                .collect(Collectors.toSet()); // Collect to a Set to avoid duplicates
     }
 
     static int findFirstDuplicate(int[] ads) {
