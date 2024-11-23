@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.System.out;
 
@@ -25,21 +27,38 @@ class CommonChars {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 else
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-
             }
-
         return dp[m][n];
     }
 }
 
 class StringAnagram {
     public static void main(String[] args) {
-        if (isAnagram1("aab", "baa")) out.println("aab and baa are anagrams.");
-        if (!isAnagram1("aaa", "baa")) out.println("aaa and baa are not anagrams.");
-        if (isAnagramHashMap("listen", "silent")) out.println("listen and silent are anagrams.");
+        if (isAnagram("aab", "baa")) out.println("isAnagram: aab and baa are anagrams.");
+        if (!isAnagram("aaa", "baa")) out.println("!isAnagram: aaa and baa are not anagrams.");
+        if (isAnagramUsingMap("listen", "silent"))
+            out.println("isAnagramUsingHashMap: listen and silent are anagrams.");
+        if (isAnagramUsingStreamAPI("listen", "silent"))
+            out.println("isAnagramUsingStreamAPI: listen and silent are anagrams.");
+        if (!isAnagramUsingStreamAPI("aaa", "baa"))
+            out.println("!isAnagramUsingStreamAPI: aaa and baa are not anagrams.");
     }
 
-    static boolean isAnagramHashMap(String str1, String str2) {
+    static boolean isAnagram(String str1, String str2) {
+        int[] count = new int[128];
+        for (int i = 0; i < str1.length(); i++) {
+            count[str1.charAt(i)]++;
+            count[str2.charAt(i)]--;
+        }
+
+        for (int j : count)
+            if (j != 0)
+                return false;
+
+        return true;
+    }
+
+    static boolean isAnagramUsingMap(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
 
@@ -61,33 +80,35 @@ class StringAnagram {
         return true;
     }
 
-    static boolean isAnagram1(String str1, String str2) {
-        int[] count = new int[128];
-        for (int i = 0; i < str1.length(); i++) {
-            count[str1.charAt(i)]++;
-            count[str2.charAt(i)]--;
-        }
-
-        for (int j : count)
-            if (j != 0)
-                return false;
-
-        return true;
+    static boolean isAnagramUsingStreamAPI(String str1, String str2) {
+        var firstStr = str1.chars().sorted().mapToObj(v -> String.valueOf((char) v)).collect(Collectors.joining());
+        var secondStr = str2.chars().sorted().mapToObj(v -> String.valueOf((char) v)).collect(Collectors.joining());
+        return firstStr.equals(secondStr);
     }
 }
 
 class FindDuplicatedInStringArray {
     public static void main(String[] args) {
-        out.println(findFirstDuplicateID(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
-        out.println(findFirstDuplicateID(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
-        out.println(findFirstDuplicateID(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+        out.println("findFirstDuplicateIDUsingSet " + findFirstDuplicateIDUsingSet(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
+        out.println("findFirstDuplicateIDUsingStreamAPI " + findFirstDuplicateIDUsingStreamAPI(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"})); // Expected "X123"
 
-        out.println(findDuplicateIDs(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"}));
-        out.println(findDuplicateIDs(new String[]{"Z999", "Y888", "Z999", "Y888"}));
-        out.println(findDuplicateIDs(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"}));
+        out.println("findFirstDuplicateIDUsingSet " + findFirstDuplicateIDUsingSet(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
+        out.println("findFirstDuplicateIDUsingStreamAPI " + findFirstDuplicateIDUsingStreamAPI(new String[]{"Z999", "Y888", "Z999", "Y888"})); // Expected "Z999"
+
+        out.println("findFirstDuplicateIDUsingSet " + findFirstDuplicateIDUsingSet(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+        out.println("findFirstDuplicateIDUsingStreamAPI " + findFirstDuplicateIDUsingStreamAPI(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"})); // Expected "E100"
+
+        out.println("findDuplicateIDsUsingSet " + findDuplicateIDsUsingSet(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"}));
+        out.println("findDuplicateIDsUsingStreamAPI " + findDuplicateIDsUsingStreamAPI(new String[]{"X123", "A456", "X123", "B789", "A456", "C111"}));
+
+        out.println("findDuplicateIDsUsingSet " + findDuplicateIDsUsingSet(new String[]{"Z999", "Y888", "Z999", "Y888"}));
+        out.println("findDuplicateIDsUsingStreamAPI " + findDuplicateIDsUsingStreamAPI(new String[]{"Z999", "Y888", "Z999", "Y888"}));
+
+        out.println("findDuplicateIDsUsingSet " + findDuplicateIDsUsingSet(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"}));
+        out.println("findDuplicateIDsUsingStreamAPI " + findDuplicateIDsUsingStreamAPI(new String[]{"E100", "B200", "C300", "E100", "D400", "C300"}));
     }
 
-    static String findFirstDuplicateID(String[] strings) {
+    static String findFirstDuplicateIDUsingSet(String[] strings) {
         Set<String> uniqueSet = new HashSet<>();
 
         for (String s : strings)
@@ -97,7 +118,15 @@ class FindDuplicatedInStringArray {
         return "";
     }
 
-    static List<String> findDuplicateIDs(String[] strings) {
+    static String findFirstDuplicateIDUsingStreamAPI(String[] strings) {
+        Set<String> uniqueSet = new HashSet<>();
+        return Arrays.stream(strings)
+                .filter(s -> !uniqueSet.add(s))
+                .findFirst()
+                .orElse("");
+    }
+
+    static List<String> findDuplicateIDsUsingSet(String[] strings) {
         Set<String> uniqueSet = new HashSet<>();
         List<String> duplicatedElements = new ArrayList<>();
 
@@ -107,15 +136,25 @@ class FindDuplicatedInStringArray {
 
         return duplicatedElements;
     }
+
+    static List<String> findDuplicateIDsUsingStreamAPI(String[] strings) {
+        Set<String> uniqueSet = new HashSet<>();
+
+        return Arrays.stream(strings)
+                .filter(s -> !uniqueSet.add(s))
+                .distinct()
+                .collect(Collectors.toList());
+    }
 }
 
 class CharCount {
     public static void main(String[] args) {
-        out.println(charCount1("aabbbccaaa"));
-        out.println(charCount2("aabbbccaaa"));
+        out.println("charCount " + charCount("aabbbccaaa"));
+        out.println("charCountUsingMap " + charCountUsingMap("aabbbccaaa"));
+        out.println("charCountUsingStreamAPI" + charCountUsingStreamAPI("aabbbccaaa"));
     }
 
-    static String charCount1(String input) {
+    static String charCount(String input) {
         if (input == null || input.isEmpty())
             return "";
 
@@ -137,7 +176,7 @@ class CharCount {
         return result.toString();
     }
 
-    static String charCount2(String input) {
+    static String charCountUsingMap(String input) {
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         for (String s : input.split(""))
             map.put(s, map.getOrDefault(s, 0) + 1);
@@ -148,18 +187,23 @@ class CharCount {
 
         return result.toString();
     }
-}
 
-class StringLength {
-    public static void main(String[] args) {
-        String str1 = "Welcome to Java world!";
-        out.println(str1.split(" ").length);
-        out.println(Arrays.stream(str1.split(" ")).count());
+    static String charCountUsingStreamAPI(String input) {
+        return input.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(c -> c, Collectors.counting()))
+                .toString();
     }
 }
 
-class WordCounter {
-    public static Map<String, Integer> countWords(String text) {
+class WordCount {
+    public static void main(String[] args) {
+        System.out.println(countWordsUsingMap("Mahsa"));
+        System.out.println("Using stream.count " + Arrays.stream("Mahsa".split("")).count());
+        System.out.println("countWordsUsingStreamAPI " + countWordsUsingStreamAPI("Mahsa"));
+    }
+
+    public static Map<String, Integer> countWordsUsingMap(String text) {
         Map<String, Integer> wordCount = new HashMap<>();
 
         for (String word : text.toLowerCase().split(""))
@@ -168,9 +212,27 @@ class WordCounter {
         return wordCount;
     }
 
+    public static String countWordsUsingStreamAPI(String text) {
+        return ((Long) text.chars().count()).toString();
+    }
+}
+
+class WordsAndCharsCount {
     public static void main(String[] args) {
-        System.out.println(countWords("Mahsa"));
-        System.out.println(Arrays.stream("Mahsa".split(" ")).count());
+        String str = "This is a Java Program";
+        out.println(str + ", nr of words: " + str.split(" ").length);
+
+        out.println("Without space: " + str.replace(" ", "").length());
+        out.println("With space: " + str.length());
+    }
+}
+
+class StringLength {
+    public static void main(String[] args) {
+        String str1 = "Welcome to Java world!";
+
+        out.println("Using str length " + str1.split(" ").length);
+        out.println("Using Stream API " + Arrays.stream(str1.split(" ")).count());
     }
 }
 
@@ -183,23 +245,6 @@ class StringReplace {
         out.println(str.replace('a', 'o'));
         out.println(str.replace("a", "o"));
         out.println(str.replaceAll("a", "o"));
-    }
-}
-
-class CharReverse {
-    public static void main(String[] args) {
-        String str = "Reverse Me";
-        StringBuilder sb = new StringBuilder();
-        for (int i = str.length() - 1; i >= 0; i--)
-            sb.append(str.charAt(i));
-        out.println(sb);
-
-        String str2 = "You Reversed Me";
-        out.println(new StringBuilder(str2).reverse());
-
-        String str3 = "You're about to Reverse Me";
-        for (int i = str2.length() - 1; i >= 0; i--)
-            out.print(str3.charAt(i));
     }
 }
 
@@ -230,7 +275,7 @@ class WellFormedString {
     }
 }
 
-class PrintLength {
+class PrintEvenWordLength {
     public static void main(String[] args) {
         String srt = "Hi World";
         for (String s : srt.split(" "))
@@ -239,29 +284,88 @@ class PrintLength {
     }
 }
 
-class SunInteger {
+class PrintOddWordLength {
     public static void main(String[] args) {
-        String str1 = "554";
-        String str2 = "896";
-        int sum = Integer.parseInt(str1) + Integer.parseInt(str2);
-        out.println(sum);
+        String srt = "Hi World";
+        out.println(Arrays.stream(srt.split(" ")).filter(w -> w.length() % 2 != 0).findFirst().orElse(""));
     }
 }
 
-class WordsReverse {
+class SumIntegerValues {
     public static void main(String[] args) {
-        String str1 = "Hello Java, Welcome to our world!";
+        out.println(Integer.parseInt("554") + Integer.parseInt("896"));
+    }
+}
+
+class CharReverse {
+    public static void main(String[] args) {
+        String str = "StringBuilder and for loop";
+        StringBuilder sb = new StringBuilder();
+        for (int i = str.length() - 1; i >= 0; i--)
+            sb.append(str.charAt(i));
+        out.println(sb);
+
+        String str2 = "StringBuilder and reverse()";
+        out.println(new StringBuilder(str2).reverse());
+
+        String str3 = "Stream API";
+        out.println(str3.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        list -> {
+                            Collections.reverse(list);
+                            return list.stream();
+                        }))
+                .map(String::valueOf)
+                .toList());
+
+        String str4 = "reverse for loop";
+        for (int i = str4.length() - 1; i >= 0; i--)
+            out.print(str4.charAt(i));
+    }
+}
+
+class WordReverse {
+    public static void main(String[] args) {
+        out.println(wordReverseUsingStringBuilder("Hello Java, Welcome to our world!"));
+        out.println(wordReverseUsingStreamAPI("Hello Java, Welcome to our world!"));
+    }
+
+    private static StringBuilder wordReverseUsingStringBuilder(String str1) {
         StringBuilder sb = new StringBuilder();
         String[] s1 = str1.split(" ");
         for (int i = s1.length - 1; i >= 0; i--)
             sb.append(s1[i]).append(" ");
-        out.println(sb);
+        return sb;
+    }
+
+    private static String wordReverseUsingStreamAPI(String str1) {
+        return Arrays.stream(str1.split(" ")).reduce((f, s) -> s + " " + f).orElse("l");
     }
 }
 
-class DuplicatedCharCount {
+class DuplicatedChars {
     public static void main(String[] args) {
-        String str = "Mmahhssa"; // to ignore case .toLowerCase()
+        duplicatedCharCountUsingMap("Mmahhssa"); // to ignore case .toLowerCase()
+        duplicatedAndUniqueCharCountUsingMap("Mmahhssa"); // to ignore case .toLowerCase()
+        duplicatedCharCountUsingStreamAPI("Mmahhssa"); // to ignore case .toLowerCase()
+    }
+
+    private static void duplicatedCharCountUsingMap(String str) {
+        HashMap<Character, Integer> duplicatedMap = new HashMap<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char c : str.toCharArray())
+            map.put(c, map.getOrDefault(c, 0) + 1);
+
+        for (Map.Entry<Character, Integer> entry : map.entrySet())
+            if (entry.getValue() != 1)
+                duplicatedMap.put(entry.getKey(), entry.getValue());
+
+        out.println("Map: " + map + ", Duplicated Map: " + duplicatedMap);
+    }
+
+    private static void duplicatedAndUniqueCharCountUsingMap(String str) {
         HashMap<Character, Integer> duplicatedMap = new HashMap<>();
         HashMap<Character, Integer> uniqueMap = new HashMap<>();
         HashMap<Character, Integer> map = new HashMap<>();
@@ -273,22 +377,18 @@ class DuplicatedCharCount {
                 duplicatedMap.put(entry.getKey(), entry.getValue());
             else uniqueMap.put(entry.getKey(), uniqueMap.getOrDefault(entry.getKey(), 0) + 1);
 
-        out.println("Map: " + map);
-        out.println("Duplicated Map: " + duplicatedMap);
-        out.println("Unique Map: " + uniqueMap);
+        out.println("Map: " + map + ", Duplicated Map: " + duplicatedMap + ", Unique Map: " + uniqueMap);
     }
-}
 
-class WordsAndCharsCount {
-    public static void main(String[] args) {
-        String str = "This is a Java Program";
-        out.println(str);
-        out.println("Nr of words: " + str.split(" ").length);
-        int charCount = 0;
-        for (String c : str.split(" "))
-            charCount += c.length();
-        out.println("Nr of chars without spaces: " + charCount);
-        out.println("Nr of chars with spaces: " + str.length());
+    private static void duplicatedCharCountUsingStreamAPI(String str) {
+        out.println(str.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(entry -> entry.getKey() + " " + entry.getValue())
+                .collect(Collectors.joining(", ")));
     }
 }
 
@@ -346,12 +446,19 @@ class FindFirstUniqueChar {
 
 class FindSecondUniqueChar {
     public static void main(String[] args) {
-        out.println(findSecondUniqueCharacter("efficient"));
-        out.println(findSecondUniqueCharacter("mahsa"));
-        out.println(findSecondUniqueCharacter("ssff"));
-        out.println(findSecondUniqueCharacter(""));
-        out.println(findSecondUniqueCharacter("raja"));
-        out.println(findSecondUniqueCharacter("test"));
+        out.println(findSecondUniqueCharacterUsingMap("efficient"));
+        out.println(findSecondUniqueCharacterUsingMap("mahsa"));
+        out.println(findSecondUniqueCharacterUsingMap("ssff"));
+        out.println(findSecondUniqueCharacterUsingMap(""));
+        out.println(findSecondUniqueCharacterUsingMap("raja"));
+        out.println(findSecondUniqueCharacterUsingMap("test"));
+        out.println("-------------------------------------");
+        out.println(findSecondUniqueCharacterUsingStreamAPI("efficient"));
+        out.println(findSecondUniqueCharacterUsingStreamAPI("mahsa"));
+        out.println(findSecondUniqueCharacterUsingStreamAPI("ssff"));
+        out.println(findSecondUniqueCharacterUsingStreamAPI(""));
+        out.println(findSecondUniqueCharacterUsingStreamAPI("raja"));
+        out.println(findSecondUniqueCharacterUsingStreamAPI("test"));
         out.println("-------------------------------------");
         out.println(findSecondUniqueChar("efficient"));
         out.println(findSecondUniqueChar("mahsa"));
@@ -361,7 +468,7 @@ class FindSecondUniqueChar {
         out.println(findSecondUniqueChar("test"));
     }
 
-    static Character findSecondUniqueCharacter(String input) {
+    static Character findSecondUniqueCharacterUsingMap(String input) {
         /*
          *  Use LinkedHashMap to preserve insertion order --> {e=2, f=2, i=2, c=1, n=1, t=1}
          *  HashMap demonstrate --> {c=1, t=1, e=2, f=2, i=2, n=1}
@@ -382,6 +489,17 @@ class FindSecondUniqueChar {
         return null;
     }
 
+    static Character findSecondUniqueCharacterUsingStreamAPI(String input) {
+        return input.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() == 1)
+                .skip(1)
+                .map(Map.Entry::getKey)
+                .findFirst().orElse(null);
+    }
+
     static Character findSecondUniqueChar(String input) {
         char outPut;
         int count = 0;
@@ -397,7 +515,6 @@ class FindSecondUniqueChar {
                     return outPut;
                 }
             }
-
         return null;
     }
 }
@@ -408,6 +525,11 @@ class StringContiguous {
         out.println(isStringContiguous(str1));
         String str2 = "ABCD";
         out.println(isStringContiguous(str2));
+
+        String str3 = "ABDGFG";
+        out.println(isStringContiguousUsingIntStream(str3));
+        String str4 = "ABCD";
+        out.println(isStringContiguousUsingIntStream(str4));
     }
 
     static boolean isStringContiguous(String str) {
@@ -419,6 +541,14 @@ class StringContiguous {
                 return false;
 
         return true;
+    }
+
+    static boolean isStringContiguousUsingIntStream(String str) {
+        if (str == null || str.isEmpty())
+            return false;
+
+        return IntStream.range(0, str.toCharArray().length - 1)
+                .allMatch(i -> str.toCharArray()[i + 1] - str.toCharArray()[i] == 1);
     }
 }
 
