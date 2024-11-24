@@ -398,12 +398,12 @@ class FindFirstUniqueChar {
         out.println(findFirstUniqueCharacter("mahsa"));
         out.println(findFirstUniqueCharacter("ssff"));
         out.println(findFirstUniqueCharacter(""));
-
+        out.println("-------------------------------------");
         out.println(findFirstUniqueCharUsingMap("efficient"));
         out.println(findFirstUniqueCharUsingMap("mahsa"));
         out.println(findFirstUniqueCharUsingMap("ssff"));
         out.println(findFirstUniqueCharUsingMap(""));
-
+        out.println("-------------------------------------");
         out.println(findFirstUniqueCharUsingStreamAPI("efficient"));
         out.println(findFirstUniqueCharUsingStreamAPI("mahsa"));
         out.println(findFirstUniqueCharUsingStreamAPI("ssff"));
@@ -422,7 +422,7 @@ class FindFirstUniqueChar {
     }
 
     static Character findFirstUniqueCharUsingMap(String input) {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new LinkedHashMap<>();
         for (String ch : input.split(""))
             map.put(ch, map.getOrDefault(ch, 0) + 1);
 
