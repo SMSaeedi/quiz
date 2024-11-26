@@ -94,7 +94,7 @@ class SetQuestion {
 
 class WordCounter {
     public static Map<String, Integer> countWords(String text) {
-        Map<String, Integer> wordCount = new HashMap<>();
+        Map<String, Integer> wordCount = new LinkedHashMap<>();
 
         for (String word : text.toLowerCase().split("")) // O(n)
             if (!word.isEmpty())
@@ -105,6 +105,5 @@ class WordCounter {
 
     public static void main(String[] args) {
         out.println(countWords("Mahsa"));
-        out.println(Arrays.stream("Mahsa".split(" ")).count());
     }
 }
