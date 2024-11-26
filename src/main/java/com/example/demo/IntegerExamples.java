@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.lang.System.*;
+import static java.lang.System.nanoTime;
+import static java.lang.System.out;
 
 class RemoveDuplicatedElementsInArray {
     public static void main(String[] args) {
@@ -732,5 +733,15 @@ class SubArrayWithGivenSum {
             }
         }
         return subArrays;
+    }
+}
+
+class FloatDivision {
+    public static void main(String[] args) {
+        out.println(1.0 / 0.0); //Infinity
+        double d = 0.0;
+        double result = d / d;
+        out.println("result " + result); // NaN
+        out.println(1 / 0); //ArithmeticException: / by zero
     }
 }

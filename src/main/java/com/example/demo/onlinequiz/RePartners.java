@@ -104,8 +104,6 @@ class WordCounter {
     }
 
     public static void main(String[] args) {
-        out.println(1.0 / 0.0); //Infinity
-        out.println(1 / 0); //ArithmeticException: / by zero
         out.println(countWords("Mahsa"));
         out.println(Arrays.stream("Mahsa".split(" ")).count());
     }
