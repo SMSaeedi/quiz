@@ -104,7 +104,7 @@ class FindDuplicatedElementsInArray {
     }
 
     static int findFirstDuplicateUsingStreamAPI(int[] ads) {
-        return Arrays.stream(ads).distinct().findFirst().orElse(0);
+        return Arrays.stream(ads).distinct().findFirst().orElseThrow(() -> new RuntimeException("No duplicated elements found"));
     }
 }
 
@@ -152,6 +152,7 @@ class FindTheOnlyUniqueElement {
     public static void main(String[] args) {
         int[] arr = new int[]{4, 3, 2, 4, 1, 3, 2};
         out.println("The unique integer is: " + findTheOnlyUniqueElement(arr));  // Output should be 1
+        out.println("The unique integer, using Set: " + findTheOnlyUniqueElementUsingSet(arr));  // Output should be 1
         out.println("The unique integer, using Map: " + findTheOnlyUniqueElementUsingMap(arr));  // Output should be 1
         out.println("The unique integer, using Stream API: " + findTheOnlyUniqueElementStreamAPI(arr));  // Output should be 1
     }
@@ -165,6 +166,15 @@ class FindTheOnlyUniqueElement {
         return unique;
     }
 
+    public static int findTheOnlyUniqueElementUsingSet(int[] arr) {
+        Set<Integer> set = new HashSet<>();
+        Arrays.sort(arr);
+        for (int i : arr)
+            if (set.add(i)) return i;
+
+        return Integer.parseInt(null);
+    }
+
     public static int findTheOnlyUniqueElementUsingMap(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i : arr) //O(n)
@@ -174,7 +184,14 @@ class FindTheOnlyUniqueElement {
     }
 
     public static int findTheOnlyUniqueElementStreamAPI(int[] arr) {
-        return Arrays.stream(arr).boxed().collect(Collectors.groupingBy(o -> o, Collectors.counting())).entrySet().stream().filter(i -> i.getValue() == 1).map(Map.Entry::getKey).findFirst().orElseThrow(() -> new RuntimeException("No duplicated element found!"));
+        return Arrays.stream(arr)
+                .boxed()
+                .collect(Collectors.groupingBy(o -> o, Collectors.counting()))
+                .entrySet().stream()
+                .filter(i -> i.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No duplicated element found!"));
     }
 }
 
@@ -187,14 +204,14 @@ class FindUniqueElements {
 
     public static int[] findUniqueElementsUsingMap(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
-        for (int num : arr) //O(n)
+        for (int num : arr) // O(n)
             map.put(num, map.getOrDefault(num, 0) + 1);
 
         var uniqueElementsCount = map.keySet().stream().filter(e -> map.get(e) == 1).count(); // O(n)
         int[] result = new int[(int) uniqueElementsCount];
         int i = 0;
-        for (int num : map.keySet()) // O(n)
-            if (map.get(num) == 1) result[i++] = num;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) // O(n)
+            if (entry.getValue() == 1) result[i++] = entry.getKey();
 
         return result;
     }

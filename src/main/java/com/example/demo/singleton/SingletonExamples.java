@@ -29,7 +29,7 @@ class LazySingleToneClass {
     public static LazySingleToneClass getSingleToneClass() {
         out.println("Lazy SingleTone is being called");
         if (lazySingleToneClass == null)
-            return lazySingleToneClass = new LazySingleToneClass();
+            lazySingleToneClass = new LazySingleToneClass();
         return lazySingleToneClass;
     }
 }
@@ -102,10 +102,12 @@ class DoubleCheckedLockingSingleton {
 
     public static DoubleCheckedLockingSingleton getInstance() {
         out.println("Thread safe Lazy SingleTone with volatile instance and block locked is being called");
-        if (instance == null)
+        if (instance == null) { //1st check without locking
             synchronized (DoubleCheckedLockingSingleton.class) {
-                instance = new DoubleCheckedLockingSingleton();
+                if (instance == null)  //2nd check with locking
+                    instance = new DoubleCheckedLockingSingleton();
             }
+        }
         return instance;
     }
 }
