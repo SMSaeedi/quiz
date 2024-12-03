@@ -2,12 +2,12 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.lang.System.nanoTime;
-import static java.lang.System.out;
+import static java.lang.System.*;
 
 class RemoveDuplicatedElementsInArray {
     public static void main(String[] args) {
@@ -615,6 +615,41 @@ class FindFirstMissingPositive {
                         .contains(value))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No missing positive num found!"));
+    }
+}
+
+class IntStreamRangeExamples {
+    public static void main(String[] args) {
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).sorted(Comparator.reverseOrder()).findFirst().orElse(-1));
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).sorted(Comparator.naturalOrder()).findFirst().orElse(-1));
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).min(Comparator.reverseOrder()).orElse(-1));
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).max(Comparator.reverseOrder()).orElse(-1));
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).max(Comparator.naturalOrder()).orElse(-1));
+        out.println(Arrays.stream(IntStream.range(0, 5)
+                .map(i -> i * 2)
+                .filter(i -> i % 3 == 0)
+                .boxed()
+                .toArray(Integer[]::new)).min(Comparator.naturalOrder()).orElse(-1));
     }
 }
 
