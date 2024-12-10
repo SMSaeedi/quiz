@@ -77,7 +77,7 @@ class SetQuestion {
         persons.add(person2);
 
         /*
-         * HashSet could not detect this change, because it manages unique elements based on the hashCode at insertion time
+         * HashSet could not detect this change, it manages unique elements (based on the hashCode) at insertion time
          * To prevent this duplication, we can set person's name as final
          */
         person2.name = "John";
