@@ -74,6 +74,7 @@ class ThreadSafeBlockSingleton {
     /**
      * Pros: Thread-safe.
      * Cons: Synchronized method can reduce performance due to the overhead of acquiring locks.
+     * Cons: another Thread might see a partially initialized Singleton instance while calling getInstance()
      */
     private static ThreadSafeBlockSingleton instance;
 
@@ -93,7 +94,6 @@ class ThreadSafeBlockSingleton {
 class DoubleCheckedLockingSingleton {
     /**
      * Pros: Thread-safe locking with volatile, improved performance by reducing synchronization overhead.
-     * Cons: More complex implementation.
      */
     private static volatile DoubleCheckedLockingSingleton instance;
 
@@ -102,12 +102,11 @@ class DoubleCheckedLockingSingleton {
 
     public static DoubleCheckedLockingSingleton getInstance() {
         out.println("Thread safe Lazy SingleTone with volatile instance and block locked is being called");
-        if (instance == null) { //1st check without locking
+        if (instance == null)  //1st check without locking
             synchronized (DoubleCheckedLockingSingleton.class) {
                 if (instance == null)  //2nd check with locking
                     instance = new DoubleCheckedLockingSingleton();
             }
-        }
         return instance;
     }
 }
