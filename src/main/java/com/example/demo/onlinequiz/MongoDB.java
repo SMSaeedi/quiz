@@ -93,8 +93,7 @@ class Circle extends Shape {
     @Override
     public double getArea() {
         // implement it base on Circle shape
-        int r = 5;
-        return 3.14 * r * r;
+        return 3.14 * radius * radius;
     }
 }
 
@@ -110,9 +109,7 @@ class Rectangle extends Shape {
     @Override
     public double getArea() {
         // implement it base on Circle shape
-        int r = 5;
-        int d = 5;
-        return r * d;
+        return height * width;
     }
 }
 
