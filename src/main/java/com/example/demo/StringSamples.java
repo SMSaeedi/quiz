@@ -582,3 +582,30 @@ class StarCase {
         }
     }
 }
+
+class YieldSample {
+    public static void main(String[] args) {
+        int num = 5;
+        var result = switch (num) {
+            case 1, 2, 3 -> "small";
+            case 4, 5 -> {
+                out.println("number is either 4 | 5 ");
+                yield "mediume";
+            }
+            default -> "large";
+        };
+        out.println(result);
+    }
+}
+
+class ScopedValueSample {
+    static final ScopedValue<String> error = ScopedValue.newInstance();
+
+    public static void main(String[] args) {
+        ScopedValue.where(error, "FieldNotFound").run(() -> { // Outer scope: error = "FieldNotFound"
+            ScopedValue.where(error, "AccessDenied").run(() -> { // Inner scope: error = "AccessDenied"
+                out.println(error.get()); // Access the value of error in the inner scope
+            });
+        });
+    }
+}
