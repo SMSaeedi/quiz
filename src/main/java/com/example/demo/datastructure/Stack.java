@@ -1,11 +1,11 @@
 package com.example.demo.datastructure;
 
-public class StackUsingArray {
+public class Stack {
     private int[] arr;
     private int top;
     private int capacity;
 
-    public StackUsingArray(int size) {
+    public Stack(int size) {
         arr = new int[size];  // fixed-size array
         capacity = size;
         top = -1;  // Stack is initially empty
