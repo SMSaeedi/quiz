@@ -31,11 +31,15 @@ class MongoDB {
         return new MyObj(str, num);
     }
 
-    @AllArgsConstructor
     @Accessors(fluent = true)
     static class MyObj {
         String str;
         int num;
+
+        public MyObj(String str, int num) {
+            this.str=str;
+            this.num=num;
+        }
     }
 }
 
