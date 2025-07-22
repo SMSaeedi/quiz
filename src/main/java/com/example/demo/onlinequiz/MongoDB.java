@@ -1,6 +1,5 @@
 package com.example.demo.onlinequiz;
 
-import lombok.AllArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -12,12 +11,12 @@ class MongoDB {
         int num = 10;
 
         modifyValues(str, num);
-        System.out.println("String after modification: " + str); //Hello
-        System.out.println("Integer after modification: " + num); //10
+        System.out.println(STR."String after modification: \{str}"); //Hello
+        System.out.println(STR."Integer after modification: \{num}"); //10
 
         MyObj myObj = modifyValues1(str, num);
-        System.out.println("String after modification: " + myObj.str); //World
-        System.out.println("Integer after modification: " + myObj.num); //20
+        System.out.println(STR."String after modification: \{myObj.str}"); //World
+        System.out.println(STR."Integer after modification: \{myObj.num}"); //20
     }
 
     public static void modifyValues(String str, int num) {
