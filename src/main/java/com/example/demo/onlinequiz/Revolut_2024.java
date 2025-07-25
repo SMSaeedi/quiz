@@ -3,7 +3,9 @@ package com.example.demo.onlinequiz;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class Revolut {
@@ -43,5 +45,26 @@ class Revolut {
 class ServerException extends RuntimeException {
     public ServerException(String message) {
         super(message);
+    }
+}
+
+class UrlShort {
+    // Revolut Quiz 2025: given the original url, generate the short url, then mapping it where the original url stored
+    static AtomicInteger integer = new AtomicInteger(0);
+    static Map<String, String> map = new HashMap<>();
+
+    public static String registerBaseUrl(String baseUrl) {
+        String shortUrl = "https://www.rev.me/" + integer.incrementAndGet();
+        map.put(shortUrl, baseUrl);
+        return shortUrl;
+    }
+
+    public static String receiveBaseUrl(String shortUrl) {
+        return map.get(shortUrl);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(registerBaseUrl("https://www.revolut.com/rewards-personalised-cashback-and-discounts/"));
+        System.out.println(receiveBaseUrl("https://www.rev.me/1"));
     }
 }
