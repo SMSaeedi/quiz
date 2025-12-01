@@ -67,14 +67,14 @@ class StringAnagram {
 
         HashMap<Character, Integer> map = new HashMap<>();
         for (char c : str1.toCharArray())
-            map.put(c, map.getOrDefault(c, 0) + 1);
+            map.put(c, map.getOrDefault(c, 0) + 1); //in here, increase the count of characters from str1.
 
         for (char c : str2.toCharArray()) {
             if (!map.containsKey(c))
                 return false;
-            map.put(c, map.get(c) + 1);
-            if (map.get(c) == 1)
-                map.remove(c);
+            map.put(c, map.get(c) - 1); //in here, should decrease the count when processing str2.
+            if (map.get(c) == 0)
+                map.remove(c); //when the count goes to zero, the character is fully matched and can be deleted.
         }
 
         return true;
@@ -207,7 +207,7 @@ class WordCount {
         Map<String, Integer> wordCount = new HashMap<>();
 
         for (String word : text.toLowerCase().split(""))
-            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1); //if exist → return its current wordCount. if not → return 0.
 
         return wordCount;
     }

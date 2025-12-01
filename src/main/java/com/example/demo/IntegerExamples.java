@@ -618,6 +618,28 @@ class FindFirstMissingPositive {
     }
 }
 
+class FindFirstMissingNumber {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 3, 6, 4, 1, 2};
+        int[] arr2 = {1, 2, 3};
+        int[] arr3 = {-1, -3};
+        out.println(missingNumber(arr1) + ", " +
+                missingNumber(arr2) + ", " +
+                missingNumber(arr3));
+    }
+
+    public static int missingNumber(int[] nums) {
+        int xor = nums.length;  // start with n
+
+        for (int i = 0; i < nums.length; i++) {
+            xor ^= i;         // XOR all indices
+            xor ^= nums[i];   // XOR all numbers
+        }
+
+        return xor;
+    }
+}
+
 class IntStreamRangeExamples {
     public static void main(String[] args) {
         out.println(Arrays.stream(IntStream.range(0, 5)
