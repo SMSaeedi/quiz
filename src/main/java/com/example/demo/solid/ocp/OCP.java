@@ -1,7 +1,5 @@
 package com.example.demo.solid.ocp;
 
-import lombok.Getter;
-
 import static java.lang.System.out;
 
 public class OCP {
@@ -22,9 +20,12 @@ interface Shape {
     double calculateArea();
 }
 
-@Getter
 class Circle implements Shape {
     private double radius;
+
+    public double getRadius() {
+        return radius;
+    }
 
     public Circle(double radius) {
         this.radius = radius;
@@ -36,10 +37,17 @@ class Circle implements Shape {
     }
 }
 
-@Getter
 class Rectangle implements Shape {
     private double length;
     private double breadth;
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getBreadth() {
+        return breadth;
+    }
 
     public Rectangle(double length, double breadth) {
         this.length = length;
@@ -52,10 +60,17 @@ class Rectangle implements Shape {
     }
 }
 
-@Getter
 class Triangle implements Shape {
     private double base;
     private double height;
+
+    public double getBase() {
+        return base;
+    }
+
+    public double getHeight() {
+        return height;
+    }
 
     public Triangle(double base, double height) {
         this.base = base;

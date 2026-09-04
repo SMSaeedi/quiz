@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 public class MinRequiredMeetingRooms {
    
     private static int minRooms(int[][] elements){
@@ -7,7 +10,7 @@ public class MinRequiredMeetingRooms {
             return 0;
         }
         
-        Arrays.sort(elements, (a,b) -> Integer.compare(a[0],b[0]));
+        Arrays.sort(elements, (a, b) -> Integer.compare(a[0],b[0]));
         
         PriorityQueue<Integer> minHeap =new PriorityQueue<>();
         

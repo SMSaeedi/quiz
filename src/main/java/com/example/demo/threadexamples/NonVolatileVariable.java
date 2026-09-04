@@ -1,14 +1,10 @@
 package com.example.demo.threadexamples;
 
-import lombok.SneakyThrows;
-
 import java.util.concurrent.atomic.AtomicInteger;
-
 import static java.lang.System.out;
 
 class VolatileVariable extends Thread {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         MyVolatileFlag myVolatileFlag = new MyVolatileFlag();
         myVolatileFlag.start();
 
@@ -19,17 +15,10 @@ class VolatileVariable extends Thread {
         out.println("Conclusion: if flag is volatile, thread will end");
         out.println("Conclusion: if flag is not volatile, thread will not end");
         out.println("Because the flag value is cached and cannot see the change!");
-
     }
 }
 
 class MyVolatileFlag extends Thread {
-    /**
-     * used to ensure that a variable's value is always read from and written to the main memory,
-     * rather than being cached in the thread's local memory (CPU cache).
-     * P.S. if the variable is either long or double (64 bits), for reading and writing the memory spaces for them,
-     * do it in 32 bit blocks.
-     */
     volatile boolean flag = true;
 
     public void run() {
@@ -38,8 +27,7 @@ class MyVolatileFlag extends Thread {
 }
 
 class NonVolatileVariable extends Thread {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         MyFlag myVolatileFlag = new MyFlag();
         myVolatileFlag.start();
 
@@ -50,7 +38,6 @@ class NonVolatileVariable extends Thread {
         out.println("Conclusion: if flag is volatile, thread will end");
         out.println("Conclusion: if flag is not volatile, thread will not end");
         out.println("Because the flag value is cached and cannot see the change!");
-
     }
 }
 
@@ -65,8 +52,7 @@ class MyFlag extends Thread {
 class AtomicVariable {
     private static final AtomicInteger atomicCounter = new AtomicInteger(0);
 
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Runnable incrementTask = () -> {
             for (int i = 0; i < 100; i++)
                 atomicCounter.incrementAndGet();

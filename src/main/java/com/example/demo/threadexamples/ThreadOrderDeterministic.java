@@ -1,12 +1,9 @@
 package com.example.demo.threadexamples;
 
-import lombok.SneakyThrows;
-
 import static java.lang.System.out;
 
 public class ThreadOrderDeterministic {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         out.println("1");
         Thread t1 = new Thread() {
             public void run() {

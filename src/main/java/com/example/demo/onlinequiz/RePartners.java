@@ -1,7 +1,5 @@
 package com.example.demo.onlinequiz;
 
-import lombok.Getter;
-
 import java.util.*;
 
 import static java.lang.System.out;
@@ -25,10 +23,17 @@ public class RePartners {
     }
 }
 
-@Getter
 final class ImmutablePerson {
     private final int age;
     private final List<String> hobbies;
+
+    public int getAge() {
+        return age;
+    }
+
+    public List<String> getHobbies() {
+        return hobbies;
+    }
 
     public ImmutablePerson(int age, List<String> hobbies) {
         this.age = age;

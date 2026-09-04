@@ -1,7 +1,5 @@
 package com.example.demo.solid.ocp.violation;
 
-import lombok.Getter;
-
 import static java.lang.System.out;
 
 public class OCP {
@@ -29,9 +27,12 @@ class AreaCalculator {
     }
 }
 
-@Getter
 class Circle {
     private double radius;
+
+    public double getRadius() {
+        return radius;
+    }
 
     public Circle(double radius) {
         this.radius = radius;
@@ -39,10 +40,25 @@ class Circle {
 
 }
 
-@Getter
 class Rectangle {
     private double length;
     private double breadth;
+
+    public double getLength() {
+        return length;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public double getBreadth() {
+        return breadth;
+    }
+
+    public void setBreadth(double breadth) {
+        this.breadth = breadth;
+    }
 
     public Rectangle(double length, double breadth) {
         this.length = length;

@@ -1,27 +1,30 @@
 package com.example.demo.threadexamples;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
-
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.System.out;
 
-@Getter
-@Setter
 class SimpleIntSharedData {
     public int data;
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
 
     public SimpleIntSharedData(int sharedData) {
         this.data = sharedData;
     }
 
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SimpleIntSharedData simpleIntSharedData = new SimpleIntSharedData(100);
 
         Runnable task1 = () -> {

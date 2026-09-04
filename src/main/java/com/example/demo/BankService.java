@@ -92,7 +92,7 @@ public class BankService {
 
     private Account getAccount(String accountId) {
         Account account = accounts.get(accountId);
-        if (account == null) throw new IllegalArgumentException(STR."Account not found: \{accountId}");
+        if (account == null) throw new IllegalArgumentException("Account not found: " + accountId);
         return account;
     }
 
