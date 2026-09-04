@@ -1,7 +1,5 @@
 package com.example.demo.solid.srp.violation;
 
-import lombok.Setter;
-
 import static java.lang.System.out;
 
 public class SRP {
@@ -21,10 +19,17 @@ public class SRP {
     }
 }
 
-@Setter
 class User {
     private String username;
     private String password;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     // Responsibility 1: User validation
     public boolean validate() {

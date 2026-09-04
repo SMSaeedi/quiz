@@ -1,9 +1,5 @@
 package com.example.demo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,11 +65,24 @@ class FindMax {
                 .orElse(new Employee()));
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Employee {
         String name;
         int age;
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public Employee(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public Employee() {
+        }
     }
 }

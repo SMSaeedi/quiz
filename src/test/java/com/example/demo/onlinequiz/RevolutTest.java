@@ -2,12 +2,8 @@ package com.example.demo.onlinequiz;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-
-import java.net.InetAddress;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class RevolutTest {
     Revolut revolut;
@@ -20,18 +16,12 @@ public class RevolutTest {
 
     @Test
     public void successful_test_register_new_server() {
-        String ip = "192.168.1.1";
-        InetAddress mockInetAdd = mock(InetAddress.class);
+        String ip = "127.0.0.1";
 
-        try (MockedStatic<InetAddress> mockedInetAddress = mockStatic(InetAddress.class)) {
-            when(mockInetAdd.getHostAddress()).thenReturn(ip);
-            mockedInetAddress.when(() -> InetAddress.getByName(ip)).thenReturn(mockInetAdd);
+        revolut.registerServer(ip);
 
-            revolut.registerServer(ip);
-
-            assertEquals(1, revolut.serverList.size());
-            assertTrue(revolut.serverList.contains(ip));
-        }
+        assertEquals(1, revolut.serverList.size());
+        assertTrue(revolut.serverList.contains(ip));
     }
 
     @Test
@@ -45,13 +35,9 @@ public class RevolutTest {
 
     @Test
     public void unknown_host_exception() {
-        try (MockedStatic<InetAddress> mockedInetAddress = mockStatic(InetAddress.class)) {
-            mockedInetAddress.when(() -> InetAddress.getByName("invalid.server"))
-                    .thenThrow(new ServerException("unknown host"));
-
-            var unknownIP = assertThrows(ServerException.class, () -> revolut.registerServer("invalid.server"));
-            assertEquals("unknown host", unknownIP.getMessage());
-        }
+        var unknownIP = assertThrows(ServerException.class,
+                () -> revolut.registerServer("does-not-exist.invalid"));
+        assertEquals("unknown host", unknownIP.getMessage());
     }
 
     @Test

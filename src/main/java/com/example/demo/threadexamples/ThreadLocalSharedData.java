@@ -1,7 +1,5 @@
 package com.example.demo.threadexamples;
 
-import lombok.SneakyThrows;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -16,8 +14,7 @@ public class ThreadLocalSharedData {
      */
     private static final ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Runnable task1 = () -> {
             threadLocal.set(100);
             out.println("Thread 1 --> " + threadLocal.get());

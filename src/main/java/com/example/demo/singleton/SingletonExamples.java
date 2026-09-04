@@ -1,13 +1,11 @@
 package com.example.demo.singleton;
 
-import lombok.Getter;
-
 import static java.lang.System.out;
 
 public class SingletonExamples {
     public static void main(String[] args) {
         out.println(LazySingleToneClass.getSingleToneClass());
-        out.println(EagerSingleToneClassNumber_1.getEagerSingleToneClass());
+        out.println(EagerSingleToneClassNumber_1.eagerSingleToneClass);
         out.println(EagerSingleToneClassNumber_2.EAGER_INSTANCE);
         out.println(ThreadSafeMethodSingleton.getInstance());
         out.println(ThreadSafeBlockSingleton.getInstance());
@@ -40,8 +38,7 @@ class EagerSingleToneClassNumber_1 {
      * Pros: Simple implementation, thread-safe without requiring synchronized methods.
      * Cons: Instance is created even if it is never used, which leads to resource wastage and memory cost
      */
-    @Getter
-    private final static EagerSingleToneClassNumber_1 eagerSingleToneClass = new EagerSingleToneClassNumber_1();
+    public final static EagerSingleToneClassNumber_1 eagerSingleToneClass = new EagerSingleToneClassNumber_1();
 
     private EagerSingleToneClassNumber_1() {
         out.println("Eager SingleTon with private instance is being called");
