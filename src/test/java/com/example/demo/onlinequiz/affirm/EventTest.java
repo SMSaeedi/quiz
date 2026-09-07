@@ -1,5 +1,7 @@
-package com.example.demo.affirm;
+package com.example.demo.onlinequiz.affirm;
 
+import com.example.demo.onlinequiz.affirm.DistinctPIIValuesCounter;
+import com.example.demo.onlinequiz.affirm.Event;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
