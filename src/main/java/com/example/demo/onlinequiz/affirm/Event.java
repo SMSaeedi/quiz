@@ -1,4 +1,4 @@
-package com.example.demo.affirm;
+package com.example.demo.onlinequiz.affirm;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
