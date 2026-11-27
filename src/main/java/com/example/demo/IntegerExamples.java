@@ -35,6 +35,27 @@ class RemoveDuplicatedElementsInArray {
     }
 }
 
+// list of numbers 1 to n; always one number is missing; the list is not sorted;
+//i.e. 1,2,4,5 -> 3 is missing or 1,2,3,4 -> 5 is missing;
+class FindOneMissingNumber {
+     static void main(String[] args) {
+        System.out.println(findMissingNumber(List.of(1,2,3,4))); //  5
+        System.out.println(findMissingNumber(List.of(1,2,4,5))); // 3
+        System.out.println(findMissingNumber(List.of(2,3,4))); // 1
+        System.out.println(findMissingNumber(List.of())); // 1
+    }
+
+    public static int findMissingNumber(List<Integer> numbers) {
+        long n=numbers.size()+1L;
+        long expectedSum=(n%2==0) ? (n/2)*(n+1) : n*(n+1)/2;
+
+        long actualSum=0L;
+        for(long num: numbers) actualSum += num;
+
+        return (int)(expectedSum-actualSum);
+    }
+}
+
 class FindDuplicatedElementsInArray {
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 3, 2, 1, 5, 3, 1, 2, 1, 4, 5, 6};
